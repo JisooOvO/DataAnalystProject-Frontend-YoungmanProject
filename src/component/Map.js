@@ -17,7 +17,7 @@ const position = {
 const Map = () => {
 
 
-    const API_KEY = "AIzaSyDae9p1BxuYqFHmtbznJyJnfHrZDUBs1wI"
+    // const API_KEY = "AIzaSyDae9p1BxuYqFHmtbznJyJnfHrZDUBs1wI"
 
     return (
         <LoadScript
