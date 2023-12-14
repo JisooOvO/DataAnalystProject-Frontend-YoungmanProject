@@ -1,6 +1,6 @@
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
-// branch test
+// 박민호구
 const containerStyle = {
     width: '1600px',
     height: '800px'
