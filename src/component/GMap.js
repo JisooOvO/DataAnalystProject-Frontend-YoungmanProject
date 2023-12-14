@@ -1,6 +1,5 @@
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
-// 박민호구
 const containerStyle = {
     width: '1600px',
     height: '800px'
@@ -15,7 +14,7 @@ const position = {
     lat: 35.0911,
     lng: 129.0875
 }
-const Map = () => {
+const GMap = () => {
 
 
     const API_KEY = "AIzaSyDae9p1BxuYqFHmtbznJyJnfHrZDUBs1wI"
@@ -38,4 +37,4 @@ const Map = () => {
     )
 }
 
-export default Map
+export default GMap

@@ -1,12 +1,12 @@
 import React from 'react'
-import Map from '../component/Map'
+import OsMap from '../component/OsMap'
 
 
 const MainPage = () => {
   return (
     <div className="text-white max-w-[1820px] mx-auto bg-black">
       ContainerShip
-        <Map />
+        <OsMap />
     </div>
   )
 }
