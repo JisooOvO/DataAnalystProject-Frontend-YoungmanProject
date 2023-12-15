@@ -1,6 +1,6 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import {Esri_WorldImagery} from "./OpenStreetMapDesign.js"
+import {Stadia_StamenToner} from "./OpenStreetMapDesign.js"
 
 function OsMap() {
   const position = [34, 129]; 
@@ -8,8 +8,8 @@ function OsMap() {
   return (
     <MapContainer center={position} zoom={13} style={{ height: '100vh', width: '100%' }}>
       <TileLayer
-        url={Esri_WorldImagery["url"]}
-        attribution={Esri_WorldImagery["attribution"]}
+        url={Stadia_StamenToner["url"]}
+        attribution={Stadia_StamenToner["attribution"]}
       />
       <Marker position={position}>
         <Popup>
