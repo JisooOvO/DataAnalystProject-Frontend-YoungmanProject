@@ -6,7 +6,7 @@ function OsMap() {
   const position = [34, 129]; 
 
   return (
-    <MapContainer center={position} zoom={10} style={{width : "100%", height : "100%"}}>
+    <MapContainer center={position} zoom={5} style={{width : "100%", height : "100%"}}>
       <TileLayer
         url={OpenStreetMap_Mapnik["url"]}
         attribution={OpenStreetMap_Mapnik["attribution"]}
