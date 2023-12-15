@@ -7,7 +7,7 @@ const Header = () => {
             <div className="text-white pl-10 text-3xl">
                 <Navigation title={"ETA"} url={"/"}/>
             </div>
-            <div className='flex gap-4 sm:gap-10 text-white'>
+            <div className='flex items-center gap-4 sm:gap-10 text-white'>
                 <Navigation title={"Signup"} url={"/signup"}/>
                 <Navigation title={"Login"} url={"/login"}/>
                 <HambergerButton/>
