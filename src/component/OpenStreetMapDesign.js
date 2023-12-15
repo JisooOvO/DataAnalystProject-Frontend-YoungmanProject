@@ -5,6 +5,7 @@ export const Esri_WorldImagery = {
 };
 
 // Default OpenStreetMap
+// test
 export const OpenStreetMap_Mapnik = {
     url : 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
 	maxZoom: 19,
