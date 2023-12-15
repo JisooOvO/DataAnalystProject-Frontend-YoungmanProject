@@ -1,7 +1,7 @@
 import LoginLeftImage from "../component/loginPage/LoginLeftImage"
 import LoginRightComponent from "../component/loginPage/LoginRightComponent"
 
-const Login = () => {
+const LoginPage = () => {
    return (
      <div id="loginPageContainer" className="w-full h-full flex">
         <LoginLeftImage/>
@@ -10,5 +10,5 @@ const Login = () => {
    )
  }
  
- export default Login
+ export default LoginPage
  

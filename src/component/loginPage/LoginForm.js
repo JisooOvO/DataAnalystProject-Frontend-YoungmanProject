@@ -10,7 +10,7 @@ const LoginForm = () => {
         <FormInput title={"🙍‍♂️ 아이디"} type={"text"}/>
         <FormInput title={"🔒 비밀번호"} type={"password"}/>
         <div className="my-2">
-            <CustomButton width={44} height={ 3+'rem'} title={"로그인하기"}/>
+            <CustomButton width={10+'rem'} height={3+'rem'} title={"로그인하기"}/>
         </div>
         <Navigation title={"회원가입하기"} url={"/signup"}/>
     </form>

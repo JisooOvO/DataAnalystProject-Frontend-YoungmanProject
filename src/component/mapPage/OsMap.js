@@ -1,15 +1,15 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import {Stadia_StamenToner} from "./OpenStreetMapDesign.js"
+import {OpenStreetMap_Mapnik} from "./OpenStreetMapDesign.js"
 
 function OsMap() {
   const position = [34, 129]; 
 
   return (
-    <MapContainer center={position} zoom={13} style={{ height: '100vh', width: '100%' }}>
+    <MapContainer center={position} zoom={10} style={{width : "100%", height : "100%"}}>
       <TileLayer
-        url={Stadia_StamenToner["url"]}
-        attribution={Stadia_StamenToner["attribution"]}
+        url={OpenStreetMap_Mapnik["url"]}
+        attribution={OpenStreetMap_Mapnik["attribution"]}
       />
       <Marker position={position}>
         <Popup>
