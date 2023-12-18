@@ -1,5 +1,5 @@
 import HambergerButton from "./HambergerButton";
-import Navigation from "../common/Navigation";
+import Navigation from "../../common/Navigation";
 
 const Header = () => {
     return (
