@@ -1,8 +1,9 @@
+import { PURPLE } from "../../common/Common";
 import Navigation from "../../common/Navigation";
 
 const Header = () => {
     return (
-        <header className={`w-full hover:b shadow-lg h-16 px-8 items-center flex justify-between`}>
+        <header style={{backgroundColor : PURPLE}} className={`w-full hover:b shadow-lg h-16 px-8 items-center flex justify-between z-[9999]`}>
             <div className="text-xl font-bold">
                 <Navigation title={"스마트가계부"} url={"/"}/>
             </div>

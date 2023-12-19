@@ -1,6 +1,8 @@
 const CustomButton = ({width, height, title, func}) => {
   return (
-    <button onClick={func} style={{height : height, width : width}} className={`border rounded-md text-white font-bold text-[120%] bg-sky-300 hover:bg-sky-400 shadow-lg hover:cursor-pointer`}>
+    <button onClick={func} 
+    style={{height : height, width : width, backgroundColor : "#EEBEA2"}} 
+    className={`rounded-xl text-white font-bold text-lg shadow-xl hover:cursor-pointer hover:text-gray-100`}>
         {title}
     </button>
   )
