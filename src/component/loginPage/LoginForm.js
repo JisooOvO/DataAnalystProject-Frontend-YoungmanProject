@@ -2,6 +2,7 @@ import FormInput from "../../common/FormInput"
 import CustomButton from "../../common/CustomButton"
 import Navigation from "../../common/Navigation"
 import { BACKEND_URL, PURPLE } from "../../common/Common"
+import MaskingButton from "../../common/MaskingButton"
 
 const LoginForm = () => {
   const handleLogin = (e) => {
@@ -30,7 +31,7 @@ const LoginForm = () => {
   }
 
   return (
-    <section className="w-[80%]">
+    <section className="w-[80%] my-4">
       <form 
       style={{backgroundColor : PURPLE}} 
       className="w-full h-[30rem] rounded-md shadow-lg flex flex-col gap-2 justify-center items-center">
@@ -38,7 +39,10 @@ const LoginForm = () => {
           <div className="bg-white shadow-inner w-[90%] h-[60%] rounded-lg p-5 flex justify-center items-center">
             <div className="w-full flex flex-col gap-5">
               <FormInput title={"🙍‍♂️ 아이디"} type={"text"} id={"username"}/>
-              <FormInput title={"🔒 비밀번호"} type={"password"} id={"password"}/>
+              <div className="relative">
+                <FormInput title={"🔒 비밀번호"} type={"password"} id={"password"}/>
+                <MaskingButton/>
+              </div>
             </div>
           </div>
           <div className="my-2 w-[90%]">
