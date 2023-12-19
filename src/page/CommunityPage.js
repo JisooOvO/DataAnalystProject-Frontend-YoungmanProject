@@ -3,6 +3,7 @@ import CommunityRightSection from "../component/communityPage/CommunityRightSect
 
 const CommunityPage = () => {
   let innerWidth = window.innerWidth;
+
   const handleToggleButtonClick = () => {
     const toggleContainer = document.querySelector("#toggleContainer");
     toggleContainer.classList.toggle("hidden");
@@ -10,7 +11,7 @@ const CommunityPage = () => {
 
   window.addEventListener('resize',()=>{
     innerWidth = window.innerWidth;
-    if(innerWidth < 768){
+    if(innerWidth < 1024){
       const toggleContainer = document.querySelector("#toggleContainer");
       toggleContainer.classList.add("hidden");
     }
@@ -18,7 +19,11 @@ const CommunityPage = () => {
   
   return (
     <section className="w-full h-full flex relative">
-        <button onClick={handleToggleButtonClick} className="block md:hidden w-7 h-7 border rounded-[50%] bg-white absolute right-8 top-2">X</button>
+        <button 
+          onClick={handleToggleButtonClick} 
+          className="block z-10 lg:hidden w-7 h-7 border rounded-[50%] bg-white absolute sm:right-8 top-3">
+            X
+        </button>
         <CommunityLeftSection/>
         <CommunityRightSection/>
     </section>

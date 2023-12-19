@@ -3,7 +3,7 @@ import UserSection from "./rightSection/UserSection"
 
 const CommunityRightSection = () => {
   return (
-  <div id="toggleContainer" className="md:block hidden w-[35%]">
+  <div id="toggleContainer" className="lg:block hidden absolute h-full w-[50%] right-0 lg:w-[35%]">
     <div className="border w-full h-full bg-blue-400">
         <UserSection/>
         <RightPostSection/>
