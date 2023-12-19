@@ -1,4 +1,4 @@
-import FormInput from "../../common/FormInput"
+import FormInput from "./FormInput"
 import CustomButton from "../../common/CustomButton"
 import Navigation from "../../common/Navigation"
 import { BACKEND_URL, PURPLE } from "../../common/Common"
@@ -10,7 +10,7 @@ const LoginForm = () => {
     const username = document.querySelector("#username").value;
     const password = document.querySelector("#password").value;
 
-    fetch(BACKEND_URL+"/public/login",{
+    fetch(BACKEND_URL+"/login",{
       method : "post",
       body : JSON.stringify({
         "username" : username,
@@ -41,19 +41,19 @@ const LoginForm = () => {
               <FormInput title={"🙍‍♂️ 아이디"} type={"text"} id={"username"}/>
               <div className="relative">
                 <FormInput title={"🔒 비밀번호"} type={"password"} id={"password"}/>
-                <MaskingButton/>
+                <div className="absolute top-[59%] right-6 sm:right-6 translate-y-[-50%] "><MaskingButton/></div>
               </div>
             </div>
           </div>
           <div className="my-2 w-[90%]">
-              <CustomButton width={100+"%"} height={3+'rem'} title={"로그인하기"} func={handleLogin}/>
+              <CustomButton width={100+"%"} height={3+'rem'} title={"로그인"} func={handleLogin}/>
           </div>
           <div className="w-[90%] flex items-center">
-            <span className="w-[34%] h-0 border border-gray-300"></span>
+            <span className="w-[34%] h-0 border border-white"></span>
             <div className="grow">
               <Navigation title={"회원가입"} url={"/signup"}/>
             </div>
-            <span className="w-[34%] h-0 border border-gray-300"></span>
+            <span className="w-[34%] h-0 border border-white"></span>
           </div>
       </form>
     </section>

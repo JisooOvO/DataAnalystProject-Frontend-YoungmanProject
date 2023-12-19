@@ -1,5 +1,5 @@
 import CustomButton from "../../common/CustomButton"
-import FormInputHeader from "../../common/FormInputHeader"
+import FormInputHeader from "../../component/loginPage/FormInputHeader"
 import LoginForm from "./LoginForm"
 
 const LoginRightComponent = () => {

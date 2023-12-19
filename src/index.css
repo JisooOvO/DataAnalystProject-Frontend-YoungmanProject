@@ -7,7 +7,7 @@ body {
     overflow-x: hidden;
     width : 100vw;
     height : 100vh;
-    min-height : 800px;
+    min-height : 850px;
     font-family: 'Open Sans', sans-serif;
     background-repeat : no-repeat;
     background-cover : cover;
@@ -24,7 +24,7 @@ body {
     width : 100%;
 }
 
-#loginPageContainer {
+#loginPageContainer, #signupContainer, #mainContainer {
     height : calc(100vh - 4rem);
 }
 
