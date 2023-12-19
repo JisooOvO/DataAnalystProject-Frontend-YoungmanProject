@@ -1,16 +1,15 @@
-import HambergerButton from "./HambergerButton";
 import Navigation from "../../common/Navigation";
 
 const Header = () => {
     return (
-        <header className="w-full pr-10 bg-sky-500 py-4 flex justify-between">
-            <div className="text-white pl-10 text-3xl">
-                <Navigation title={"ETA"} url={"/"}/>
+        <header className={`w-full hover:b shadow-lg h-16 px-8 items-center flex justify-between`}>
+            <div className="text-xl font-bold">
+                <Navigation title={"스마트가계부"} url={"/"}/>
             </div>
-            <div className='flex items-center gap-4 sm:gap-10 text-white'>
-                <Navigation title={"Signup"} url={"/signup"}/>
-                <Navigation title={"Login"} url={"/login"}/>
-                <HambergerButton/>
+            <div className='flex font-semibold items-center gap-4 sm:gap-10 text-white'>
+                <Navigation title={"영수증 변환"} url={"/transform/add_receipt"}/>
+                <Navigation title={"가계부 작성"} url={"/accountbook/add"}/>
+                <Navigation title={"로그인"} url={"/login"}/>
             </div>
         </header>
     )

@@ -1,11 +1,7 @@
-
-
 const HambergerButton = () => {
-    
     const handleHambergerButton = () => {
-    //    setIsSidebarOpen(!isSidebarOpen);
-        console.log("i'm hamburger")
     }
+
     return (
         <button
             className="flex flex-col justify-between items-center w-6 h-5"
