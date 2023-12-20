@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../../css/Carousel.css"
 
-const Carousel = ({ images }) => {
+const Carousel = ({ images, onSelect }) => {
 
     const [current, setCurrent] = useState(0);
     const length = images.length;
@@ -19,14 +19,17 @@ const Carousel = ({ images }) => {
     }
 
     return (
-        <div className="carousel">
-            <span className="left-arrow" onClick={prevSlide}>◀</span>
-            <span className="right-arrow" onClick={nextSlide}>▶</span>
+        <div className="relative mx-auto overflow-hidden">
+            <span className="absolute top-[40%] transform -translate-y-1/2 text-3xl z-10 cursor-pointer select-none left-0" onClick={prevSlide}>◀</span>
+            <span className="absolute top-[40%] transform -translate-y-1/2 text-3xl z-10 cursor-pointer select-none right-0" onClick={nextSlide}>▶</span>
             {images.map((item, index) => (
-                <div className={index === current ? "slide active" : "slide"} key={index}>
+                <div className={index === current ? "slide active" : "slide"} 
+                     key={index}
+                     onClick={() => onSelect(index)}
+                     >
                 {index === current && (
                     <>
-                    <img src={item.src} alt="travel image" className='image' />
+                    <img src={item.src} alt="menu_image" className="w-[100%] h-auto" />
                     <div className="image-text">{item.text}</div>
                     </>
                     )}
