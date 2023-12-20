@@ -12,13 +12,15 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Header/>
-        <Routes>
-          <Route path='/' element={<MainPage/>}/>
-          <Route path="/login" element={<LoginPage/>}/>          
-          <Route path="/signup" element={<SignupPage/>}/> 
-          <Route path='/transform/add_receipt' element={<TransformReceiptPage/>}/>
-          <Route path='/accountbook/add' element={<ViewAccountBookPage/>}/>
-        </Routes>  
+        <main className='w-full'>
+          <Routes>
+            <Route path='/' element={<MainPage/>}/>
+            <Route path="/login" element={<LoginPage/>}/>
+            <Route path="/signup" element={<SignupPage/>}/>
+            <Route path='/transform/add_receipt' element={<TransformReceiptPage/>}/>
+            <Route path='/accountbook/add' element={<ViewAccountBookPage/>}/>
+          </Routes>
+        </main>  
       </BrowserRouter>
     </div>
   );

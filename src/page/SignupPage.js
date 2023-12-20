@@ -34,7 +34,7 @@ const SignupPage = () => {
   }
 
   return (
-    <div id="signupContainer" className="w-full flex flex-col items-center">
+    <div id="signupContainer" className="w-full h-full flex flex-col items-center">
       <form style={{backgroundColor : PURPLE}} 
       className="mt-20 mb-5 w-[80%] max-w-[30rem] min-h-[30rem] h-[70%] bg-white rounded-lg shadow-lg flex flex-col items-center justify-center">
         <p className="text-white w-[90%] mb-2">회원가입하시면 서비스를 이용하실 수 있습니다</p>

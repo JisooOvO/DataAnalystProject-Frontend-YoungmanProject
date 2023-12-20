@@ -24,7 +24,7 @@ body {
     width : 100%;
 }
 
-#loginPageContainer, #signupContainer, #mainContainer {
+main {
     height : calc(100vh - 4rem);
 }
 
