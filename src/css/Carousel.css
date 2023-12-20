@@ -1,0 +1,40 @@
+.carousel {
+    position: relative;
+    margin: auto;
+    overflow: hidden;
+}
+
+.slide {
+    opacity: 0;
+    transition-duration: 1s ease;
+}
+
+.slide.active {
+    opacity: 1;
+    transition-duration: 1s;
+    transform: scale(1.08);
+}
+
+.image {
+    width: 100%;
+    height: auto;
+}
+
+.left-arrow, right-arrow {
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    font-size: 30px;
+    color: white;
+    z-index: 10;
+    cursor: pointer;
+    user-select: none;
+}
+
+.left-arrow {
+    left: 0;
+}
+
+.right-arrow {
+    right: 0;
+}
