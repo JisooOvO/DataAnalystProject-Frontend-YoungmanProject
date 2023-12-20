@@ -30,18 +30,19 @@ const MyPageContents = () => {
   return (
     <section style={{backgroundColor : BEIGE}} className="w-[90%] max-w-[50rem] h-[80%] mt-20 rounded-xl shadow-md py-10 px-5">
       <div className="xl:hidden">
+          <p className="text-sm sm:text-base mb-2 drop-shadow-md text-white font-bold">카테고리</p>
           <div className="h-[15%] bg-white mb-5 rounded-lg shadow-inner px-5 py-5">
             <ul id="categoryContainer2" className="w-full h-full flex items-center gap-5 text-xl whitespace-nowrap">
                 {
                     ["내 정보 변경","테스트"].map((item,idx) => 
                         <li id={`cate${idx}`} key={`key${idx}`} onClick={handleCheckMyInformation} 
-                        className="w-fit h-fit text-center hover:cursor-pointer hover:text-gray-500">{item}</li>
+                        className="text-sm sm:text-base w-fit h-fit text-center hover:cursor-pointer hover:text-gray-500">{item}</li>
                     )
                 }
             </ul>           
           </div>
       </div>
-      <div className="border bg-white shadow-inner rounded-xl w-full h-[85%] xl:h-full py-10 px-5 relative">
+      <div className="border bg-white shadow-inner rounded-xl w-full h-[80%] xl:h-full py-10 px-5 relative">
         {
             category === 0 ? <ChangeMyInformation/>
             :

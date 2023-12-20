@@ -49,7 +49,7 @@ const LoginForm = () => {
     <section className="w-[80%] my-4">
       <form 
       style={{backgroundColor : PURPLE}} 
-      className="w-full h-[30rem] rounded-md shadow-lg flex flex-col gap-2 justify-center items-center">
+      className="w-full h-[30rem] rounded-xl shadow-lg flex flex-col gap-2 justify-center items-center">
           <p className="w-[90%] text-white font-extrabold">아이디로 로그인하기</p>
           <div className="bg-white shadow-inner w-[90%] h-[60%] rounded-lg p-5 flex justify-center items-center">
             <div className="w-full flex flex-col gap-5">
