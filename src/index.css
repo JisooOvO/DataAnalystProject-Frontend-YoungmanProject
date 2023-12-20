@@ -32,3 +32,13 @@ main {
     background-image : url("./image/loginBackgroundImg.png");
     background-size : cover;
 }
+
+@media(max-width : 409px) {
+    #responsiveUsername {
+        top : 8.5%;
+        right : 15px;
+    }
+    #responsivePassword {
+        top : 38%;
+    }
+}

@@ -8,7 +8,7 @@ const Navigation = ({title, url}) => {
 
   return (
     <div onClick={handleNavigate} 
-    className="hover:cursor-pointer sm:text-base text-[80%] text-white hover:text-gray-300 drop-shadow-md flex justify-center items-center">
+    className="hover:cursor-pointer text-inherit text-white hover:text-gray-300 drop-shadow-md flex justify-center items-center">
       {title}
     </div>
   )

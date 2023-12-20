@@ -8,9 +8,12 @@ const MaskingButton = () => {
       targetElem.type = "password";
   }
   return (
-    <button
+    <div
     onClick={handleMaskingToggleButton}
-    className="flex justify-center items-center w-9 h-9 rounded-[50%] bg-[#EEBEA2] shadow-md hover:bg-[#F0A16D]">🔍</button>
+    tabIndex={-1}
+    className="flex justify-center items-center w-9 h-9 rounded-[50%] bg-[#EEBEA2] shadow-md hover:bg-[#F0A16D] hover:cursor-pointer">
+      🔍
+    </div>
   )
 }
 

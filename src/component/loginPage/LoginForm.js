@@ -3,13 +3,22 @@ import CustomButton from "../../common/CustomButton"
 import Navigation from "../../common/Navigation"
 import { BACKEND_URL, PURPLE } from "../../common/Common"
 import MaskingButton from "../../common/MaskingButton"
+import { useNavigate } from "react-router-dom"
+import { useRecoilState } from "recoil"
+import AtomIsLogin from "../../common/Atom"
+import { useState } from "react"
 
 const LoginForm = () => {
+  const navigate = useNavigate();
+  // eslint-disable-next-line
+  const [isLogin,setIslogin] = useRecoilState(AtomIsLogin);
+  const [isTouched, setIsTouched] = useState(false);
   const handleLogin = (e) => {
     e.preventDefault();
+    if(isTouched) return;
     const username = document.querySelector("#username").value;
     const password = document.querySelector("#password").value;
-
+    setIsTouched(true);
     fetch(BACKEND_URL+"/login",{
       method : "post",
       body : JSON.stringify({
@@ -20,14 +29,20 @@ const LoginForm = () => {
     .then(res => {
       if(res.status === 200){
         alert("로그인에 성공하셨습니다. 메인 페이지로 이동합니다.");
+        setIsTouched(false);
+        setIslogin(true);
+        sessionStorage.setItem("token",res.headers.get("Authorization"));
+        sessionStorage.setItem("username",res.headers.get("Username"));
+        navigate("/");
       }else{
-        alert("잘 못 된 아이디, 비밀번호입니다.");
+        alert("아이디, 비밀번호가 틀립니다.");
+        setIsTouched(false);
       }
     })
     .catch(e =>{
       console.log(e);
       alert("데이터 전송 중 오류 발생");
-    });
+    })
   }
 
   return (
@@ -41,7 +56,7 @@ const LoginForm = () => {
               <FormInput title={"🙍‍♂️ 아이디"} type={"text"} id={"username"}/>
               <div className="relative">
                 <FormInput title={"🔒 비밀번호"} type={"password"} id={"password"}/>
-                <div className="absolute top-[59%] right-6 sm:right-6 translate-y-[-50%] "><MaskingButton/></div>
+                <div className="absolute top-[55px] right-6 sm:right-6"><MaskingButton/></div>
               </div>
             </div>
           </div>
@@ -50,7 +65,7 @@ const LoginForm = () => {
           </div>
           <div className="w-[90%] flex items-center">
             <span className="w-[34%] h-0 border border-white"></span>
-            <div className="grow">
+            <div className="grow px-4 whitespace-nowrap text-white drop-shadow-md">
               <Navigation title={"회원가입"} url={"/signup"}/>
             </div>
             <span className="w-[34%] h-0 border border-white"></span>
