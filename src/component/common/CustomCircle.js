@@ -1,8 +1,10 @@
-const CustomCircle = ({svg}) => {
+const CustomCircle = ({svg,func}) => {
   return (
-    <div className="w-full h-full rounded-[50%] bg-custom-blue shadow-md flex justify-center items-center">
+    <button 
+    onClick={func}
+    className="w-full h-full rounded-[50%] bg-custom-blue shadow-md flex justify-center items-center hover:opacity-70">
       {svg}
-    </div>
+    </button>
   )
 }
 
