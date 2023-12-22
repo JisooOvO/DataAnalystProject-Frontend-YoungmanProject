@@ -1,8 +1,9 @@
-const CustomButton = ({title,func}) => {
+const CustomButton = ({id,title,func}) => {
   return (
-    <button 
+    <button
+      id={id}
       onClick={func}
-      className="w-full h-full border border-black rounded-xl shadow-md text-inherit bg-custom-blue hover:opacity-70 flex justify-center items-center">
+      className="w-full h-full rounded-xl shadow-md text-inherit bg-custom-blue hover:opacity-70 flex justify-center items-center">
       {title}
     </button>
   )
