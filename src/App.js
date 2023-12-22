@@ -11,7 +11,7 @@ function App() {
       <BrowserRouter>
         <RecoilRoot>
           <Header />
-          <main className="w-full sm:w-[85%] h-full">
+          <main className="w-[90%] mx-auto h-full">
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />

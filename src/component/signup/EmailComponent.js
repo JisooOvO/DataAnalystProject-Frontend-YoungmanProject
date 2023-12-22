@@ -21,10 +21,10 @@ const EmailComponent = () => {
   return (
     <div className="w-full h-24">
       <p className="mb-3 font-bold">이메일</p>
-      <div className="h-12 flex items-center gap-2">
+      <div className="h-12 w-full flex items-center gap-2">
         <input
-        className="border border-black h-full rounded-xl grow px-2"
-        type="text" placeholder="이메일을 입력하세요." id="email"/>
+        className="border border-black h-full rounded-xl w-[50%] sm:grow px-2"
+        type="text" placeholder="이메일" id="email"/>
         <p className="text-2xl font-bold">@</p>
         <div className="w-[40%] border border-black h-12 relative rounded-xl ">
           <select onChange={handleSelectChange} ref={selectRef} className="w-full h-full px-2 rounded-xl" id="hostEmail">

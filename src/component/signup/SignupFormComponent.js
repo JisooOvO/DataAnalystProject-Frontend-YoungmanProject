@@ -5,7 +5,7 @@ const SignupFormComponent = ({title,subtitle,type,id,placeholder,state,func}) =>
     <div className="w-full h-24">
         <p className="mb-3 font-bold">{title}</p>
         <div className="h-12"><CustomInput type={type} id={id} placeholder={placeholder} func={func} state={state}/></div>
-        <p className="text-sm mt-1">{subtitle}</p>
+        <p className="text-[80%] sm:text-sm mt-1">{subtitle}</p>
     </div>
   )
 }
