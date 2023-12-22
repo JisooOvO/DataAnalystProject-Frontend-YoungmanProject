@@ -19,6 +19,12 @@ const LoginForm = () => {
     const username = document.querySelector("#username").value;
     const password = document.querySelector("#password").value;
     setIsTouched(true);
+
+    if(username === "" || password === "" ){
+      alert("미기입된 항목이 존재합니다.");
+      return;
+    }
+
     fetch(BACKENDURL + "/login",{
       method : "post",
       body : JSON.stringify({
@@ -53,7 +59,7 @@ const LoginForm = () => {
         <FormComponent title={"아이디"} type={"text"} placeholder={"아이디"} id={"username"}/>
         <div className="w-full mt-5 relative">
           <FormComponent title={"비밀번호"} type={"password"} placeholder={"비밀번호"} id={"password"}/>
-          <div className="w-9 h-9 absolute top-[44%] right-4"><CustomCircle svg={<SearchIcon/>} func={handleMaskingButton}/></div>
+          <div className="w-9 h-9 absolute top-[44%] right-2"><CustomCircle svg={<SearchIcon/>} func={handleMaskingButton}/></div>
         </div>
         <LoginFormNav/>
         <div className="mt-20 w-full h-16 font-bold text-2xl text-white"><CustomButton title={"로그인"} func={handleLoginButton}/></div>
