@@ -1,16 +1,24 @@
-import FormComponent from "../login/FormComponent"
+import FormComponent from "./FormComponent"
 import LoginFormNav from "../login/LoginFormNav"
 import CustomButton from "../common/CustomButton"
 import CustomCircle from "../common/CustomCircle"
 import SearchIcon from "../../image/SearchIcon"
-import { BACKENDURL } from "../common/Common"
+import { AtomIsLogin, BACKENDURL } from "../common/Common"
+import { useNavigate } from "react-router-dom"
+import { useState } from "react"
+import { useRecoilState } from "recoil"
 
 const LoginForm = () => {
+  const navigate = useNavigate();
+  const [isTouched, setIsTouched] = useState(false);
+  const [isLogin, setIsLogin] = useRecoilState(AtomIsLogin);
+
   const handleLoginButton = (e) => {
+    if(isTouched) return;
     e.preventDefault();
     const username = document.querySelector("#username").value;
     const password = document.querySelector("#password").value;
-
+    setIsTouched(true);
     fetch(BACKENDURL + "/login",{
       method : "post",
       body : JSON.stringify({
@@ -19,8 +27,13 @@ const LoginForm = () => {
       })
     })
     .then(res => {
-      if(res === 200){
+      if(res.status === 200){
         alert("로그인에 성공하셨습니다. 메인 페이지로 이동합니다.");
+        sessionStorage.setItem("token",res.headers.get("Authorization"));
+        sessionStorage.setItem("username",res.headers.get("Username"));
+        setIsLogin(true);
+        navigate("/");
+        setIsTouched(false);
       }else{
         alert("아이디 또는 비밀번호가 일치하지 않습니다.");
       }

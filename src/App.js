@@ -2,17 +2,22 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./index.css"
 import Login from "./page/Login";
 import Header from "./component/Header";
+import Signup from "./page/Signup";
+import { RecoilRoot } from "recoil";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Header />
-        <main>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-          </Routes>
-        </main>
+        <RecoilRoot>
+          <Header />
+          <main>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+            </Routes>
+          </main>
+        </RecoilRoot>
       </BrowserRouter>
     </div >
   );
