@@ -4,8 +4,8 @@ import { BACKENDURL } from "../common/Common"
 import CustomButton from "../common/CustomButton"
 import CustomCircle from "../common/CustomCircle"
 import SignupFormComponent from "./SignupFormComponent"
-import EmailComponent from "./EmailComponent"
 import { useNavigate } from "react-router-dom"
+import CheckIcon from "../../image/CheckIcon"
 const SignupForm = () => {
   const [isTouched, setIsTouched] = useState(false);
   const [isIdTyping, setIsIdTyping] = useState(false);
@@ -14,6 +14,34 @@ const SignupForm = () => {
   const IDTEXT = "아이디는 5 ~ 10자 이내 영어, 숫자의 조합입니다.";
   const PASSWORDTEXT = "비밀번호는 5 ~ 10자 이내 영어, 숫자의 조합입니다.";
   const regex = /^[a-zA-Z0-9]{5,10}$/;
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+
+  const calWidth = () => {
+    setInnerWidth(window.innerWidth);
+  };
+
+  useEffect(()=>{
+    window.addEventListener('resize',calWidth)
+    return ()=> {
+        window.removeEventListener('resize',calWidth);
+    }
+    // eslint-disable-next-line
+  },[])
+
+  useEffect(()=>{
+    if(innerWidth > 768) 
+        setDupleBt(
+            <div className="w-24 h-9 text-white font-bold top-[44%] absolute right-2">
+                <CustomButton id={"checkDupleIdButton"} title={"중복확인"} func={handleDupleIdcheckButton}/>
+            </div>
+        )
+    else 
+        setDupleBt(
+            <div className="w-9 h-9 absolute top-[44%] right-2">
+                <CustomCircle id={"checkDupleIdButton"} func={handleDupleIdcheckButton} svg={<CheckIcon/>}/>
+            </div>
+    )
+  },[innerWidth])
 
   const handleDupleIdcheckButton = (e) => {
     e.preventDefault();
@@ -55,18 +83,24 @@ const SignupForm = () => {
     });
   }
 
+  const [dupleBt, setDupleBt] = useState(<CustomButton id={"checkDupleIdButton"} title={"중복확인"} func={handleDupleIdcheckButton}/>);
+
+
   const handleSignupButton = (e) => {
     e.preventDefault();
     if(isTouched) return;
     const username = document.querySelector("#username").value;
-    const emailId = document.querySelector("#email").value
-    const emailHost = 
-        document.querySelector("#hostEmail").value !== "other" ? 
-            document.querySelector("#hostEmail").value : document.querySelector("#typingHostEmail").value;
-    const email = emailId + "@" + emailHost;
+    let email = document.querySelector("#email")
     const password = document.querySelector("#password").value;
     const checkPassword = document.querySelector("#checkPassword").value;
-    console.log(email);
+    
+    if(email.validity.typeMismatch){
+        alert("올바른 이메일 형식이 아닙니다.");
+        return;
+    }
+
+    email = email.value;
+
     if(!regex.test(username)){
         alert(IDTEXT);
         return;
@@ -87,7 +121,7 @@ const SignupForm = () => {
        return; 
     }
 
-    if(password === "" || username === "" || emailId === ""){
+    if(password === "" || username === "" || email === ""){
         alert("미기입된 항목이 존재합니다.");
         return;
     }
@@ -105,7 +139,7 @@ const SignupForm = () => {
     })
     .then(res => {
         if(res.status === 200){
-            alert("회원가입이 완료되었습니다.");
+            alert("회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.");
             navigate("/login");
         }else{
             alert("회원가입에 실패하였습니다.");
@@ -162,14 +196,15 @@ const SignupForm = () => {
   }
 
   return (
-    <form className="w-full h-[42rem] border border-black rounded-xl shadow-md p-10">
+    <form className="w-full h-[42rem] border border-black rounded-xl shadow-md p-5 sm:p-10">
       <div className="w-full mb-8 relative">
           <SignupFormComponent title={"아이디"} id={"username"} placeholder={"아이디"} state={setIsIdTyping}
           type={"text"} subtitle={IDTEXT}/>
-          <div className="w-24 h-9 text-white font-bold top-[44%] absolute right-2"><CustomButton id={"checkDupleIdButton"} title={"중복확인"} func={handleDupleIdcheckButton}/></div>
+          {dupleBt ? dupleBt : ''}
       </div>
       <div className="w-full mb-4">
-          <EmailComponent/>
+          <SignupFormComponent title={"이메일"} id={"email"} placeholder={"이메일"} 
+          type={"email"}/>
       </div>
       <div className="w-full mb-8 relative">
           <SignupFormComponent func={handlePasswordTyping} title={"비밀번호"} id={"password"} placeholder={"비밀번호"} type={"password"} state={setPasswordCheckMsg}

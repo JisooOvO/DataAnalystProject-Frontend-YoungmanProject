@@ -11,18 +11,23 @@ import ArrowLeftIcon from "../image/ArrowLeftIcon"
 import ArrowRightIcon from "../image/ArrowRightIcon"
 
 const Header = () => {
-
     const [isExpanded, setIsExpanded] = useState(true);
 
     const toggleSidebar = () => {
         setIsExpanded(!isExpanded);
     }
 
+    useEffect(()=>{
+        const innerWidth = window.innerWidth;
+        if(innerWidth <= 768) setTimeout(()=>{setIsExpanded(false)},500)
+    },[])
+
     useEffect(() => {
         const header = document.querySelector("#header");
         if (isExpanded === false) {
             setTimeout(() => {
                 header.classList.add("z-[-10]");
+                header.classList.remove("z-[9999]");
             },500)
         }
         else {
@@ -36,20 +41,22 @@ const Header = () => {
     const sidebarClass = isExpanded ? "translate-x-0" : "-translate-x-[18rem]";
     const arrowIcon = isExpanded ? <ArrowLeftIcon /> : <ArrowRightIcon />
 
-    // const isLoggedIn = sessionStorage.getItem("token" != null) // test용
     const menuItems = [
         {
-            title: "사입 관리",
+            title: "영수증 관리",
             items: [
-                { name: "수기 영수증 반환", icon: <ChangeReceiptIcon /> },
-                { name: "사입서 관리", icon: <WriteIcon /> }
+                { name: "수기 영수증 변환", icon: <ChangeReceiptIcon />, url : "/transform_receipt" },
+                { name: "영수증 관리", icon: <WriteIcon />, url : "/manage_receipt" }
             ]
         },
         {
-            title: "회원 관리",
+            title: "내 정보 관리",
             items: [
-                { name: "비밀번호 변경", icon: <LockIcon /> },
-                ...(!isLoggedIn ? [{ name: "회원가입", icon: <RegisterIcon /> }] : [])
+                ...(!isLoggedIn ? 
+                    [{ name: "회원가입", icon: <RegisterIcon />, url : "/signup" }] 
+                    : 
+                    [{ name: "비밀번호 변경", icon: <LockIcon />, url : "/mypage/change_password" }]
+                   )
             ]
         }
     ]
@@ -67,12 +74,16 @@ const Header = () => {
         navigate("/login");
     }
 
+    const handleNavigate = (e,url) => {
+        navigate(url);
+    }
+
     return (
         <>
             <header id="header" className={`absolute w-[18rem] min-h-[800px] h-full z-[9999]`}>
-                <div className={`relative shadow-xl shadow-black w-full  h-full bg-custom-blue transition-all duration-500 ease-in-out ${sidebarClass}`}>
+                <div className={`relative shadow-xl shadow-black w-full h-full bg-custom-blue transition-all duration-500 ease-in-out ${sidebarClass}`}>
                     <div className="w-full h-[6rem] border-b-[1px] border-black">
-                        <h1 className="pt-3 pl-4 h-[50%] w-full text-white text-lg font-bold">수기 영수증 변환 시스템</h1>
+                        <h1 onClick={(e)=>{handleNavigate(e,"/")}} className="pt-3 pl-4 h-[50%] w-full text-white text-lg font-bold hover:cursor-pointer hover:opacity-70">영수증 변환 프로그램</h1>
                         <div className="h-[27%] w-full flex">
                             <button onClick={isLoggedIn ? handleLogoutButton : handleLoginButton} className="w-[50%] flex pt-2 pl-6">
                                 <PowerIcon />
@@ -92,11 +103,12 @@ const Header = () => {
                     {/* 메뉴 아이템 */}
                     <div className="w-full">
                         {menuItems.map((menu, menuIndex) => (
-                            <div className="text-white ml-4 mt-4 m-20" key={menuIndex}>
+                            <div className="text-white ml-4 mt-4 m-20" key={`key${menuIndex}`}>
                                 <h2 className="text-base font-bold p-1">{menu.title}</h2>
                                 <nav>
                                     {menu.items.map((item, itemIndex) => (
-                                        <div className="flex w-80 p-2" key={itemIndex}>
+                                        <div className="flex w-80 p-2 hover:cursor-pointer hover:opacity-70" 
+                                        key={`key${itemIndex}`} onClick={(e)=>{handleNavigate(e,item.url)}}>
                                             {item.icon}
                                             <span className="px-2 mt-1">{item.name}</span>
                                         </div>
