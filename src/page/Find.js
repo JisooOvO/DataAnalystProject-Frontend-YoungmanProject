@@ -1,6 +1,6 @@
 import TitleHeader from "../component/common/TitleHeader"
 
-const FindId = () => {
+const Find = () => {
   return (
     <div className="w-full max-w-[30rem] h-full mx-auto">
       <TitleHeader title />
@@ -8,4 +8,4 @@ const FindId = () => {
   )
 }
 
-export default FindId
+export default Find
