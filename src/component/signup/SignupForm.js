@@ -164,23 +164,23 @@ const SignupForm = () => {
   return (
     <form className="w-full h-[42rem] border border-black rounded-xl shadow-md p-10">
       <div className="w-full mb-8 relative">
-          <SignupFormComponent title={"아이디"} id={"username"} placeholder={"아이디를 입력하세요."} state={setIsIdTyping}
+          <SignupFormComponent title={"아이디"} id={"username"} placeholder={"아이디"} state={setIsIdTyping}
           type={"text"} subtitle={IDTEXT}/>
-          <div className="w-24 h-9 text-white font-bold top-[44%] absolute right-4"><CustomButton id={"checkDupleIdButton"} title={"중복확인"} func={handleDupleIdcheckButton}/></div>
+          <div className="w-24 h-9 text-white font-bold top-[44%] absolute right-2"><CustomButton id={"checkDupleIdButton"} title={"중복확인"} func={handleDupleIdcheckButton}/></div>
       </div>
       <div className="w-full mb-4">
           <EmailComponent/>
       </div>
       <div className="w-full mb-8 relative">
-          <SignupFormComponent func={handlePasswordTyping} title={"비밀번호"} id={"password"} placeholder={"비밀번호를 입력하세요."} type={"password"} state={setPasswordCheckMsg}
+          <SignupFormComponent func={handlePasswordTyping} title={"비밀번호"} id={"password"} placeholder={"비밀번호"} type={"password"} state={setPasswordCheckMsg}
           subtitle={PASSWORDTEXT}/>
-          <div className="w-9 h-9 absolute top-[44%] right-4"><CustomCircle svg={<SearchIcon/>}
+          <div className="w-9 h-9 absolute top-[44%] right-2"><CustomCircle svg={<SearchIcon/>}
           func={(e)=>{handleMaskingButton(e,"password")}}/></div>
       </div>
       <div className="w-full mb-8 relative">
-          <SignupFormComponent func={handlePasswordTyping} title={"비밀번호 확인"} id={"checkPassword"} placeholder={"비밀번호를 한번 더 입력하세요."} type={"password"} state={setPasswordCheckMsg}
+          <SignupFormComponent func={handlePasswordTyping} title={"비밀번호 확인"} id={"checkPassword"} placeholder={"비밀번호 확인"} type={"password"} state={setPasswordCheckMsg}
           subtitle={"비밀번호 확인을 위해 한번 더 입력하세요."}/>
-          <div className="w-9 h-9 absolute top-[44%] right-4"><CustomCircle svg={<SearchIcon/>} 
+          <div className="w-9 h-9 absolute top-[44%] right-2"><CustomCircle svg={<SearchIcon/>} 
           func={(e)=>{handleMaskingButton(e,"checkPassword")}}/></div>
       </div>
       <p id="passwordCheckMsg" className="h-10">{passwordCheckMsg}</p>
