@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router"
-import ChangeReceiptIcon from "./ChangeReceiptIcon"
-import LockIcon from "./LockIcon"
-import PowerIcon from "./PowerIcon"
-import RegisterIcon from "./RegisterIcon"
-import WriteIcon from "./WriteIcon"
+import ChangeReceiptIcon from "../image/ChangeReceiptIcon"
+import LockIcon from "../image/LockIcon"
+import PowerIcon from "../image/PowerIcon"
+import RegisterIcon from "../image/RegisterIcon"
+import WriteIcon from "../image/WriteIcon"
 
 const Header = () => {
 
@@ -24,23 +24,31 @@ const Header = () => {
         }
     ]
 
-    // const navigate = useNavigate();
+    const isLoggedIn = () => {
+        localStorage.getItem("token" && "username" != null);
+    }
 
-    // const handleLoginButton = (e) => {
-    //     e.preventDefault();
-    //     navigate("/login")
-    // }
+    const navigate = useNavigate();
+
+    const handleLoginButton = (e) => {
+        e.preventDefault();
+        navigate("/login")
+    }
 
     return (
         <header className="lg:w-[20rem] h-full bg-custom-blue">
-            <div className="w-full h-[10%] border-b-[1px] border-black">
+            <div className="w-full h-[12%] border-b-[1px] border-black">
                 <h1 className="pt-3 pl-4 h-[50%] w-full text-white text-lg font-bold">수기 영수증 변환 시스템</h1>
                 <div className="h-[50%] w-full flex">
-                    <button className="w-[40%] flex text-xl pt-2 pl-6">
+                    <button onClick={handleLoginButton} className="w-[50%] flex text-xl pt-2 pl-5">
                         <PowerIcon />
-                        <div className=" text-white text-[19px] pl-1 pt-[1px]">로그인</div>
+                        <div className=" text-white text-[19px] pl-1 pt-[1px]">
+                            { isLoggedIn ? "로그아웃" : "로그인"}
+                            </div>
                     </button>
-                    <div className="w-[60%] text-[#bdb3b3] text-[15px] pt-3 pl-8" >로그인을 해주세요</div>
+                    <div className="w-[50%] text-[#bdb3b3] text-[15px] pt-3" >
+                         { isLoggedIn ? `${sessionStorage.username}님 환영합니다` : "로그인을 해주세요" }
+                        </div>
                 </div>
             </div>
             <div className="w-full h-[88%]">
