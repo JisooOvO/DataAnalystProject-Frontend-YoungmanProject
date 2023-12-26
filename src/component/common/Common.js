@@ -16,3 +16,13 @@ export const AtomTableRows = atom({
     key: "tableRows",
     default: [],
 })
+
+export const AtomWidth = atom({
+    key: "innerWidth",
+    default: window.innerWidth,
+})
+
+export const AtomIsMobile = atom({
+    key: "isMobile",
+    default: false,
+})

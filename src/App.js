@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./index.css"
 import Login from "./page/Login";
-import Header from "./component/Header";
+import Header from "./component/header/Header";
 import Signup from "./page/Signup";
 import { RecoilRoot } from "recoil";
 import TransformReceipt from "./page/TransformReceipt";

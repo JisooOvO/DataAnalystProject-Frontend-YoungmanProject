@@ -15,14 +15,19 @@ const TableRow = () => {
     const buttons = document.querySelectorAll("#buttons");
     const tds = document.querySelectorAll("#td");
     const saveBt = document.querySelectorAll("#saveBt");
+    const deleteBt = document.querySelectorAll("#deleteBt");
     tds.forEach(item => item.classList.remove("bg-gray-300"));
     targetElem.classList.add("bg-gray-300");
     saveBt.forEach(item => {
         item.classList.remove("bg-gray-300");
         item.classList.add("bg-custom-blue");
     });
-    buttons.forEach(item => item.classList.add("opacity-0"));
-    button.classList.remove("opacity-0");
+    deleteBt.forEach(item=>{
+      item.classList.remove("bg-gray-300");
+      item.classList.add("bg-custom-blue");      
+    })
+    buttons.forEach(item => item.classList.add("hidden"));
+    button.classList.remove("hidden");
   }
 
   const handleDoubleClick = (e) => {
@@ -43,9 +48,14 @@ const TableRow = () => {
         const text = tableInput.value;
         const tds = document.querySelectorAll("#td");
         const saveBt = document.querySelectorAll("#saveBt");
+        const deleteBt = document.querySelectorAll("#deleteBt");
         saveBt.forEach(item => {
             item.classList.add("bg-custom-blue");
             item.classList.remove("bg-gray-300");
+        });
+        deleteBt.forEach(item=>{
+          item.classList.remove("bg-gray-300");
+          item.classList.add("bg-custom-blue");      
         });
         tds.forEach(item => item.classList.remove("bg-gray-300"));    
         tableInput.parentElement.textContent = text;
@@ -66,19 +76,19 @@ const TableRow = () => {
     })
     
     fetch(BACKENDURL+"/api/private/receipt/saveReceipt",{
-        method:"post",
-        headers: {
-            "Authorization" : sessionStorage.getItem("token"),
-            "Content-Type" : "application/json",
-        },
-        body : body
+      method:"post",
+      headers: {
+          "Authorization" : sessionStorage.getItem("token"),
+          "Content-Type" : "application/json",
+      },
+      body : body
     })
     .then(res => {
-        if(res.status === 200) alert("저장되었습니다.");
+      if(res.status === 200) alert("저장되었습니다.");
     })
     .catch(e => {
-        console.log(e);
-        alert("데이터 전송 중 에러 발생");
+      console.log(e);
+      alert("데이터 전송 중 에러 발생");
     })
   }
 
@@ -107,7 +117,7 @@ const TableRow = () => {
           className="border text-center border-l-0 flex justify-center items-center border-black border-t-0 min-h-[4.2rem]">
           </div>
         )}
-        <div id="buttons" className="absolute flex gap-2 right-2 bottom-2 opacity-0">
+        <div id="buttons" className="absolute flex gap-2 right-2 bottom-2 hidden">
             <div className="w-9 h-9 right-2 bottom-2 z-10 rounded-[50%]"><CustomCircle id={"saveBt"} func={handleSave} svg={<AddIcon/>}/></div>
             <div className="w-9 h-9 right-2 bottom-2 z-10 rounded-[50%]"><CustomCircle id={"deleteBt"} func={handleDelete} svg={<DeleteIcon/>}/></div>
         </div>

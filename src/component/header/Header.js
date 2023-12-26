@@ -1,29 +1,53 @@
 import { useNavigate } from "react-router"
-import ChangeReceiptIcon from "../image/ChangeReceiptIcon"
-import LockIcon from "../image/LockIcon"
-import PowerIcon from "../image/PowerIcon"
-import RegisterIcon from "../image/RegisterIcon"
-import WriteIcon from "../image/WriteIcon"
+import ChangeReceiptIcon from "../../image/ChangeReceiptIcon"
+import LockIcon from "../../image/LockIcon"
+import PowerIcon from "../../image/PowerIcon"
+import RegisterIcon from "../../image/RegisterIcon"
+import WriteIcon from "../../image/WriteIcon"
 import { useRecoilState } from "recoil"
-import { AtomIsLogin } from "./common/Common"
+import { AtomIsLogin, AtomIsMobile, AtomWidth } from "./../common/Common"
 import { useEffect, useState } from "react"
-import ArrowLeftIcon from "../image/ArrowLeftIcon"
-import ArrowRightIcon from "../image/ArrowRightIcon"
+import ArrowLeftIcon from "../../image/ArrowLeftIcon"
+import ArrowRightIcon from "../../image/ArrowRightIcon"
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(AtomIsLogin);
   const [isExpanded, setIsExpanded] = useState(true);
+  // eslint-disable-next-line
+  const [innerWidth, setInnerWidth] = useRecoilState(AtomWidth);
+  // eslint-disable-next-line
+  const [isMobile, setIsMobile] = useRecoilState(AtomIsMobile);
+
   const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setIsExpanded(!isExpanded);
   }
 
+  const handleInnerWidth = () => {
+    setInnerWidth(window.innerWidth);
+  }
+
   useEffect(()=>{
+    handleInnerWidth();
+    window.addEventListener('resize',handleInnerWidth);
+    return ()=> {
+      window.removeEventListener('resize',handleInnerWidth);
+    }
+    // eslint-disable-next-line
+  },[])
+
+  useEffect(()=>{
+    if(innerWidth < 768) setIsMobile(true);
+    else setIsMobile(false);
+    // eslint-disable-next-line
+  },[innerWidth])
+
+  useEffect(()=>{
+    handleInnerWidth();
     const token = sessionStorage.getItem("token");
     if(token) setIsLoggedIn(true);
-    const innerWidth = window.innerWidth;
-    if(innerWidth <= 768) setTimeout(()=>{setIsExpanded(false)},500);
+    if(innerWidth < 768) setTimeout(()=>{setIsExpanded(false)},500);
     
     const main = document.querySelector("main");
     main.addEventListener('click',()=>{

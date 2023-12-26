@@ -1,8 +1,9 @@
 import TableNav from "./TableNav";
 import { useRecoilState } from "recoil";
-import { AtomCount, AtomTableRows } from "../common/Common";
+import { AtomTableRows } from "../common/Common";
 
 const ManageForm = () => {
+ // eslint-disable-next-line 
   const [tbRows, setTbRows] = useRecoilState(AtomTableRows);
 
   return (
