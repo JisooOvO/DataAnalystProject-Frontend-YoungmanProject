@@ -11,11 +11,12 @@ import { useRecoilState } from "recoil"
 const LoginForm = () => {
   const navigate = useNavigate();
   const [isTouched, setIsTouched] = useState(false);
+  // eslint-disable-next-line
   const [isLogin, setIsLogin] = useRecoilState(AtomIsLogin);
 
   const handleLoginButton = (e) => {
-    if(isTouched) return;
     e.preventDefault();
+    if(isTouched) return;
     const username = document.querySelector("#username").value;
     const password = document.querySelector("#password").value;
     setIsTouched(true);
@@ -44,7 +45,7 @@ const LoginForm = () => {
         alert("아이디 또는 비밀번호가 일치하지 않습니다.");
       }
     })
-    .catch(e => console(e));
+    .catch(e => console.log(e));
   }
 
   const handleMaskingButton = (e) => {

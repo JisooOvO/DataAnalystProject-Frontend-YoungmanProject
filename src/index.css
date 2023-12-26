@@ -7,6 +7,7 @@ body {
     width : 100vw;
     height : 100vh;
     min-height: 800px;
+    overflow-x: hidden;
     font-family: 'Open Sans', sans-serif;
 }
 
@@ -23,4 +24,22 @@ body {
 
 svg {
     fill : white;
+}
+
+/* WebKit 브라우저 스크롤바 스타일링 */
+::-webkit-scrollbar {
+    width: 12px; /* 스크롤바의 폭 */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #57677E; /* 스크롤바의 색상 */
+    border-radius: 6px; /* 스크롤바 썸의 둥근 모양을 위한 반지름 */
+}
+
+::-webkit-scrollbar-track {
+    background-color: #eaeaea; /* 스크롤바 트랙의 배경 색상 */
+}
+
+::-webkit-scrollbar-corner {
+    background-color: #57677E; /* 스크롤바 모서리 배경 색상 */
 }

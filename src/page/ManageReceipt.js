@@ -1,7 +1,13 @@
+import TitleHeader from "../component/common/TitleHeader"
+import ManageNav from "../component/manage/ManageNav"
+import ManageForm from "../component/manage/ManageForm"
+
 const ManageReceipt = () => {
   return (
-    <div>
-      영수증 관리 페이지
+    <div className="w-full max-w-[80rem] h-full mx-auto">
+      <TitleHeader title={"RECEIPT MANAGEMENT"}/>
+      <ManageNav/>
+      <ManageForm/>
     </div>
   )
 }
