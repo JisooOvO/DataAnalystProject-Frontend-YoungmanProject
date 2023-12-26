@@ -93,20 +93,20 @@ const Header = () => {
               <h1 
               onClick={(e)=>{handleNavigate(e,"/")}} 
               className="pt-3 pl-4 h-[50%] w-full text-white text-lg font-bold hover:cursor-pointer hover:opacity-70">
-                  영수증 변환 프로그램
+                  YOUNGMAN PROJECT
               </h1>
-              <div className="h-[27%] w-full flex">
-                <button onClick={isLoggedIn ? handleLogoutButton : handleLoginButton} className="w-[50%] flex pt-2 pl-6">
+              <div className="h-[27%] w-full flex mt-2">
+                <button onClick={isLoggedIn ? handleLogoutButton : handleLoginButton} className="w-[50%] flex pl-6">
                   <PowerIcon />
                   <div className=" text-white text-base pl-1 pt-[1px]">
                     {isLoggedIn ? "로그아웃" : "로그인"}
                   </div>
                 </button>
-                <div className="w-[73%] text-[#bdb3b3] text-[14px] flex justify-center items-center pt-4 pr-2" >
+                <div className="w-[73%] text-[#bdb3b3] text-[14px] flex justify-center items-center mt-1 pr-2" >
                   {isLoggedIn ? (
                   <span className="text-center">{sessionStorage.getItem("username")}님 환영합니다</span>
                     ) : (
-                    '로그인 하세요'
+                    '로그인이 필요합니다'
                   )}
                 </div>
               </div>
