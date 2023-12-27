@@ -5,26 +5,24 @@ import DeleteIcon from "../../image/DeleteIcon"
 import { useRecoilState } from "recoil";
 import { AtomTableRows, BACKENDURL } from "../common/Common";
 
-const TableRow = () => {
+const TableRow = ({dId,dCompanyName,dItem,dQuantity,dTradeDate,dUnitPrice,dPrice}) => {
   const [isTyping, setIsTyping] = useState(false);
   const [tbRows, setTbRows] = useRecoilState(AtomTableRows);
-
+  const arr = [dId,dTradeDate,dCompanyName,dItem,dQuantity,dUnitPrice,dPrice];
   const handleClick = (e) => {
     const targetElem = e.target.parentElement;
     const button = targetElem.lastChild;
     const buttons = document.querySelectorAll("#buttons");
-    const tds = document.querySelectorAll("#td");
+    const tds = document.querySelectorAll("[id^=td]");
     const saveBt = document.querySelectorAll("#saveBt");
     const deleteBt = document.querySelectorAll("#deleteBt");
     tds.forEach(item => item.classList.remove("bg-gray-300"));
     targetElem.classList.add("bg-gray-300");
     saveBt.forEach(item => {
         item.classList.remove("bg-gray-300");
-        item.classList.add("bg-custom-blue");
     });
     deleteBt.forEach(item=>{
       item.classList.remove("bg-gray-300");
-      item.classList.add("bg-custom-blue");      
     })
     buttons.forEach(item => item.classList.add("hidden"));
     button.classList.remove("hidden");
@@ -32,47 +30,74 @@ const TableRow = () => {
 
   const handleDoubleClick = (e) => {
     setIsTyping(true);
-    let targetElem = e.target;
+    let targetElem = e.target;    
     const txt = targetElem.textContent;
-    targetElem.innerHTML = 
-        `<input id="tableInput" class="w-full h-16 text-center" type="text"/>`
+    targetElem.innerHTML = `<input id="tableInput" class="w-full border border-black h-[2rem] text-center" type="${targetElem.id}" />`;
     const tableInput = document.querySelector("#tableInput");
     tableInput.focus();
+    tableInput.addEventListener('blur',()=>{
+      targetElem.classList.remove("bg-gray-300");
+    })
     tableInput.value = txt;
   }
+
+  const handleKeyDown = (e) => {
+    let targetElem = e.target;  
+    if(e.code !== "Tab" && e.code !== "Enter"){
+      setIsTyping(true);
+      targetElem.innerHTML = `<input id="tableInput" class="w-full border border-black h-[2rem] text-center" type="${targetElem.id}" />`;
+      const tableInput = document.querySelector("#tableInput");
+      tableInput.focus();
+    }
+    if(e.code === "Enter"){
+      const tableInput = document.querySelector("#tableInput");
+      tableInput.blur();
+    }
+   }
 
   useEffect(()=>{
     const tableInput = document.querySelector("#tableInput");
     if(!tableInput || !isTyping) return;
     tableInput.addEventListener('blur',()=>{
-        const text = tableInput.value;
-        const tds = document.querySelectorAll("#td");
-        const saveBt = document.querySelectorAll("#saveBt");
-        const deleteBt = document.querySelectorAll("#deleteBt");
-        saveBt.forEach(item => {
-            item.classList.add("bg-custom-blue");
-            item.classList.remove("bg-gray-300");
-        });
-        deleteBt.forEach(item=>{
+      const text = tableInput.value;
+      const tds = document.querySelectorAll("[id^=td]");
+      const saveBt = document.querySelectorAll("#saveBt");
+      const deleteBt = document.querySelectorAll("#deleteBt");
+      saveBt.forEach(item => {    
           item.classList.remove("bg-gray-300");
-          item.classList.add("bg-custom-blue");      
-        });
-        tds.forEach(item => item.classList.remove("bg-gray-300"));    
-        tableInput.parentElement.textContent = text;
-        setIsTyping(false);
+      });
+      deleteBt.forEach(item=>{
+        item.classList.remove("bg-gray-300");    
+      });
+      tds.forEach(item => item.classList.remove("bg-gray-300"));    
+      tableInput.parentElement.textContent = text;
+      setIsTyping(false);
     });
   },[isTyping])
 
   const handleSave = (e) => {
-    const targetElem = e.target.closest("#td");
+    const targetElem = e.target.closest("[id^=td]");
     const arr = targetElem.innerText.split("\n");
+    let canSave = true;
+    arr.forEach(item => {
+      if(!item) {
+        canSave = false;
+        return;
+    }})
+    if(!canSave){
+      alert("미 입력된 항목이 존재합니다.");
+      return;
+    }
+    let receiptId = null;
+    if(targetElem.id !== "td") receiptId = targetElem.id.slice(2);
     const body = JSON.stringify({
-        "tradeDate" : new Date(arr[0]),
-        "companyName" : arr[1],
-        "item" : arr[2],
-        "quantity" : arr[3],
-        "unitPrice" : arr[4],
-        "price" : arr[5],
+      "receiptId" : receiptId,
+      "tradeDate" : new Date(arr[0]),
+      "companyName" : arr[1],
+      "item" : arr[2],
+      "quantity" : arr[3],
+      "unitPrice" : arr[4],
+      "price" : arr[5],
     })
     
     fetch(BACKENDURL+"/api/private/receipt/saveReceipt",{
@@ -84,7 +109,13 @@ const TableRow = () => {
       body : body
     })
     .then(res => {
-      if(res.status === 200) alert("저장되었습니다.");
+      if(res.status === 200) {
+        alert("저장되었습니다.");
+        return res.text();
+      }
+    })
+    .then(data => {
+      targetElem.id = "td" + data;
     })
     .catch(e => {
       console.log(e);
@@ -93,34 +124,72 @@ const TableRow = () => {
   }
 
   const handleDelete = (e) => {
-    const targetElem = e.target.closest("#td");
-    const tds = document.querySelectorAll("#td");
+    const targetElem = e.target.closest("[id^=td]");
+    const tds = document.querySelectorAll("[id^=td]");
+    console.log(targetElem.id.slice(2));
     let targetCnt = 0;
-    for(let td of tds){
+    if(targetElem.id !== "td"){
+      const result = window.confirm("해당 영수증 데이터를 데이터베이스에서 영구삭제하시겠습니까?");
+      if(!result) return;
+      fetch(BACKENDURL+"/api/private/receipt/deleteReceipt",{
+        method: "delete",
+        headers: {
+          "Authorization" : sessionStorage.getItem("token"),
+          "Content-Type" : "application/json",
+        },
+        body: JSON.stringify({
+          "receiptId" : targetElem.id.slice(2),
+        })
+      })
+      .then(res => {
+        if(res.status === 200) {
+          alert("삭제되었습니다.");
+          for(let td of tds){
+            if(td !== targetElem) targetCnt = targetCnt + 1
+            else break;
+          } 
+          const newArr = tbRows.slice().filter((item,idx) => idx !== targetCnt);
+          setTbRows(newArr);
+        }else{
+          alert("데이터 전송 중 에러 발생");
+        }
+      })
+      .catch(e => {
+        console.log(e);
+        alert("데이터 전송 중 에러 발생");
+      })
+    }
+    else{
+      for(let td of tds){
         if(td !== targetElem) targetCnt = targetCnt + 1
         else break;
+      }
+      
+      const newArr = tbRows.slice().filter((item,idx) => idx !== targetCnt);
+      setTbRows(newArr);
     }
-    
-    const newArr = tbRows.slice().filter((item,idx) => idx !== targetCnt);
-    setTbRows(newArr);
   }
 
   return (
     <div
-    id="td"
+    id= { arr[0] === undefined ? "td" : "td"+arr[0] }
     className="relative grid grid-cols-6"
     onClick={handleClick}
     onDoubleClick={handleDoubleClick}>
-        {[0,1,2,3,4,5].map((item) =>
-          <div key={`tdKey${item}`}
+      {["date","text","text","number","number","number"].map((item,idx) => {
+        return ( 
+          <div key={`tdKey${idx}`}
+          id={item}
           tabIndex={0}
-          className="border text-center border-l-0 flex justify-center items-center border-black border-t-0 min-h-[4.2rem]">
+          onKeyDown={handleKeyDown}
+          className="border text-center border-r-0 flex justify-center items-center border-black border-t-0 h-[2rem]">
+            {arr[idx+1]}
           </div>
-        )}
-        <div id="buttons" className="absolute flex gap-2 right-2 bottom-2 hidden">
-            <div className="w-9 h-9 right-2 bottom-2 z-10 rounded-[50%]"><CustomCircle id={"saveBt"} func={handleSave} svg={<AddIcon/>}/></div>
-            <div className="w-9 h-9 right-2 bottom-2 z-10 rounded-[50%]"><CustomCircle id={"deleteBt"} func={handleDelete} svg={<DeleteIcon/>}/></div>
-        </div>
+      )})}
+      <div id="buttons" className="absolute flex gap-2 right-2 -bottom-8 hidden">
+        <div className="w-9 h-9 right-2 bottom-2 z-10 rounded-[50%]"><CustomCircle id={"saveBt"} func={handleSave} svg={<AddIcon/>}/></div>
+        <div className="w-9 h-9 right-2 bottom-2 z-10 rounded-[50%]"><CustomCircle id={"deleteBt"} func={handleDelete} svg={<DeleteIcon/>}/></div>
+      </div>
     </div>
   )
 }

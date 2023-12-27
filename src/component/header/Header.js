@@ -137,22 +137,23 @@ const Header = () => {
             </div>
               {/* 메뉴 아이템 */}
             <div className="w-full">
-              {menuItems.map((menu, menuIndex) => (
+              {menuItems.map((menu, menuIndex) => { 
+                return(
                 <div className="text-white ml-4 mt-4 m-20" key={`key${menuIndex}`}>
                   <h2 className="text-base font-bold p-1">{menu.title}</h2>
                     <nav>
                       {
-                        menu.items.map((item, itemIndex) => (
-                        <div className="flex w-80 p-2 hover:cursor-pointer hover:opacity-70" 
-                        key={`key${itemIndex}`} onClick={(e)=>{handleNavigate(e,item.url)}}>
-                          {item.icon}
-                        <span className="px-2 mt-1">{item.name}</span>
-                        </div>
-                        ))
+                        menu.items.map((item, itemIndex) => {
+                        return (
+                          <div className="flex w-80 p-2 hover:cursor-pointer hover:opacity-70" key={`key${itemIndex}`} onClick={(e)=>{handleNavigate(e,item.url)}}>
+                            {item.icon}
+                            <span className="px-2 mt-1">{item.name}</span>
+                          </div>
+                        )})
                       }
                     </nav>
                   </div>
-                  ))}
+                  )})}
               </div>
           </div>
           {/* 화살표 버튼 */}

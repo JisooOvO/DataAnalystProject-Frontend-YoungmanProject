@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom"
 import CheckIcon from "../../image/CheckIcon"
 const SignupForm = () => {
   const [isTouched, setIsTouched] = useState(false);
-  const [isIdTyping, setIsIdTyping] = useState(false);
+  const [isIdTyping, setIsIdTyping] = useState(true);
   const navigate = useNavigate();
   const [passwordCheckMsg, setPasswordCheckMsg] = useState("");
   const IDTEXT = "아이디는 5 ~ 10자 이내 영어, 숫자의 조합입니다.";
@@ -31,22 +31,22 @@ const SignupForm = () => {
   useEffect(()=>{
     if(innerWidth > 768) 
         setDupleBt(
-            <div className="w-24 h-9 text-white font-bold top-[44%] absolute right-2">
-                <CustomButton id={"checkDupleIdButton"} title={"중복확인"} func={handleDupleIdcheckButton}/>
+            <div onClick={handleDupleIdcheckButton} className="w-24 h-9 text-white font-bold top-[44%] absolute right-2 hover:cursor-pointer">
+                <CustomButton id={"checkDupleIdButton"} title={"중복확인"}/>
             </div>
         )
     else 
         setDupleBt(
-            <div className="w-9 h-9 absolute top-[44%] right-2">
-                <CustomCircle id={"checkDupleIdButton"} func={handleDupleIdcheckButton} svg={<CheckIcon/>}/>
+            <div onClick={handleDupleIdcheckButton} className="w-9 h-9 absolute top-[44%] right-2">
+                <CustomCircle id={"checkDupleIdButton"} svg={<CheckIcon/>}/>
             </div>
     )
     // eslint-disable-next-line
   },[innerWidth])
 
   const handleDupleIdcheckButton = (e) => {
+    console.log(isIdTyping);
     e.preventDefault();
-    if(isTouched) return;
     if(!isIdTyping) return;
     const username = document.querySelector("#username").value;
     
@@ -76,15 +76,17 @@ const SignupForm = () => {
         }else{
             alert("이미 사용 중인 아이디입니다.");
         }
-        setIsTouched(false);
     })
     .catch(e => {
         console.log(e);
         alert("데이터 전송 중 에러 발생");
     });
+    
   }
 
-  const [dupleBt, setDupleBt] = useState(<CustomButton id={"checkDupleIdButton"} title={"중복확인"} func={handleDupleIdcheckButton}/>);
+  const [dupleBt, setDupleBt] = useState(
+    <CustomButton id={"checkDupleIdButton"} title={"중복확인"} func={handleDupleIdcheckButton}/>
+  );
 
 
   const handleSignupButton = (e) => {
@@ -127,6 +129,7 @@ const SignupForm = () => {
         return;
     }
 
+    setIsTouched(true);
     fetch(BACKENDURL+"/api/public/signup",{
         method: "post",
         headers: {
@@ -145,6 +148,7 @@ const SignupForm = () => {
         }else{
             alert("회원가입에 실패하였습니다.");
         }
+        setIsTouched(false);
     })
     .catch(e => {
         console.log(e);
@@ -220,7 +224,7 @@ const SignupForm = () => {
           func={(e)=>{handleMaskingButton(e,"checkPassword")}}/></div>
       </div>
       <p id="passwordCheckMsg" className="h-10">{passwordCheckMsg}</p>
-      <div className="w-full h-16 font-bold text-2xl text-white"><CustomButton title={"회원가입"} func={handleSignupButton}/></div>
+      <button onClick={handleSignupButton} className="w-full h-16 font-bold text-2xl text-white"><CustomButton title={"회원가입"}/></button>
     </form>
   )
 }

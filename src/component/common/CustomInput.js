@@ -1,4 +1,4 @@
-const CustomInput = ({type,placeholder,id,state,func}) => {
+const CustomInput = ({type,placeholder,id,state,func, defaultValue}) => {
   const handleInputChange = () => {
     if(state) state(true);
   }
@@ -8,7 +8,8 @@ const CustomInput = ({type,placeholder,id,state,func}) => {
     onChange={handleInputChange}
     onKeyUp={func}
     className="bg-white border border-black w-full h-full rounded-xl shadow-inner px-2" 
-    placeholder={placeholder} id={id} name={id} type={type}/>
+    placeholder={placeholder} id={id} name={id} type={type} defaultValue={defaultValue
+    }/>
   )
 }
 

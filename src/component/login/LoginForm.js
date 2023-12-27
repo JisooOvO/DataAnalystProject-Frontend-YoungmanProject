@@ -40,10 +40,10 @@ const LoginForm = () => {
         sessionStorage.setItem("username",res.headers.get("Username"));
         setIsLogin(true);
         navigate("/");
-        setIsTouched(false);
       }else{
         alert("아이디 또는 비밀번호가 일치하지 않습니다.");
       }
+      setIsTouched(false);
     })
     .catch(e => console.log(e));
   }
@@ -63,7 +63,7 @@ const LoginForm = () => {
           <div className="w-9 h-9 absolute top-[44%] right-2"><CustomCircle svg={<SearchIcon/>} func={handleMaskingButton}/></div>
         </div>
         <LoginFormNav/>
-        <div className="mt-20 w-full h-16 font-bold text-2xl text-white"><CustomButton title={"로그인"} func={handleLoginButton}/></div>
+        <button onClick={handleLoginButton} className="mt-20 w-full h-16 font-bold text-2xl text-white"><CustomButton title={"로그인"} /></button>
     </form>
   )
 }

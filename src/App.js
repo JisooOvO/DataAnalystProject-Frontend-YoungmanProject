@@ -8,6 +8,7 @@ import TransformReceipt from "./page/TransformReceipt";
 import ManageReceipt from "./page/ManageReceipt";
 import MainPage from "./page/Main";
 import ChangePassword from "./page/ChangePassword"
+import Verify from "./page/Verify";
 import Find from "./page/Find";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
               <Route path="/" element={<MainPage/>}/>
               <Route path="/login" element={<Login/>}/>
               <Route path="/signup" element={<Signup/>}/>
+              <Route path="/verify/:slot" element={<Verify/>}/>
               <Route path="/find" element={<Find/>}/>
               <Route path="/transform_receipt" element={<TransformReceipt/>}/>
               <Route path="/manage_receipt"element={<ManageReceipt/>}/>

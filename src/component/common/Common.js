@@ -26,3 +26,8 @@ export const AtomIsMobile = atom({
     key: "isMobile",
     default: false,
 })
+
+export const AtomEmail = atom({
+    key: "email",
+    default : '',
+})
