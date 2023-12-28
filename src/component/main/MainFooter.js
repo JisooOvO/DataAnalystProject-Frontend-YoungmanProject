@@ -16,9 +16,9 @@ const MainFooter = () => {
             <p>개발자 GITHUB</p>
         </div>
         <div className="flex flex-col">
-            <Link to={"https://github.com/JisooOvO"} className="ml-16 mb-2 hover:opacity-70 hover:cursor-pointer">FRONTEND https://github.com/JisooOvO</Link>
-            <Link to={"https://github.com/ORENOL"} className="ml-16 mb-2 hover:opacity-70 hover:cursor-pointer">BACKEND https://github.com/ORENOL</Link>
-            <Link to={"https://github.com/color7921"} className="ml-16 mb-2 hover:opacity-70 hover:cursor-pointer">DATA ANALYST https://github.com/color7921</Link>
+            <Link to={"https://github.com/JisooOvO"} className="ml-16 mb-2 w-fit hover:opacity-70 hover:cursor-pointer">FRONTEND https://github.com/JisooOvO</Link>
+            <Link to={"https://github.com/ORENOL"} className="ml-16 mb-2 w-fit hover:opacity-70 hover:cursor-pointer">BACKEND https://github.com/ORENOL</Link>
+            <Link to={"https://github.com/color7921"} className="ml-16 mb-2 w-fit hover:opacity-70 hover:cursor-pointer">DATA ANALYST https://github.com/color7921</Link>
         </div>
         
     </div>
