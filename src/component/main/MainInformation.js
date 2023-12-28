@@ -6,8 +6,8 @@ import MainInforSVGContainer from "./MainInforSVGContainer"
 
 const MainInformation = () => {
   return (
-    <div className="w-full h-[20rem] flex justify-center items-center">
-        <div className="flex justify-around w-full">
+    <div className="w-full lg:h-[20rem] flex justify-center items-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 justify-around w-full">
             <MainInforSVGContainer svg={<CameraIcon/>} title={"1. TAKE PHOTO"}/>
             <MainInforSVGContainer svg={<UploadIcon/>} title={"2. UPLOAD RECEIPT"}/>
             <MainInforSVGContainer svg={<MainChangeIcon/>} title={"3. TRANSFORM"}/>

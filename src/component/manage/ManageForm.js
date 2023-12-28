@@ -20,9 +20,9 @@ const ManageForm = () => {
               )
             }
           </div>
-          <div className="w-[12px] bg-[#E2E2E2] flex justify-center items-center"></div>
+          <div className="w-[12px] bg-[#575c77] flex justify-center items-center"></div>
         </div>
-        <div className="w-full h-[32rem] overflow-scroll overflow-x-hidden">
+        <div className="w-full h-[32rem] overflow-scroll overflow-x-hidden border border-black border-t-0 border-r-0">
           {tbRows}
         </div>
       </div>

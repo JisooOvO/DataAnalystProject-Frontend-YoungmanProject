@@ -17,6 +17,8 @@ const Header = () => {
   const [innerWidth, setInnerWidth] = useRecoilState(AtomWidth);
   // eslint-disable-next-line
   const [isMobile, setIsMobile] = useRecoilState(AtomIsMobile);
+  const [headerHeight, setHeaderHeight] = useState(window.screen.availHeight);
+  const [headerWidth, setHeaderWidth] = useState(18+'rem');
 
   const navigate = useNavigate();
 
@@ -43,31 +45,62 @@ const Header = () => {
     // eslint-disable-next-line
   },[innerWidth])
 
+  const handleResize = () => {
+    setHeaderHeight(Math.max(
+      document.body.scrollHeight, document.body.offsetHeight,
+      document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight
+    ));
+  };
+
+  const handleScroll = () => {
+    setHeaderHeight(Math.max(
+      document.body.scrollHeight, document.body.offsetHeight,
+      document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight
+    ));
+  };
+
   useEffect(()=>{
-    handleInnerWidth();
     const token = sessionStorage.getItem("token");
     if(token) setIsLoggedIn(true);
-    if(innerWidth < 768) setTimeout(()=>{setIsExpanded(false)},500);
-    
+    if(innerWidth < 768) {
+      setTimeout(()=>{setIsExpanded(false)},500);
+    }
+ 
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('scroll', handleScroll);
+
+    handleInnerWidth();
+
     const main = document.querySelector("main");
     main.addEventListener('click',()=>{
         setIsExpanded(false);
     })
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
+    };
     // eslint-disable-next-line
   },[])
 
   useEffect(() => {
-      const header = document.querySelector("#header");
-      if (isExpanded === false) {
-        setTimeout(() => {
-          header.classList.add("z-[-10]");
-          header.classList.remove("z-[9999]");
+      // const header = document.querySelector("#header");
+      // if (isExpanded === false) {
+      //   setTimeout(() => {
+      //     header.classList.add("z-[-10]");
+      //     header.classList.remove("z-[9999]");
+      //   },500)
+      // }
+      // else {
+      //   header.classList.remove("z-[-10]"); 
+      //   header.classList.add("z-[9999]");
+      // }
+      if(isExpanded)
+        setHeaderWidth(18+'rem')
+      else
+        setTimeout(()=>{
+          setHeaderWidth(0);
         },500)
-      }
-      else {
-        header.classList.remove("z-[-10]"); 
-        header.classList.add("z-[9999]");
-      }
   },[isExpanded])
 
 
@@ -111,9 +144,9 @@ const Header = () => {
 
   return (
       <>
-        <header style={{ height: window.screen.availHeight }} id="header" className={`absolute w-[18rem] z-[9999]`}>
+        <header style={{ width : headerWidth, height: headerHeight }} id="header" className={`fixed min-h-min z-[9999]`}>
           <div 
-          className={`relative shadow-xl shadow-black w-full h-full bg-custom-blue transition-all duration-500 ease-in-out ${sidebarClass}`}>
+          className={`relative w-full h-full bg-custom-blue transition-all duration-500 ease-in-out ${sidebarClass}`}>
             <div className="w-full h-[6rem] border-b-[1px] border-black">
               <h1 
               onClick={(e)=>{handleNavigate(e,"/")}} 
@@ -160,7 +193,7 @@ const Header = () => {
           {/* 화살표 버튼 */}
           </header>
           <button onClick={toggleSidebar}
-              className={`shadow-lg border-2 border-l-0 border-gray-400 bg-[#707070] z-[9999] absolute top-1/2 -translate-y-1/2 transition-all left-[18rem] duration-500 ease-in-out ${sidebarClass}`}>
+              className={`shadow-lg border-2 border-l-0 border-gray-400 bg-[#707070] z-[9999] fixed top-1/2 -translate-y-1/2 transition-all left-[18rem] duration-500 ease-in-out ${sidebarClass}`}>
               {arrowIcon}
           </button>
       </>
