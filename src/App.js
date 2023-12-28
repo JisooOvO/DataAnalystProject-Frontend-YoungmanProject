@@ -12,6 +12,7 @@ import Verify from "./page/Verify";
 import Find from "./page/Find";
 
 function App() {
+
   return (
     <div className="App">
       <BrowserRouter>

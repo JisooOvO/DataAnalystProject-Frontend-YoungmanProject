@@ -3,7 +3,7 @@ const CustomButton = ({id,title,func}) => {
     <div
       id={id}
       onClick={func}
-      className="w-full h-full rounded-xl shadow-md text-inherit bg-custom-blue hover:opacity-70 flex justify-center items-center">
+      className="w-full h-full rounded-xl shadow-md text-inherit bg-custom-blue hover:opacity-90 flex justify-center items-center">
       {title}
     </div>
   )

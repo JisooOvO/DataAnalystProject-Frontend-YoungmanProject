@@ -111,8 +111,9 @@ const Header = () => {
 
   return (
       <>
-        <header id="header" className={`absolute w-[18rem] min-h-[800px] h-full z-[9999]`}>
-          <div className={`relative shadow-xl shadow-black w-full h-full bg-custom-blue transition-all duration-500 ease-in-out ${sidebarClass}`}>
+        <header style={{ height: window.screen.availHeight }} id="header" className={`absolute w-[18rem] z-[9999]`}>
+          <div 
+          className={`relative shadow-xl shadow-black w-full h-full bg-custom-blue transition-all duration-500 ease-in-out ${sidebarClass}`}>
             <div className="w-full h-[6rem] border-b-[1px] border-black">
               <h1 
               onClick={(e)=>{handleNavigate(e,"/")}} 
@@ -122,7 +123,7 @@ const Header = () => {
               <div className="h-[27%] w-full flex mt-2">
                 <button onClick={isLoggedIn ? handleLogoutButton : handleLoginButton} className="w-[50%] flex pl-6">
                   <PowerIcon />
-                  <div className=" text-white text-base pl-1 pt-[1px]">
+                  <div className=" text-white text-base pl-1 pt-[1px] hover:opacity-70">
                     {isLoggedIn ? "로그아웃" : "로그인"}
                   </div>
                 </button>

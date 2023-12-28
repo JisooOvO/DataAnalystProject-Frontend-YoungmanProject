@@ -31,12 +31,11 @@ const TableNav = () => {
   }
 
   useEffect(()=>{
-    console.log(isLogin);
-    if(!isLogin){
-      alert("로그인이 필요한 서비스입니다.");
-      navigate("/login");
-      return;
-    }
+    // if(!isLogin){
+    //   alert("로그인이 필요한 서비스입니다.");
+    //   navigate("/login");
+    //   return;
+    // }
 
     setTbRows('');
     fetch(BACKENDURL+"/api/private/receipt/getPageReceipt",{
