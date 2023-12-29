@@ -63,7 +63,7 @@ const Header = () => {
     const token = sessionStorage.getItem("token");
     if(token) setIsLoggedIn(true);
     if(innerWidth < 768) {
-      setTimeout(()=>{setIsExpanded(false)},500);
+      setTimeout(()=>{setIsExpanded(false);},500); 
     }
  
     window.addEventListener('resize', handleResize);
@@ -71,10 +71,10 @@ const Header = () => {
 
     handleInnerWidth();
 
-    const main = document.querySelector("main");
-    main.addEventListener('click',()=>{
-        setIsExpanded(false);
-    })
+    // const main = document.querySelector("main");
+    // main.addEventListener('click',()=>{
+    //     setIsExpanded(false);
+    // })
     
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -83,28 +83,18 @@ const Header = () => {
     // eslint-disable-next-line
   },[])
 
+
   useEffect(() => {
-      // const header = document.querySelector("#header");
-      // if (isExpanded === false) {
-      //   setTimeout(() => {
-      //     header.classList.add("z-[-10]");
-      //     header.classList.remove("z-[9999]");
-      //   },500)
-      // }
-      // else {
-      //   header.classList.remove("z-[-10]"); 
-      //   header.classList.add("z-[9999]");
-      // }
-      if(isExpanded)
-        setHeaderWidth(18+'rem')
-      else
-        setTimeout(()=>{
-          setHeaderWidth(0);
-        },500)
-  },[isExpanded])
+    if(isExpanded)
+      setHeaderWidth(18 + "rem")
+    else
+      setTimeout(()=>{
+        setHeaderWidth( 0);
+      },500)
+  },[isExpanded]);
 
 
-  const sidebarClass = isExpanded ? "translate-x-0" : "-translate-x-[18rem]";
+  const sidebarClass = isExpanded ? "translate-x-0" : `-translate-x-[18rem]`;
   const arrowIcon = isExpanded ? <ArrowLeftIcon /> : <ArrowRightIcon />
 
   const menuItems = [
@@ -144,8 +134,8 @@ const Header = () => {
 
   return (
       <>
-        <header style={{ width : headerWidth, height: headerHeight }} id="header" className={`fixed min-h-min z-[9999]`}>
-          <div 
+        <header style={{ width : headerWidth, height: headerHeight }} id="header" className={`fixed z-[9999]`}>
+          <div
           className={`relative w-full h-full bg-custom-blue transition-all duration-500 ease-in-out ${sidebarClass}`}>
             <div className="w-full h-[6rem] border-b-[1px] border-black">
               <h1 
@@ -193,8 +183,8 @@ const Header = () => {
           {/* 화살표 버튼 */}
           </header>
           <button onClick={toggleSidebar}
-              className={`shadow-lg border-2 border-l-0 border-gray-400 bg-[#707070] z-[9999] fixed top-1/2 -translate-y-1/2 transition-all left-[18rem] duration-500 ease-in-out ${sidebarClass}`}>
-              {arrowIcon}
+          className={`shadow-lg border-2 border-l-0 w-10 h-10 border-gray-400 left-[18rem] bg-[#707070] z-[9999] fixed top-1/2 -translate-y-1/2 transition-all duration-500 ease-in-out ${sidebarClass}`}>
+            {arrowIcon}
           </button>
       </>
     )

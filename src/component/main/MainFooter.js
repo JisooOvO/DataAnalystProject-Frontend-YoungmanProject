@@ -16,9 +16,15 @@ const MainFooter = () => {
             <p>개발자 GITHUB</p>
         </div>
         <div className="flex flex-col">
-            <Link to={"https://github.com/JisooOvO"} className="ml-5 sm:ml-16 mb-2 w-fit hover:opacity-70 hover:cursor-pointer">FRONTEND https://github.com/JisooOvO</Link>
-            <Link to={"https://github.com/ORENOL"} className="ml-5 sm:ml-16 mb-2 w-fit hover:opacity-70 hover:cursor-pointer">BACKEND https://github.com/ORENOL</Link>
-            <Link to={"https://github.com/color7921"} className="ml-5 sm:ml-16 mb-2 w-fit hover:opacity-70 hover:cursor-pointer">DATA ANALYST https://github.com/color7921</Link>
+            <Link to={"https://github.com/JisooOvO"} className="ml-5 sm:ml-16 mb-2 w-fit hover:opacity-70 hover:cursor-pointer">
+              <span>FRONTEND </span><span className="sm:inline-block block">https://github.com/JisooOvO</span>
+              </Link>
+            <Link to={"https://github.com/ORENOL"} className="ml-5 sm:ml-16 mb-2 w-fit hover:opacity-70 hover:cursor-pointer">
+              <span>BACKEND </span><span className="sm:inline-block block">https://github.com/ORENOL</span>
+              </Link>
+            <Link to={"https://github.com/color7921"} className="ml-5 sm:ml-16 mb-2 w-fit hover:opacity-70 hover:cursor-pointer">
+              <span>DATA ANALYST </span><span className="sm:inline-block block">https://github.com/color7921</span>
+            </Link>
         </div>
         
     </div>

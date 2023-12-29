@@ -9,7 +9,7 @@ const NavigationText = ({title, url}) => {
   return (
     <p
     onClick={handleNav} 
-    className="hover:text-gray-500 hover:cursor-pointer text-inherit sm:text-base text-[70%]">{title}</p>
+    className="hover:text-gray-500 hover:cursor-pointer text-inherit sm:text-base text-[80%]">{title}</p>
   )
 }
 

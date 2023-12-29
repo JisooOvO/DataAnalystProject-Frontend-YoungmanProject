@@ -182,7 +182,7 @@ const TableRow = ({dId,dCompanyName,dItem,dQuantity,dTradeDate,dUnitPrice,dPrice
           id={item}
           tabIndex={0}
           onKeyDown={handleKeyDown}
-          className="border text-center border-r-0 flex justify-center items-center border-black border-t-0 h-[2rem]">
+          className="border text-center border-l-0 flex justify-center items-center border-black border-t-0 h-[2rem]">
             {arr[idx+1]}
           </div>
       )})}

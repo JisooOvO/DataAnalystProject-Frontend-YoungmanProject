@@ -3,9 +3,10 @@ import CustomButton from "../common/CustomButton"
 import TableRow from "./TableRow";
 import { useRecoilState } from "recoil";
 import { AtomIsLogin, AtomIsMobile, AtomTableRows, BACKENDURL } from "../common/Common";
-import CustomCircle from "../common/CustomCircle";
 import AddRows from "../../image/AddRows"
 import { useNavigate } from "react-router-dom";
+import * as XLSX from 'xlsx';
+import ChangeIcon from "../../image/ChangeReceiptIcon"
 
 const TableNav = () => {
   // eslint-disable-next-line
@@ -73,22 +74,42 @@ const TableNav = () => {
     }
   },[arr])
 
-  return (
-    <div className="z-10 h-full flex items-center">
-      { isMobile ?
-          <div className="w-9 h-9 relative" 
-            onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-            <CustomCircle svg={<AddRows/>} func={handleButtonClick}/>
-            <div id="addBt" className="hidden absolute top-[7px] right-[-75px] font-bold text-gray-500 text-sm">행 추가하기</div>
-          </div>
-        :
-          <button onClick={handleButtonClick} className="w-40 h-10 border rounded-xl justify-end items-center bg-custom-blue text-white font-bold my-2 flex">
-            <div className="h-full w-[75%]">
-              <CustomButton title={"행 추가하기"}/>
-            </div>
-            <div className="h-[90%] grow flex items-center"><AddRows/></div>
-          </button>    
+  const colName = ["거래일","업체명","물품","수량","단가","가격"];
+  let totalData = [];
+  const handleExportToExcel = () => {
+    const rows = document.querySelectorAll("[id^=td]");
+    rows.forEach(item => {
+      let i = 0;
+      let rowData = {};
+      for(const cell of item.children){
+        if(i >= 6) break;
+        rowData[colName[i]] = cell.innerText;
+        i = i + 1;
       }
+      totalData.push(rowData);
+    });
+
+    const ws = XLSX.utils.json_to_sheet(totalData);
+    const wb = XLSX.utils.book_new();
+    const today = new Date().toISOString().slice(0,10);
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.writeFile(wb, `${today}_YProject_Receipt_Data.xlsx`);
+  }
+
+  return (
+    <div className="z-10 h-full flex gap-4 items-center my-2">
+      <button onClick={handleButtonClick} className="w-32 sm:w-40 h-10 border rounded-xl justify-end items-center bg-custom-blue text-white flex">
+        <div className="h-full w-[75%]">
+          <CustomButton title={"행 추가하기"}/>
+        </div>
+        <div className="h-[90%] grow flex items-center"><AddRows/></div>
+      </button>
+      <button onClick={handleExportToExcel} className="w-32 sm:w-40 h-10 border rounded-xl justify-end items-center bg-custom-blue text-white flex">
+        <div className="h-full w-[75%]">
+          <CustomButton title={"엑셀 변환하기"}/>
+        </div>
+        <div className="h-[90%] grow flex items-center"><ChangeIcon/></div>
+      </button> 
     </div>
   )
 }
