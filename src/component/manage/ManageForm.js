@@ -1,6 +1,7 @@
 import TableNav from "./TableNav";
 import { useRecoilState } from "recoil";
 import { AtomTableRows } from "../common/Common";
+import Slash from "./Slash";
 
 const ManageForm = () => {
  // eslint-disable-next-line 
@@ -20,7 +21,9 @@ const ManageForm = () => {
               )
             }
           </div>
-          <div className="w-[12px] bg-[#575c77] flex justify-center items-center"></div>
+          <div className="w-[12px]">
+            <Slash/>
+          </div>
         </div>
         <div className="w-full h-[32rem] overflow-scroll overflow-x-hidden">
           {tbRows}
