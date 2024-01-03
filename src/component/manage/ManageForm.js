@@ -7,7 +7,11 @@ const ManageForm = () => {
  // eslint-disable-next-line 
   const [tbRows, setTbRows] = useRecoilState(AtomTableRows);
   return (
-    <div className="border border-black w-full h-[45rem] p-4 sm:p-5 rounded-xl shadow-md sm:text-base text-[70%]">
+    <div className="border border-black w-full h-fit p-4 sm:p-5 rounded-xl shadow-md sm:text-base text-[70%]">
+      <div className="w-full text-center my-5">
+        <p>변환한 영수증 정보를 이 곳에서 확인할 수 있으며</p>
+        <p>영수증 관련 정보를 입력하여 엑셀 파일로 변환이 가능합니다.</p>
+      </div>
       <div className="h-20">
         <TableNav/>
       </div>

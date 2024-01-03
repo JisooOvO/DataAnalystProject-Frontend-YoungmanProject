@@ -1,4 +1,5 @@
 import { atom } from "recoil"
+import DigitalSearch from "../../image/DigitalSearch"
 
 export const BACKENDURL = "http://10.125.121.212:8080"
 
@@ -30,4 +31,34 @@ export const AtomIsMobile = atom({
 export const AtomEmail = atom({
     key: "email",
     default : '',
+})
+
+export const AtomImage = atom({
+    key: "image",
+    default : '',
+})
+
+export const AtomImageName = atom({
+    key: "imageName",
+    default : <p>첨부 파일이 없습니다.</p>,
+})
+
+export const AtomReceipt = atom({
+    key: "receipt",
+    default : 
+      <div className="w-full h-full flex flex-col justify-center items-center">
+        <div className="w-12 h-12 rounded-xl mb-4 bg-custom-blue"><DigitalSearch/></div>
+        <p>파일 첨부시 변환된 영수증을</p>
+        <p>확인할 수 있습니다</p>
+      </div>, 
+})
+
+export const AtomIsLoading = atom({
+    key : "loading",
+    default : false,
+})
+
+export const AtomSearchDataRows = atom({
+    key : "searchDataRows",
+    default : [],
 })

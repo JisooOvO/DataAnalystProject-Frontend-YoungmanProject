@@ -9,6 +9,10 @@ const TableRow = ({dId,dCompanyName,dItem,dQuantity,dTradeDate,dUnitPrice,dPrice
   const [isTyping, setIsTyping] = useState(false);
   const [tbRows, setTbRows] = useRecoilState(AtomTableRows);
   const arr = [dId,dTradeDate,dCompanyName,dItem,dQuantity,dUnitPrice,dPrice];
+  const option = {
+    maximumFractionDigits: 4
+  };
+  
   const handleClick = (e) => {
     const targetElem = e.target.parentElement;
     const button = targetElem.lastChild;
@@ -48,10 +52,6 @@ const TableRow = ({dId,dCompanyName,dItem,dQuantity,dTradeDate,dUnitPrice,dPrice
       targetElem.innerHTML = `<input id="tableInput" class="w-full border border-black h-[2rem] text-center" type="${targetElem.id}" />`;
       const tableInput = document.querySelector("#tableInput");
       tableInput.focus();
-    }
-    if(e.code === "Enter"){
-      const tableInput = document.querySelector("#tableInput");
-      tableInput.blur();
     }
    }
 
@@ -182,8 +182,8 @@ const TableRow = ({dId,dCompanyName,dItem,dQuantity,dTradeDate,dUnitPrice,dPrice
           id={item}
           tabIndex={0}
           onKeyDown={handleKeyDown}
-          className="border text-center border-l-0 flex justify-center items-center border-black border-t-0 h-[2rem]">
-            {arr[idx+1]}
+          className="border text-center border-l-0 flex justify-center items-center border-black border-t-0 min-h-[3rem]">
+            {arr[idx+1] ? arr[idx+1].toLocaleString('ko-KR', option) : ""}
           </div>
       )})}
       <div id="buttons" className="absolute flex gap-2 right-2 -bottom-8 hidden">

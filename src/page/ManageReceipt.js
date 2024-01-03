@@ -9,6 +9,7 @@ const ManageReceipt = () => {
       <TitleHeader title={"RECEIPT MANAGEMENT"}/>
       <ManageNav/>
       <ManageForm/>
+      <div className="h-10"></div>
     </div>
   )
 }

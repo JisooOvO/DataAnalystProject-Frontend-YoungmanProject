@@ -71,10 +71,10 @@ const Header = () => {
 
     handleInnerWidth();
 
-    // const main = document.querySelector("main");
-    // main.addEventListener('click',()=>{
-    //     setIsExpanded(false);
-    // })
+    const main = document.querySelector("main");
+    main.addEventListener('click',()=>{
+        setIsExpanded(false);
+    })
     
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -93,6 +93,27 @@ const Header = () => {
       },500)
   },[isExpanded]);
 
+  useEffect(()=>{
+    const url = new URL(window.location.href);
+    const menuItem = document.querySelectorAll("#menuItem");
+    switch(url.pathname){
+      case menuItems[0]["items"][0]["url"] :
+        menuItem.forEach(item => item.classList.remove("underline"));
+        menuItem[0].classList.add("underline"); 
+        break;
+      case menuItems[0]["items"][1]["url"] : 
+        menuItem.forEach(item => item.classList.remove("underline"));
+        menuItem[1].classList.add("underline"); 
+        break;
+      case menuItems[1]["items"][0]["url"] : 
+        menuItem.forEach(item => item.classList.remove("underline"));
+        menuItem[2].classList.add("underline"); 
+        break;
+      default :
+        menuItem.forEach(item => item.classList.remove("underline"));
+        break;
+    }
+  },[navigate])
 
   const sidebarClass = isExpanded ? "translate-x-0" : `-translate-x-[18rem]`;
   const arrowIcon = isExpanded ? <ArrowLeftIcon /> : <ArrowRightIcon />
@@ -169,7 +190,7 @@ const Header = () => {
                       {
                         menu.items.map((item, itemIndex) => {
                         return (
-                          <div className="flex w-80 p-2 hover:cursor-pointer hover:opacity-70" key={`key${itemIndex}`} onClick={(e)=>{handleNavigate(e,item.url)}}>
+                          <div id="menuItem" className="flex w-full p-2 hover:cursor-pointer hover:opacity-70" key={`key${itemIndex}`} onClick={(e)=>{handleNavigate(e,item.url)}}>
                             {item.icon}
                             <span className="px-2 mt-1">{item.name}</span>
                           </div>

@@ -2,18 +2,14 @@ import { useEffect, useState } from "react";
 import CustomButton from "../common/CustomButton"
 import TableRow from "./TableRow";
 import { useRecoilState } from "recoil";
-import { AtomIsLogin, AtomIsMobile, AtomTableRows, BACKENDURL } from "../common/Common";
-import AddRows from "../../image/AddRows"
+import { AtomIsLogin, AtomSearchDataRows, AtomTableRows, BACKENDURL } from "../common/Common";
 import { useNavigate } from "react-router-dom";
 import * as XLSX from 'xlsx';
-import ChangeIcon from "../../image/ChangeReceiptIcon"
 
 const TableNav = () => {
   // eslint-disable-next-line
   const [tbrows, setTbRows] = useRecoilState(AtomTableRows);
-  // eslint-disable-next-lin
-  const [isMobile, setIsMobile] = useRecoilState(AtomIsMobile);
-  const [arr, setArr] = useState([]);
+  const [arr, setArr] = useRecoilState(AtomSearchDataRows);
   const [isLogin, setIsLogin] = useRecoilState(AtomIsLogin);
   const navigate = useNavigate();
 
@@ -21,19 +17,16 @@ const TableNav = () => {
     setArr((prevItem) => [...prevItem, []])
   }
 
-  const handleMouseEnter = (e) => {
-    const targetElem = document.querySelector("#addBt");
-    targetElem.classList.remove("hidden");
-  }
-
-  const handleMouseLeave = (e) => {
-     const targetElem = document.querySelector("#addBt");
-    targetElem.classList.add("hidden");
-  }
-
   useEffect(()=>{
+
+    if(!sessionStorage.getItem("token")){
+      alert("로그인이 필요한 페이지입니다.");
+      navigate("/login");
+    }
+
     setTbRows('');
-    fetch(BACKENDURL+"/api/private/receipt/getPageReceipt",{
+
+    fetch(BACKENDURL+"/api/private/receipt/getPageReceipt?orderCriteria=createDate",{
       method : "get",
       headers : {
         "Authorization" : sessionStorage.getItem("token"),
@@ -43,8 +36,6 @@ const TableNav = () => {
     .then(res => {
       if(res.status === 200){
         return res.json();
-      }else{
-        alert("데이터 전송 중 에러 발생");
       }
     })
     .then(data => {
@@ -70,8 +61,16 @@ const TableNav = () => {
         dUnitPrice={item.unitPrice}
         dPrice={item.price}/>])
       )
-      arr.length = 0;
+      setArr([]);
+
+      for(let i = 0 ; i < 10 ; i = i+1){
+        setTbRows((prevItem)=>[...prevItem,
+          <TableRow key={`trkey${Math.random()}`}/>
+        ])
+      }  
+
     }
+    // eslint-disable-next-line
   },[arr])
 
   const colName = ["거래일","업체명","물품","수량","단가","가격"];
@@ -97,18 +96,12 @@ const TableNav = () => {
   }
 
   return (
-    <div className="z-10 h-full flex gap-4 items-center my-2">
-      <button onClick={handleButtonClick} className="w-32 sm:w-40 h-10 border rounded-xl justify-end items-center bg-custom-blue text-white flex">
-        <div className="h-full w-[75%]">
-          <CustomButton title={"행 추가하기"}/>
-        </div>
-        <div className="h-[90%] grow flex items-center"><AddRows/></div>
+    <div className="z-10 h-full flex gap-4 items-center my-2 w-full justify-center sm:justify-start">
+      <button onClick={handleButtonClick} className="h-12 w-36 text-white">
+        <CustomButton title={"행 추가하기"}/>
       </button>
-      <button onClick={handleExportToExcel} className="w-32 sm:w-40 h-10 border rounded-xl justify-end items-center bg-custom-blue text-white flex">
-        <div className="h-full w-[75%]">
-          <CustomButton title={"엑셀 변환하기"}/>
-        </div>
-        <div className="h-[90%] grow flex items-center"><ChangeIcon/></div>
+      <button onClick={handleExportToExcel} className="h-12 w-36 text-white">
+        <CustomButton title={"엑셀 변환하기"}/>
       </button> 
     </div>
   )

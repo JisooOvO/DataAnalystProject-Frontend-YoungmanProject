@@ -1,7 +1,11 @@
+import TitleHeader from "../component/common/TitleHeader"
+import ChangePWBox from "../component/changePW/ChangePWBox"
+
 const ChangePassword = () => {
   return (
-    <div>
-        비밀번호 변경 페이지
+    <div className="w-full max-w-[50rem] h-full mx-auto">
+      <TitleHeader title={"CHANGE PASSWORD"}/>
+      <ChangePWBox/>
     </div>
   )
 }

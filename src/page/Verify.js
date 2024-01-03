@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import TitleHeader from "../component/common/TitleHeader"
 import { useEffect, useState } from "react";
 import FindBox from "../component/verify/VerifyBox";
@@ -6,8 +6,11 @@ import FindBox from "../component/verify/VerifyBox";
 const Verify = () => {
   const slot = useParams().slot;
   const [targetNm, setTargetNm ] = useState('');
+  const navigate = useNavigate();
 
   useEffect(()=>{
+    if(sessionStorage.getItem("token")) navigate("/");
+
     if(slot === "password"){
       setTargetNm("비밀번호");
     }
