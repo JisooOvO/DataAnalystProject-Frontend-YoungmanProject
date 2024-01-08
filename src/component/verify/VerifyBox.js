@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react"
 import FindContainer from "./VerifyContainer";
 import { AtomEmail, BACKENDURL } from "../common/Common"
-import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import CodeInput from "./CodeInput";
 
 const VerifyBox = ({targetNm}) => {
   const [container, setContainer] = useState('');
   const [isClick, setIsClick] = useState(false);
-  const [userEmail, setUserEmail] = useRecoilState(AtomEmail);
+  const [_, setUserEmail] = useRecoilState(AtomEmail);
 
   useEffect(()=>{
     setContainer(<FindContainer targetNm={targetNm} handleSubmitClick={handleSubmitClick}/>);        
@@ -23,13 +22,13 @@ const VerifyBox = ({targetNm}) => {
         return;
     }
     fetch(BACKENDURL+"/api/public/verifyEmail",{
-        method: "post",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            "email" : email.value,
-        })
+      method: "post",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+          "email" : email.value,
+      })
     })
     .then(res => {
       if(res.status === 200){
@@ -47,16 +46,20 @@ const VerifyBox = ({targetNm}) => {
           })
         })
         .then(res => {
-          if(res.status !== 200)
+          if(res.status !== 200){
             alert("데이터 전송 중 에러 발생");
-        })
+          }
+          })
         .catch(e => {
           console.log(e);
-          alert("데이터 전송 중 에러 발생");
         })
       }else{
         alert("이메일과 일치하는 회원 정보가 존재하지 않습니다.");
+        return res.json();
       }
+    })
+    .then(data => {
+      console.log(data);
     })
     .catch(e => {
       console.log(e);

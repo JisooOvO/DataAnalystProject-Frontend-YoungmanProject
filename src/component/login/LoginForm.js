@@ -35,9 +35,9 @@ const LoginForm = () => {
     })
     .then(res => {
       if(res.status === 200){
-        alert("로그인에 성공하셨습니다. 메인 페이지로 이동합니다.");
         sessionStorage.setItem("token",res.headers.get("Authorization"));
         sessionStorage.setItem("username",res.headers.get("Username"));
+        sessionStorage.setItem("role",res.headers.get("Role"));
         setIsLogin(true);
         navigate("/");
       }else{
@@ -45,7 +45,10 @@ const LoginForm = () => {
       }
       setIsTouched(false);
     })
-    .catch(e => console.log(e));
+    .catch(e => {
+      console.log(e)
+      alert("데이터 전송 중 에러 발생");
+    });
   }
 
   const handleMaskingButton = (e) => {

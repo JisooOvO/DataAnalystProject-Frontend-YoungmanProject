@@ -6,9 +6,11 @@ import RegisterIcon from "../../image/RegisterIcon"
 import WriteIcon from "../../image/WriteIcon"
 import { useRecoilState } from "recoil"
 import { AtomIsLogin, AtomIsMobile, AtomWidth } from "./../common/Common"
-import { useEffect, useState } from "react"
+import { memo, useEffect, useState } from "react"
 import ArrowLeftIcon from "../../image/ArrowLeftIcon"
 import ArrowRightIcon from "../../image/ArrowRightIcon"
+import SupervisorIcon from "../../image/SupervisorIcon"
+import MessageIcon from "../../image/MessageIcon"
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(AtomIsLogin);
@@ -96,6 +98,7 @@ const Header = () => {
   useEffect(()=>{
     const url = new URL(window.location.href);
     const menuItem = document.querySelectorAll("#menuItem");
+
     switch(url.pathname){
       case menuItems[0]["items"][0]["url"] :
         menuItem.forEach(item => item.classList.remove("underline"));
@@ -105,9 +108,17 @@ const Header = () => {
         menuItem.forEach(item => item.classList.remove("underline"));
         menuItem[1].classList.add("underline"); 
         break;
-      case menuItems[1]["items"][0]["url"] : 
+      case ( menuItems[1] ? menuItems[1]["items"][0]["url"] : "/Im_not_url"): 
         menuItem.forEach(item => item.classList.remove("underline"));
         menuItem[2].classList.add("underline"); 
+        break;
+      case ( menuItems[1] && menuItems[1]["items"][1] ? menuItems[1]["items"][1]["url"] : "/Im_not_url"): 
+        menuItem.forEach(item => item.classList.remove("underline"));
+        menuItem[3].classList.add("underline"); 
+        break;
+      case ( menuItems[2] ? menuItems[2]["items"][0]["url"] : "/Im_not_url") :
+        menuItem.forEach(item => item.classList.remove("underline"));
+        menuItem[4].classList.add("underline"); 
         break;
       default :
         menuItem.forEach(item => item.classList.remove("underline"));
@@ -126,6 +137,14 @@ const Header = () => {
             { name: "영수증 관리", icon: <WriteIcon />, url : "/manage_receipt" }
           ]
       },
+      isLoggedIn&(sessionStorage.getItem("role") === "[ROLE_ADMIN]") ?
+      {
+        title: "회사 관리",
+        items: [
+          { name: "소속 회원 관리", icon : <SupervisorIcon/>, url : "/company/manage_member" },
+          { name: "메신저", icon : <MessageIcon/>, url : "/company/message/lobby"}
+        ] 
+      } : null,
       {
           title: "내 정보 관리",
           items: [
@@ -138,6 +157,10 @@ const Header = () => {
       }
   ]
 
+  if(sessionStorage.getItem("role") !== "[ROLE_ADMIN]"){
+    menuItems.splice(1,1);
+  }
+
   const handleLoginButton = () => {
       navigate("/login")
   }
@@ -145,6 +168,8 @@ const Header = () => {
   const handleLogoutButton = () => {
       sessionStorage.removeItem("token");
       sessionStorage.removeItem("username");
+      sessionStorage.removeItem("role");
+      sessionStorage.removeItem("association");
       setIsLoggedIn(false);
       navigate("/login");
   }
@@ -182,12 +207,15 @@ const Header = () => {
             </div>
               {/* 메뉴 아이템 */}
             <div className="w-full">
-              {menuItems.map((menu, menuIndex) => { 
+              {menuItems.map((menu, menuIndex) => {
+                if(!menu) return;
+                else
                 return(
                 <div className="text-white ml-4 mt-4 m-20" key={`key${menuIndex}`}>
                   <h2 className="text-base font-bold p-1">{menu.title}</h2>
                     <nav>
                       {
+                        menu.items ?
                         menu.items.map((item, itemIndex) => {
                         return (
                           <div id="menuItem" className="flex w-full p-2 hover:cursor-pointer hover:opacity-70" key={`key${itemIndex}`} onClick={(e)=>{handleNavigate(e,item.url)}}>
@@ -195,6 +223,8 @@ const Header = () => {
                             <span className="px-2 mt-1">{item.name}</span>
                           </div>
                         )})
+                        :
+                        ""
                       }
                     </nav>
                   </div>

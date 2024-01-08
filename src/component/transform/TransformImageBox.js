@@ -89,7 +89,7 @@ const TransformImageBox = () => {
           </div>
       }
       </div>
-      <div className="h-[40rem] flex justify-center items-center border border-black overflow-scroll overflow-x-hidden">
+      <div className="h-[40rem] flex justify-center items-center border border-black overflow-auto overflow-x-hidden">
         { receiptView }
       </div>
     </div>

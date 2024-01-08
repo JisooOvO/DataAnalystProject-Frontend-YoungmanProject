@@ -62,3 +62,23 @@ export const AtomSearchDataRows = atom({
     key : "searchDataRows",
     default : [],
 })
+
+export const AtomChangeTable = atom({
+    key : "changeTable",
+    default : true,
+})
+
+export const AtomViewImage = atom({
+    key : "viewImage",
+    default : "",
+})
+
+export const AtomCardView = atom({
+    key : "cardView",
+    default : "",
+})
+
+export const AtomCompanyManageView = atom({
+    key : "companyManageView",
+    default : "",
+})

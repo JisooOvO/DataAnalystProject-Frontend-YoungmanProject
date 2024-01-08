@@ -35,6 +35,11 @@ const TransformReceipt = () => {
       navigate("/login");
     }
 
+    if(sessionStorage.getItem("role") === "[ROLE_WAITING]"){
+      alert("승인되지 않은 사용자입니다.");
+      navigate("/");
+    }
+
     window.addEventListener('resize', handleResize);
     window.addEventListener('scroll', handleScroll);
     return () => {

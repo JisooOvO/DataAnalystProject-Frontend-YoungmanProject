@@ -12,7 +12,7 @@ const Login = () => {
   return (
     <div className="w-full max-w-[30rem] h-full mx-auto">
       <TitleHeader title={"MEMBER LOGIN"}/>
-      <OuthSection/>
+      {/* <OuthSection/> */}
       <LoginForm/>
     </div>
   )

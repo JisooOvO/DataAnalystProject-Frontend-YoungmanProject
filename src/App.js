@@ -10,6 +10,10 @@ import MainPage from "./page/Main";
 import ChangePassword from "./page/ChangePassword"
 import Verify from "./page/Verify";
 import Find from "./page/Find";
+import Error404 from "./page/Error404";
+import ManageCompanyUser from "./page/ManageCompanyUser";
+import Message from "./page/Message";
+import ChatRoom from "./page/ChatRoom";
 
 function App() {
 
@@ -28,6 +32,10 @@ function App() {
               <Route path="/transform_receipt" element={<TransformReceipt/>}/>
               <Route path="/manage_receipt"element={<ManageReceipt/>}/>
               <Route path="/mypage/change_password" element={<ChangePassword/>}/>
+              <Route path="/company/manage_member" element={<ManageCompanyUser/>}/>
+              <Route path="/company/message/lobby" element={<Message/>}/>
+              <Route path="/company/message/chat" element={<ChatRoom/>}/>
+              <Route path="/*" element={<Error404/>}/>
             </Routes>
           </main>
         </RecoilRoot>

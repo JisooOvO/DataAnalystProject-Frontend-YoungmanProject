@@ -6,6 +6,7 @@ import CustomCircle from "../common/CustomCircle"
 import SignupFormComponent from "./SignupFormComponent"
 import { useNavigate } from "react-router-dom"
 import CheckIcon from "../../image/CheckIcon"
+import CustomInput from "../common/CustomInput"
 const SignupForm = () => {
   const [isTouched, setIsTouched] = useState(false);
   const [isIdTyping, setIsIdTyping] = useState(true);
@@ -45,7 +46,6 @@ const SignupForm = () => {
   },[innerWidth])
 
   const handleDupleIdcheckButton = (e) => {
-    console.log(isIdTyping);
     e.preventDefault();
     if(!isIdTyping) return;
     const username = document.querySelector("#username").value;
@@ -91,12 +91,14 @@ const SignupForm = () => {
 
   const handleSignupButton = (e) => {
     e.preventDefault();
+
     if(isTouched) return;
     const username = document.querySelector("#username").value;
     let email = document.querySelector("#email")
     const password = document.querySelector("#password").value;
     const checkPassword = document.querySelector("#checkPassword").value;
-    
+    const association = document.querySelector("#association").value;
+
     if(email.validity.typeMismatch){
         alert("올바른 이메일 형식이 아닙니다.");
         return;
@@ -128,7 +130,7 @@ const SignupForm = () => {
         alert("미기입된 항목이 존재합니다.");
         return;
     }
-
+    console.log(association);
     setIsTouched(true);
     fetch(BACKENDURL+"/api/public/signup",{
         method: "post",
@@ -138,22 +140,26 @@ const SignupForm = () => {
         body: JSON.stringify({
             "username" : username,
             "email" : email,
-            "password" : password
+            "password" : password,
+            "association" : association,
         })
     })
     .then(res => {
         if(res.status === 200){
-            alert("회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.");
+            alert("회원가입 요청이 완료되었습니다. 관리자의 승인을 기다리세요.");
             navigate("/login");
         }else{
             alert("회원가입에 실패하였습니다.");
+            return res.json();
         }
         setIsTouched(false);
     })
+    .then(data => console.log(data))
     .catch(e => {
         console.log(e);
         alert("데이터 전송 중 에러 발생");
     })
+    setIsTouched(false);
   }
 
   const handleMaskingButton = (e,targetId) => {
@@ -201,7 +207,7 @@ const SignupForm = () => {
   }
 
   return (
-    <form className="w-full h-[42rem] border border-black rounded-xl shadow-md p-5 sm:p-10">
+    <form className="w-full h-fit border border-black rounded-xl shadow-md p-5 sm:p-10">
       <div className="w-full mb-8 relative">
           <SignupFormComponent title={"아이디"} id={"username"} placeholder={"아이디"} state={setIsIdTyping}
           type={"text"} subtitle={IDTEXT}/>
@@ -210,6 +216,15 @@ const SignupForm = () => {
       <div className="w-full mb-4">
           <SignupFormComponent title={"이메일"} id={"email"} placeholder={"이메일"} 
           type={"email"}/>
+      </div>
+      <div className="w-full mb-4">
+        <div className="w-full h-24">
+          <p className="mb-3 font-bold">소속</p>
+            <select id="association" className="w-full h-12 rounded-xl border border-black shadow-inner p-2 hover:cursor-pointer">
+              <option value={"0"}>나인온스</option>  
+              <option value={"1"}>부산대학교</option> 
+            </select>
+        </div>
       </div>
       <div className="w-full mb-8 relative">
           <SignupFormComponent func={handlePasswordTyping} title={"비밀번호"} id={"password"} placeholder={"비밀번호"} type={"password"} state={setPasswordCheckMsg}

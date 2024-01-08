@@ -1,0 +1,58 @@
+import { useState } from "react";
+import CustomCircle from "../common/CustomCircle";
+import CloseIcon from "../../image/CloseIcon";
+import { AtomViewImage } from "../common/Common";
+import { useRecoilState } from "recoil";
+
+const ModalImage = () => {
+  const [viewImage, setViewImage] = useRecoilState(AtomViewImage);
+  const [{ x, y }, setPosition] = useState({
+    x: 0,
+    y: 0,
+  });
+
+  const handleMouseDown = (m) => {
+    const mouseMoveHandler = (e) => {
+      const deltaX = e.screenX - m.screenX;
+      const deltaY = e.screenY - m.screenY;
+    
+      setPosition({
+        x: x + deltaX,
+        y: y + deltaY,
+      });
+    };
+    
+    const mouseUpHandler = () => {
+      document.removeEventListener("mousemove", mouseMoveHandler);
+    };
+    
+    document.addEventListener("mousemove", mouseMoveHandler);
+    document.addEventListener("mouseup", mouseUpHandler, { once: true });
+  };
+
+  const handleExit = () => {
+    const modal = document.querySelector("#modal");
+    modal.classList.add("hidden");
+  }
+
+  return (
+    <div id="modal" onMouseDown={handleMouseDown} style={{ transform: `translateX(${x}px) translateY(${y}px)` }} 
+    className="hidden border w-[80%] max-w-[30rem] h-[30rem] bg-white p-3 rounded-xl shadow-xl absolute top-[50%] left-10 z-[9999]">
+      <div className="w-full h-14 flex items-center rounded-xl border-4 p-2 pl-4 justify-between border-custom-blue shadow-inner drop-shadow-md">
+        <p>영수증 사진 정보</p>
+        <button onClick={handleExit} className="w-9 h-9"><CustomCircle svg={<CloseIcon/>}/></button>
+      </div>
+      {
+        viewImage ?
+          <img draggable={false} src={viewImage} alt="영수증 사진 정보" className="w-full h-[80%] mt-5"/>
+        :
+          <div className="w-full h-[80%] mt-5 flex flex-col items-center justify-center">
+            <p>해당 아이템과 일치하는</p> 
+            <p>영수증 사진 정보가 없습니다.</p>
+          </div> 
+      }
+    </div>
+  )
+}
+
+export default ModalImage

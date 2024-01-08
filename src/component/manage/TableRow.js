@@ -3,11 +3,13 @@ import CustomCircle from "../common/CustomCircle";
 import AddIcon from "../../image/AddIcon"
 import DeleteIcon from "../../image/DeleteIcon"
 import { useRecoilState } from "recoil";
-import { AtomTableRows, BACKENDURL } from "../common/Common";
+import { AtomTableRows, AtomViewImage, BACKENDURL } from "../common/Common";
+import PhotoIcon from "../../image/PhotoIcon"
 
-const TableRow = ({dId,dCompanyName,dItem,dQuantity,dTradeDate,dUnitPrice,dPrice}) => {
+const TableRow = ({dId,dCompanyName,dItem,dQuantity,dTradeDate,dUnitPrice,dPrice,dreceiptDocumentId}) => {
   const [isTyping, setIsTyping] = useState(false);
   const [tbRows, setTbRows] = useRecoilState(AtomTableRows);
+  const [viewImage, setViewImage] = useRecoilState(AtomViewImage);
   const arr = [dId,dTradeDate,dCompanyName,dItem,dQuantity,dUnitPrice,dPrice];
   const option = {
     maximumFractionDigits: 4
@@ -170,6 +172,15 @@ const TableRow = ({dId,dCompanyName,dItem,dQuantity,dTradeDate,dUnitPrice,dPrice
     }
   }
 
+  const handleShowReceiptImage = () => {
+    const modal = document.querySelector("#modal");
+    modal.classList.remove("hidden");
+    if(dreceiptDocumentId)
+      setViewImage(BACKENDURL+`/api/public/receipt/getReceiptImage?receiptDocumentId=${dreceiptDocumentId}`)
+    else
+      setViewImage("");
+  }
+
   return (
     <div
     id= { arr[0] === undefined ? "td" : "td"+arr[0] }
@@ -187,6 +198,7 @@ const TableRow = ({dId,dCompanyName,dItem,dQuantity,dTradeDate,dUnitPrice,dPrice
           </div>
       )})}
       <div id="buttons" className="absolute flex gap-2 right-2 -bottom-8 hidden">
+        <div className="w-9 h-9 right-2 bottom-2 z-10 rounded-[50%]"><CustomCircle id={"saveBt"} func={handleShowReceiptImage} svg={<PhotoIcon/>}/></div>
         <div className="w-9 h-9 right-2 bottom-2 z-10 rounded-[50%]"><CustomCircle id={"saveBt"} func={handleSave} svg={<AddIcon/>}/></div>
         <div className="w-9 h-9 right-2 bottom-2 z-10 rounded-[50%]"><CustomCircle id={"deleteBt"} func={handleDelete} svg={<DeleteIcon/>}/></div>
       </div>

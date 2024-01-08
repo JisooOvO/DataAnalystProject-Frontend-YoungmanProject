@@ -8,8 +8,6 @@ const Receipt = ({data}) => {
     maximumFractionDigits: 4
   };
 
-  console.log(data)
-
   const handleSaveButtonClick = () => {
     const itemNames = document.querySelectorAll("#itemName");
     const unitPrices = document.querySelectorAll("#unitPrice");
@@ -38,14 +36,8 @@ const Receipt = ({data}) => {
         "unitPrice" : +unitPrices[i].value.replace(",",""),
         "price" : +prices[i].value.replace(",",""),
         "tradeDate" : new Date(tradeDate.value),
-      }
-
-      for(let i ; i < data.length ; i++){
-        if(targetItem["item"] === data[i]["item"]){
-          targetItem["receiptId"] = data[i]["receiptId"];
-          targetItem["receiptDocumentId"] = data[i]["receiptDocumentId"];
-          return
-        }
+        "receiptId" : data[i]["receiptId"],
+        "receiptDocumentId" : data[i]["receiptDocumentId"],
       }
 
       if(Number.isNaN(targetItem["price"]) || Number.isNaN(targetItem["quantity"]) || Number.isNaN(targetItem["unitPrice"])){

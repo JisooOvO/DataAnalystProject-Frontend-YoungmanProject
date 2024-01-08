@@ -24,6 +24,11 @@ const TableNav = () => {
       navigate("/login");
     }
 
+    if(sessionStorage.getItem("role") === "[ROLE_WAITING]"){
+      alert("승인되지 않은 사용자입니다.");
+      navigate("/");
+    }
+
     setTbRows('');
 
     fetch(BACKENDURL+"/api/private/receipt/getPageReceipt?orderCriteria=createDate",{
@@ -59,7 +64,8 @@ const TableNav = () => {
         dQuantity={item.quantity}
         dTradeDate={item.tradeDate ? item.tradeDate.slice(0,10) : ''}
         dUnitPrice={item.unitPrice}
-        dPrice={item.price}/>])
+        dPrice={item.price}
+        dreceiptDocumentId={item.receiptDocumentId}/>])
       )
       setArr([]);
 
@@ -97,10 +103,10 @@ const TableNav = () => {
 
   return (
     <div className="z-10 h-full flex gap-4 items-center my-2 w-full justify-center sm:justify-start">
-      <button onClick={handleButtonClick} className="h-12 w-36 text-white">
+      <button onClick={handleButtonClick} className="h-10 w-36 font-bold text-white">
         <CustomButton title={"행 추가하기"}/>
       </button>
-      <button onClick={handleExportToExcel} className="h-12 w-36 text-white">
+      <button onClick={handleExportToExcel} className="h-10 w-36 font-bold text-white">
         <CustomButton title={"엑셀 변환하기"}/>
       </button> 
     </div>
