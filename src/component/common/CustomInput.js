@@ -7,7 +7,7 @@ const CustomInput = ({type,placeholder,id,state,func, defaultValue}) => {
     <input 
     onChange={handleInputChange}
     onKeyUp={func}
-    className="bg-white border border-black w-full h-full rounded-xl shadow-inner px-2" 
+    className="bg-white border w-full h-full rounded-xl shadow-inner px-2" 
     placeholder={placeholder} id={id} name={id} type={type} defaultValue={defaultValue
     }/>
   )

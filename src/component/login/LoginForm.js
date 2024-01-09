@@ -59,7 +59,7 @@ const LoginForm = () => {
   }
 
   return (
-    <form className="w-full h-[30rem] border border-black rounded-xl shadow-md p-10">
+    <form className="w-full h-[30rem] bg-gray-200 border rounded-xl shadow-md p-10">
         <FormComponent title={"아이디"} type={"text"} placeholder={"아이디"} id={"username"}/>
         <div className="w-full mt-5 relative">
           <FormComponent title={"비밀번호"} type={"password"} placeholder={"비밀번호"} id={"password"}/>

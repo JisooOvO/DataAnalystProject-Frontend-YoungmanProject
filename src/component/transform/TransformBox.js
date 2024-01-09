@@ -7,7 +7,7 @@ const TransformBox = () => {
 
   return (
     <>
-      <div className="border border-black h-fit p-5 w-full rounded-xl shadow-md">
+      <div className="border h-fit bg-gray-200 p-5 w-full rounded-xl shadow-md">
         <TransformUploadBox/>
         <TransformNav/>        
         <TransformImageBox/>

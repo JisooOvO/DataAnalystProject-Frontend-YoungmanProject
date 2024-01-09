@@ -207,7 +207,7 @@ const SignupForm = () => {
   }
 
   return (
-    <form className="w-full h-fit border border-black rounded-xl shadow-md p-5 sm:p-10">
+    <form className="w-full bg-gray-200 h-fit border rounded-xl shadow-md p-5 sm:p-10">
       <div className="w-full mb-8 relative">
           <SignupFormComponent title={"아이디"} id={"username"} placeholder={"아이디"} state={setIsIdTyping}
           type={"text"} subtitle={IDTEXT}/>
@@ -220,7 +220,7 @@ const SignupForm = () => {
       <div className="w-full mb-4">
         <div className="w-full h-24">
           <p className="mb-3 font-bold">소속</p>
-            <select id="association" className="w-full h-12 rounded-xl border border-black shadow-inner p-2 hover:cursor-pointer">
+            <select id="association" className="w-full h-12 rounded-xl border shadow-inner p-2 hover:cursor-pointer">
               <option value={"0"}>나인온스</option>  
               <option value={"1"}>부산대학교</option> 
             </select>

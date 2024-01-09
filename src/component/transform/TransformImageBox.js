@@ -77,7 +77,7 @@ const TransformImageBox = () => {
   return (
     <div className="mt-10 w-full h-fit gap-5 grid grid-cols-1 lg:grid-cols-2">
       <div id="dragZone" onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop}
-      className="h-[40rem] flex justify-center items-center border border-black">
+      className="h-[40rem] bg-white flex justify-center items-center border">
       {
         imageUrl ? 
           <img src={imageUrl} className="h-full w-full" alt="영수증 사진"/>
@@ -89,7 +89,7 @@ const TransformImageBox = () => {
           </div>
       }
       </div>
-      <div className="h-[40rem] flex justify-center items-center border border-black overflow-auto overflow-x-hidden">
+      <div className="h-[40rem] flex bg-white justify-center items-center border overflow-auto overflow-x-hidden">
         { receiptView }
       </div>
     </div>

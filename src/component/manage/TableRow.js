@@ -38,7 +38,7 @@ const TableRow = ({dId,dCompanyName,dItem,dQuantity,dTradeDate,dUnitPrice,dPrice
     setIsTyping(true);
     let targetElem = e.target;    
     const txt = targetElem.textContent;
-    targetElem.innerHTML = `<input id="tableInput" class="w-full border border-black h-[2rem] text-center" type="${targetElem.id}" />`;
+    targetElem.innerHTML = `<input id="tableInput" class="w-full border h-[2rem] text-center" type="${targetElem.id}" />`;
     const tableInput = document.querySelector("#tableInput");
     tableInput.focus();
     tableInput.addEventListener('blur',()=>{
@@ -51,7 +51,7 @@ const TableRow = ({dId,dCompanyName,dItem,dQuantity,dTradeDate,dUnitPrice,dPrice
     let targetElem = e.target;  
     if(e.code !== "Tab" && e.code !== "Enter"){
       setIsTyping(true);
-      targetElem.innerHTML = `<input id="tableInput" class="w-full border border-black h-[2rem] text-center" type="${targetElem.id}" />`;
+      targetElem.innerHTML = `<input id="tableInput" class="w-full border h-[2rem] text-center" type="${targetElem.id}" />`;
       const tableInput = document.querySelector("#tableInput");
       tableInput.focus();
     }
@@ -193,7 +193,7 @@ const TableRow = ({dId,dCompanyName,dItem,dQuantity,dTradeDate,dUnitPrice,dPrice
           id={item}
           tabIndex={0}
           onKeyDown={handleKeyDown}
-          className="border text-center border-l-0 flex justify-center items-center border-black border-t-0 min-h-[3rem]">
+          className="border text-center border-l-0 flex justify-center items-center border-t-0 min-h-[3rem]">
             {arr[idx+1] ? arr[idx+1].toLocaleString('ko-KR', option) : ""}
           </div>
       )})}

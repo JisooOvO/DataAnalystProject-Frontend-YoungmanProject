@@ -3,8 +3,8 @@ import CustomInput from "../common/CustomInput"
 
 const VerifyContainer = ({targetNm,handleSubmitClick}) => {
   return (
-    <div className="border border-black h-[20rem] rounded-xl shadow-md p-5">
-        <div className="w-full h-12 font-bold flex flex-col justify-center sm:text-base text-sm text-center">
+    <div className="border bg-gray-200 h-[20rem] rounded-xl shadow-md p-5">
+        <div className="w-full h-12 flex flex-col justify-center sm:text-base text-sm text-center">
           <p>회원가입시 입력한 이메일을 통해 </p>
           <p>{targetNm}를 { targetNm === "아이디" ? "찾을" : "변경 할" } 수 있습니다.</p>
         </div>

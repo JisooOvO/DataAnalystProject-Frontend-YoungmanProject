@@ -4,14 +4,25 @@ import CustomInput from "../common/CustomInput"
 import SockJS from "sockjs-client";
 import {Stomp} from "@stomp/stompjs"
 import MyMessage from "./MyMessage";
+import ExitIcon from "../../image/ExitIcon";
+import { useNavigate } from "react-router-dom";
+import { BACKENDURL } from "../common/Common";
 
 const ChatBox = () => {  
   const targetUsername = new URL(window.location).searchParams.get("username");
+  const navigate = useNavigate();
   const username = sessionStorage.getItem("username");
   const [view , setView] = useState("");
   const stompClient = useRef(Stomp.over(()=>{
     return socket;
   }))
+
+  let c1 = username + "&" + targetUsername;
+  let c2 = targetUsername + "&" + username;
+  let roomId;
+
+  if(c1 < c2) roomId = c1;
+  else roomId = c2; 
 
   const socket = new SockJS('http://10.125.121.212:8080/chat');
   
@@ -23,47 +34,87 @@ const ChatBox = () => {
     const text = document.querySelector("#text");
     text.focus();
 
+    fetch(BACKENDURL+`/api/private/chat/getChatLogsByRoomId?chatRoomId=${encodeURIComponent(roomId)}`,{
+      headers:{
+        "Authorization" : sessionStorage.getItem("token"),
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      data.map((item,idx) =>
+        setView(prevItem => [...prevItem,<MyMessage key={`key${idx}`} chatLog={item}/>])
+      )
+    })
+    .catch(e => console.log(e));
+
     stompClient.current.activate();
 
     stompClient.current.onDisconnect = function(){
-        console.log("STOMP DISCONNECTED");
-      }
+      console.log("STOMP DISCONNECTED");
+    }
     
     stompClient.current.onConnect = function(){
       console.log("STOMP CONNECT SUCCESS");
-      stompClient.current.subscribe('/topic/private', (message) => { 
+
+      stompClient.current.send("/app/join", headers ,JSON.stringify(sessionStorage.getItem("username")))
+      stompClient.current.subscribe(`/topic/room/${roomId}`, (message) => { 
         setView(prevItem => [...prevItem,<MyMessage key={`key${Math.random()}`} chatLog={JSON.parse(message.body)}/>])
       })
     };
+
+    return () => {
+      if(stompClient.current.connected)
+        stompClient.current.deactivate();
+    }
   },[])
+
+  useEffect(()=>{
+    const chatBox = document.querySelector("#chatBox");
+
+    if(!(chatBox.clientHeight === chatBox.scrollHeight)){
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  },[view])
 
   const handleSendText = (e) => {
     e.preventDefault();
 
     const text = document.querySelector("#text");
+
+    if(text.value === "") return;
+
     const messageBody = {
-        "sender" : username,
-        "receiver" : targetUsername,
-        "content" : text.value,
-        "type" : "CHAT"
+      "sender" : username,
+      "receiver" : targetUsername,
+      "roomId" : roomId,
+      "content" : text.value,
+      "type" : "CHAT"
     };
     if(stompClient.current && stompClient.current.connected){
-      console.log(JSON.stringify(messageBody));
-      stompClient.current.send("/app/chat.sendMessage", headers , JSON.stringify(messageBody))
+      stompClient.current.send("/app/chat.sendMessageToRoom", headers , JSON.stringify(messageBody))
     }
     text.value = "";
   }
 
+  const handleExit = () => {
+    navigate("/company/message/lobby");
+  }
+
   return (
-    <div className="border border-black rounded-xl p-5 shadow-md w-full h-[45rem]">
-      <p className="text-xl drop-shadow-md mb-5">{targetUsername+ "님과의 채팅"}</p>
-      <div className="border h-[80%] mb-5 p-5 overflow-auto overflow-x-hidden shadow-inner border-black">
+    <div className="border bg-gray-200 rounded-xl p-5 shadow-md w-full h-[45rem]">
+      <div className="flex w-full h-12 items-center mb-5 justify-between">
+        <p className="text-xl drop-shadow-md">{targetUsername+ "님과의 채팅"}</p>
+        <button onClick={handleExit} className="bg-custom-blue h-full flex items-center justify-center shadow-md rounded-xl w-12">
+          <ExitIcon/>
+        </button>
+      </div>
+      <div id="chatBox" className="border h-[80%] mb-5 p-5 overflow-auto overflow-x-hidden bg-white shadow-inner">
         {view}
       </div>
       <form className="w-full h-[8%] gap-5 flex">
-        <div className="w-[75%] h-full"><CustomInput id={"text"}/></div>
+        <div className="w-[75%] h-full"><CustomInput placeholder={"메시지를 입력하세요"} id={"text"}/></div>
         <button onClick={handleSendText} className="h-full grow font-bold text-white tracking-widest">
-            <CustomButton title={"전송"}/>
+          <CustomButton title={"전송"}/>
         </button>
       </form>
     </div>

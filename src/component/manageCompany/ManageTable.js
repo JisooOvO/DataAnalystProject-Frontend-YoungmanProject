@@ -73,7 +73,7 @@ const ManageTable = ({data}) => {
   },[data])
 
   return (
-    <table className="sm:text-base text-[80%] mb-5 w-full mt-10 text-center border border-black border-b-0">
+    <table className="sm:text-base text-[80%] bg-white mb-5 w-full mt-10 text-center border border-b-0">
     <thead>
       <tr className="h-12 bg-custom-blue text-white">
         <th>회원명</th>                  
@@ -86,7 +86,7 @@ const ManageTable = ({data}) => {
       {
           data ? data.map((item,idx) => {
               return (
-              <tr key={`key${idx}`} className="border border-black h-12">
+              <tr key={`key${idx}`} className="border h-12">
                   <td id="username">{item.username}</td>
                   <td>
                     <select onChange={handleChangePermission} className="w-full text-center h-12" defaultValue={item.role}>

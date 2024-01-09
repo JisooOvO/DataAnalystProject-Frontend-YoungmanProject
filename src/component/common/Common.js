@@ -82,3 +82,8 @@ export const AtomCompanyManageView = atom({
     key : "companyManageView",
     default : "",
 })
+
+export const AtomIsCodePass = atom({
+    key : "isCodePass",
+    default : false,
+})

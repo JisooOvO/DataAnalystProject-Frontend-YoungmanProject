@@ -42,8 +42,8 @@ const ManageFormCard = () => {
   },[])
 
   return (
-    <div className="border border-black w-full h-fit p-4 sm:p-5 rounded-xl shadow-md sm:text-base text-[70%]">
-      <div className="w-full flex flex-col items-center mt-5 mb-10">
+    <div className="border bg-gray-200 w-full h-fit p-4 sm:p-5 rounded-xl shadow-md sm:text-base text-[70%]">
+      <div className="w-full flex flex-col items-center mt-5 mb-10 text-gray-700">
         <p>변환된 영수증을 카드 형태로 제공합니다</p>
         <p>영수증 추가, 수정 및 엑셀 변환은 테이블 형태에서만 가능합니다</p>
       </div>

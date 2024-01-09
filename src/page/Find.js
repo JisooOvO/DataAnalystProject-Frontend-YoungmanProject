@@ -1,18 +1,19 @@
-import { useRecoilState } from "recoil";
 import TitleHeader from "../component/common/TitleHeader"
 import FindBox from "../component/find/FindBox";
-import { AtomEmail } from "../component/common/Common";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { AtomIsCodePass } from "../component/common/Common";
 
 const Find = () => {
   const url = new URL(window.location.href);
   const targetNm = url.searchParams.get("target");
-  const [userEmail, setUserEmail] = useRecoilState(AtomEmail);
   const navigate = useNavigate();
+  const [isCodePass,_] = useRecoilState(AtomIsCodePass);
 
   useEffect(()=>{
     if(sessionStorage.getItem("token")) navigate("/");
+    if(!isCodePass) navigate("/");
   },[])
 
   return (

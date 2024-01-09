@@ -67,7 +67,7 @@ const TransformUploadBox = () => {
     <form action="" encType="multipart/form-data" className="w-full">
       <label htmlFor="image" className="flex gap-5 w-full justify-center">
           <input onChange={handleUpload} id="image" type="file" className="hidden w-full"/>
-            <div className="border border-black rounded-xl w-[80%] h-12 flex items-center p-4">
+            <div className="border bg-white rounded-xl w-[80%] h-12 flex items-center p-4 text-gray-700">
               {fileName ? fileName : ''}
             </div>
           <div className="hover:cursor-pointer flex flex-col justify-center">

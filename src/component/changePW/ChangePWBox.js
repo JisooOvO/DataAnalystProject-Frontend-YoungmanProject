@@ -90,7 +90,7 @@ const ChangePWBox = () => {
   }
 
   return (
-    <div className="w-full border flex flex-col items-center border-black rounded-xl shadow-md h-fit p-10">
+    <div className="w-full border bg-gray-200 flex flex-col items-center rounded-xl shadow-md h-fit p-10">
       <p className="mb-3 w-[70%]">현재 비밀번호</p>
       <div className="h-12 w-[70%] mb-10 relative">
         <CustomInput id={"originalPW"} type={"password"} placeholder={"현재 비밀번호"}/>
@@ -100,7 +100,7 @@ const ChangePWBox = () => {
       <div className="h-12 w-[70%] mb-14 relative">
         <CustomInput id={"changePW"} type={"password"} func={handlePasswordTyping} placeholder={"변경할 비밀번호"}/>
         <button tabIndex={-1} onClick={(e)=>{handleMaskingButton(e,"changePW")}} className="w-9 h-9 absolute top-[6px] right-4"><CustomCircle svg={<SearchIcon/>}/></button>
-        <p className="text-sm mt-2 text-gray-500">{PASSWORDTEXT}</p>
+        <p className="text-sm mt-2 text-gray-700">{PASSWORDTEXT}</p>
       </div>
       <p className="mb-3 w-[70%]">비밀번호 확인</p>
       <div className="h-12 w-[70%] mb-5 relative">

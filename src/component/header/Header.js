@@ -6,7 +6,7 @@ import RegisterIcon from "../../image/RegisterIcon"
 import WriteIcon from "../../image/WriteIcon"
 import { useRecoilState } from "recoil"
 import { AtomIsLogin, AtomIsMobile, AtomWidth } from "./../common/Common"
-import { memo, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import ArrowLeftIcon from "../../image/ArrowLeftIcon"
 import ArrowRightIcon from "../../image/ArrowRightIcon"
 import SupervisorIcon from "../../image/SupervisorIcon"
@@ -98,7 +98,6 @@ const Header = () => {
   useEffect(()=>{
     const url = new URL(window.location.href);
     const menuItem = document.querySelectorAll("#menuItem");
-
     switch(url.pathname){
       case menuItems[0]["items"][0]["url"] :
         menuItem.forEach(item => item.classList.remove("underline"));
@@ -118,12 +117,14 @@ const Header = () => {
         break;
       case ( menuItems[2] ? menuItems[2]["items"][0]["url"] : "/Im_not_url") :
         menuItem.forEach(item => item.classList.remove("underline"));
-        menuItem[4].classList.add("underline"); 
+        if(menuItem[4]) menuItem[4].classList.add("underline");
+        else menuItem[3].classList.add("underline"); 
         break;
       default :
         menuItem.forEach(item => item.classList.remove("underline"));
         break;
     }
+    // eslint-disable-next-line
   },[navigate])
 
   const sidebarClass = isExpanded ? "translate-x-0" : `-translate-x-[18rem]`;
@@ -137,14 +138,19 @@ const Header = () => {
             { name: "영수증 관리", icon: <WriteIcon />, url : "/manage_receipt" }
           ]
       },
-      isLoggedIn&(sessionStorage.getItem("role") === "[ROLE_ADMIN]") ?
       {
         title: "회사 관리",
         items: [
+          ...(isLoggedIn&(sessionStorage.getItem("role") === "[ROLE_ADMIN]") ?
+          [
           { name: "소속 회원 관리", icon : <SupervisorIcon/>, url : "/company/manage_member" },
           { name: "메신저", icon : <MessageIcon/>, url : "/company/message/lobby"}
+          ]
+          :
+          [{ name: "메신저", icon : <MessageIcon/>, url : "/company/message/lobby"}]
+          )
         ] 
-      } : null,
+      },
       {
           title: "내 정보 관리",
           items: [
@@ -156,10 +162,6 @@ const Header = () => {
           ]
       }
   ]
-
-  if(sessionStorage.getItem("role") !== "[ROLE_ADMIN]"){
-    menuItems.splice(1,1);
-  }
 
   const handleLoginButton = () => {
       navigate("/login")
@@ -183,7 +185,7 @@ const Header = () => {
         <header style={{ width : headerWidth, height: headerHeight }} id="header" className={`fixed z-[9999]`}>
           <div
           className={`relative w-full h-full bg-custom-blue transition-all duration-500 ease-in-out ${sidebarClass}`}>
-            <div className="w-full h-[6rem] border-b-[1px] border-black">
+            <div className="w-full h-[6rem] border-b-[1px] border-gray-400">
               <h1 
               onClick={(e)=>{handleNavigate(e,"/")}} 
               className="pt-3 pl-4 h-[50%] w-full text-white text-lg font-bold hover:cursor-pointer hover:opacity-70">
@@ -208,6 +210,7 @@ const Header = () => {
               {/* 메뉴 아이템 */}
             <div className="w-full">
               {menuItems.map((menu, menuIndex) => {
+                // eslint-disable-next-line
                 if(!menu) return;
                 else
                 return(

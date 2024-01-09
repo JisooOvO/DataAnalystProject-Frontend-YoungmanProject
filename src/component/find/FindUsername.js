@@ -1,12 +1,13 @@
 import { useRecoilState } from "recoil"
 import CustomButton from "../common/CustomButton"
-import { AtomEmail, BACKENDURL } from "../common/Common"
+import { AtomEmail, AtomIsCodePass, BACKENDURL } from "../common/Common"
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const FindUsername = () => {
   const [userEmail, setUserEmail] = useRecoilState(AtomEmail);
   const [txt, setTxt] = useState('');
+  const [_, setIsCodePass] = useRecoilState(AtomIsCodePass);
   const navigate = useNavigate();
 
   useEffect(()=>{
@@ -35,6 +36,7 @@ const FindUsername = () => {
                 <p>입니다.</p>
              </>);
              setUserEmail("");
+            setIsCodePass(false);
         })
         .catch(e => {
             console.log(e);
@@ -44,11 +46,12 @@ const FindUsername = () => {
   },[userEmail])
 
   const handleGoLogin = () => {
+    setIsCodePass(false);
     navigate("/login");
   }
 
   return (
-    <div className="border border-black h-[12rem] rounded-xl shadow-md p-5 sm:text-base text-sm">
+    <div className="border h-fit bg-gray-200 rounded-xl shadow-md p-5 sm:text-base text-sm">
         <div className="h-12 flex items-center text-xl mb-4">
             {txt}
         </div>

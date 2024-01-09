@@ -69,11 +69,11 @@ const ManageNav = () => {
   }
 
   return (
-    <div className="w-full h-fit border border-black mb-2 rounded-xl shadow-md py-4 px-3">
+    <div className="w-full bg-gray-200 h-fit border mb-8 rounded-xl shadow-md py-4 px-3">
       <p className="mb-3 border rounded-xl p-2 bg-custom-blue text-white">상세 검색</p>
       <div className="sm:w-[70%] text-[80%] sm:text-base p-2 grid items-center gap-4">
         <div className="sm:flex gap-2 items-center w-full">
-          <p className="mb-2 sm:mb-0 w-[10rem]">거래 기간</p>
+          <p className="mb-2 sm:mb-0 w-[10rem] text-gray-700">거래 기간</p>
           <div className="flex gap-1 grow">
             <div className="h-10 w-[40%]"><CustomInput type={"date"} id={"startDate"} defaultValue={new Date(new Date(today) - 63113852000).toISOString().slice(0,10)}/></div>
             <div className="h-full text-2xl grow text-center">~</div>
@@ -81,15 +81,15 @@ const ManageNav = () => {
           </div>
         </div>
         <div className="sm:flex gap-2 items-center">
-          <p className="mb-2 sm:mb-0 w-[10rem]">업체명</p>
+          <p className="mb-2 sm:mb-0 w-[10rem] text-gray-700">업체명</p>
           <div className="h-10 grow"><CustomInput type={"text"} id={"companyName"}/></div>
         </div>
         <div className="sm:flex gap-2 items-center">
-          <p className="mb-2 sm:mb-0 w-[10rem]">물품명</p>
+          <p className="mb-2 sm:mb-0 w-[10rem] text-gray-700">물품명</p>
           <div className="h-10 grow"><CustomInput type={"text"} id={"itemName"}/></div>
         </div>
         <div className="sm:flex gap-2 items-center">
-          <p className="mb-2 sm:mb-0 w-[10rem]">검색 물품 수</p>
+          <p className="mb-2 sm:mb-0 w-[10rem] text-gray-700">검색 물품 수</p>
           <div className="h-10 grow"><CustomInput type={"number"} defaultValue={10} id={"pageSize"}/></div>
         </div>
       </div>

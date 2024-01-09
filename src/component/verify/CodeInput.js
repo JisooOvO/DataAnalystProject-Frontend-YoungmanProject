@@ -1,8 +1,9 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { BACKENDURL } from "../common/Common";
+import { AtomIsCodePass, BACKENDURL } from "../common/Common";
 import CustomButton from "../common/CustomButton"
 import CustomInput from "../common/CustomInput"
 import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 
 const CodeInput = () => {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ const CodeInput = () => {
   const slot = useParams().slot;
   const [seconds, setSeconds] = useState(900000);
   const [d, setD] = useState(new Date(900000));
+  const [isCodePass, setIsCodePass] = useRecoilState(AtomIsCodePass);
   
   useEffect(()=>{
     const intervalFunc = setInterval(()=>{
@@ -44,6 +46,7 @@ const CodeInput = () => {
     .then(res => {
       if(res.status === 200){
           alert("코드 인증에 성공하셨습니다.\n다음 페이지로 이동합니다.");
+          setIsCodePass(true);
           navigate("/find?target="+slot);
       }else{
           alert("코드가 일치하지 않습니다.");
@@ -51,24 +54,23 @@ const CodeInput = () => {
     })
     .catch(e => {
       console.log(e);
-      alert("데이터 전송 중 에러 발생");
     })
     setIsTouched(false);
   }
 
   return (
-    <form id="codeForm" className="hidden border border-black w-full mt-10 rounded-xl shadow-md h-[14rem] p-5">
-      <p className="font-bold mb-3">코드 입력</p>
+    <form id="codeForm" className="hidden border bg-gray-200 w-full mt-10 rounded-xl shadow-md h-[14rem] p-5">
+      <p className="font-bold my-3">코드 입력</p>
       <div className="h-12 w-full flex gap-8">
         <div className="h-full w-[70%]">
           <CustomInput id={"code"} type={"text"}/>
         </div>
         <div className="h-full flex items-center gap-2 justify-center">
-          <div className="border flex justify-center items-center h-full rounded-xl  font-bold border-black w-14">
+          <div className="border flex justify-center items-center h-full rounded-xl bg-white font-bold w-14">
             {String(d.getMinutes()).padStart(2,"0")}
           </div>
           :
-          <div className="border flex justify-center items-center h-full rounded-xl  font-bold border-black w-14">
+          <div className="border flex justify-center items-center h-full rounded-xl bg-white font-bold w-14">
             {String(d.getSeconds()).padStart(2,"0")}
           </div>
         </div>
