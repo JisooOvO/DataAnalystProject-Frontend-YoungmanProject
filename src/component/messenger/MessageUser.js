@@ -1,11 +1,50 @@
 import { useNavigate } from "react-router-dom";
 import UserIcon from "../../image/UserIcon";
+import { useEffect, useState } from "react";
 
-const MessageUser = ({data}) => {
+const MessageUser = ({conData,data,count}) => {
   const navigate = useNavigate();
+  const myName = sessionStorage.getItem("username");
+  const [lastMsg, setLastMsg] = useState("상대방과 대화를 시작해보세요.");
+  const [lastTime, setLastTime] = useState("");
+  let unReadCount;
   let role = "";
   if(data["role"] === "WAITING") role = "대기회원"
   if(data["role"] === "ADMIN") role = "관리자"
+ 
+  count.map((item) => {
+    const cId = item["_id"];
+    const indexAt = String(item["_id"]).indexOf("&");
+    const c1 = cId.slice(0,indexAt);
+    const c2 = cId.slice(indexAt+1);
+    let targetName;
+
+    if(c1 !== myName) targetName = c1
+    else targetName = c2
+
+    if(targetName === data["username"])
+      unReadCount = item["unreadMessages"];
+  })
+
+  useEffect(()=>{
+    
+    conData.map(item => {
+      const c1 = sessionStorage.getItem("username");
+      const c2 = data["username"];
+      let roomId;
+
+      if(c1 < c2) roomId = c1 + "&" + c2;
+      else roomId = c2 + "&" + c1;
+
+      if(item["chatRoomId"] === roomId){
+        setLastMsg(item["content"])
+        setLastTime(()=>{
+          const newDate = new Date(new Date(item["timeStamp"]) + 9*60*60000);
+          return newDate.toLocaleString();
+        })
+      }
+    })
+  },[navigate])
 
   const handleEnterMessage = () => {
     navigate(`/company/message/chat?username=${data["username"]}`)
@@ -22,8 +61,15 @@ const MessageUser = ({data}) => {
           </div>
           <p className="text-custom-blue">{data["association"] ? data["association"]["association"] : ""}</p>
       </div>
-      <div className="my-4 p-2">
-        gg
+      <div className="mt-2 p-2 text-sm text-gray-500 flex items-center justify-between">
+        <p>{lastMsg}</p>
+        <div className="flex flex-col items-end">
+          <p>{lastTime}</p>
+          {
+            unReadCount ?
+            <p className="w-7 h-7 rounded-[50%] flex items-center justify-center mt-1 shadow-md bg-red-500 text-white">{unReadCount}</p> : ""
+          }
+        </div>
       </div>
     </div>
   )

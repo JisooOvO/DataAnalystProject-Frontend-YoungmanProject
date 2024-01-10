@@ -13,6 +13,8 @@ const ChatBox = () => {
   const navigate = useNavigate();
   const username = sessionStorage.getItem("username");
   const [view , setView] = useState("");
+  const [isLooked, setIsLooked] = useState(false);
+  const lastMsg = useRef();
   const stompClient = useRef(Stomp.over(()=>{
     return socket;
   }))
@@ -30,10 +32,7 @@ const ChatBox = () => {
     "Authorization" : sessionStorage.getItem("token"),
   }
 
-  useEffect(()=>{
-    const text = document.querySelector("#text");
-    text.focus();
-
+  function fetchData(){
     fetch(BACKENDURL+`/api/private/chat/getChatLogsByRoomId?chatRoomId=${encodeURIComponent(roomId)}`,{
       headers:{
         "Authorization" : sessionStorage.getItem("token"),
@@ -46,6 +45,34 @@ const ChatBox = () => {
       )
     })
     .catch(e => console.log(e));
+  }
+
+  useEffect(()=>{
+    const text = document.querySelector("#text");
+    text.focus();
+
+    fetchData();
+
+    let c1 = username + "&" + targetUsername;
+    let c2 = targetUsername + "&" + username;
+    let roomId;
+
+    if(c1 < c2) roomId = c1;
+    else roomId = c2; 
+
+    const fetchBody = {
+      "roomId" : roomId,
+    }
+
+    fetch(BACKENDURL+`/api/private/chat/postGreeting`,{
+      method : "post",
+      headers: {
+        "Authorization" : sessionStorage.getItem("token"),
+        "Content-Type" : "application/json",
+      },
+      body: JSON.stringify(fetchBody)
+    })
+    .catch(e => console.log(e));
 
     stompClient.current.activate();
 
@@ -55,18 +82,52 @@ const ChatBox = () => {
     
     stompClient.current.onConnect = function(){
       console.log("STOMP CONNECT SUCCESS");
+      stompClient.current.send("/app/join", headers ,JSON.stringify(sessionStorage.getItem("username")));
 
-      stompClient.current.send("/app/join", headers ,JSON.stringify(sessionStorage.getItem("username")))
-      stompClient.current.subscribe(`/topic/room/${roomId}`, (message) => { 
-        setView(prevItem => [...prevItem,<MyMessage key={`key${Math.random()}`} chatLog={JSON.parse(message.body)}/>])
+      stompClient.current.subscribe(`/topic/room/${roomId}`, (message) => {
+        const msgBody = JSON.parse(message.body);
+        lastMsg.current = msgBody;
+
+        console.log(msgBody);
+
+        if(msgBody["type"] === null) {
+          console.log("HELLO");
+          setIsLooked(true);
+          setView("");
+          fetchData();
+        }
+
+        if(msgBody["type"] !== null)
+          setView(prevItem => [...prevItem,<MyMessage key={`key${Math.random()}`} chatLog={msgBody}/>])
       })
     };
-
+    
     return () => {
       if(stompClient.current.connected)
         stompClient.current.deactivate();
     }
   },[])
+
+  useEffect(()=>{
+    console.log(lastMsg);
+    if(isLooked && lastMsg.current["chatLogId"]){
+      fetch(BACKENDURL+"/api/private/chat/updateIsLooked",{
+        method : "put",
+        headers : {
+          "Authorization" : sessionStorage.getItem("token"),
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify(lastMsg.current)
+      })
+      .then(res => {
+        if(res.status === 200) {
+          setView();
+          fetchData();
+        }
+      })
+      .catch(e => console.log(e));
+    }
+  },[lastMsg.current])
 
   useEffect(()=>{
     const chatBox = document.querySelector("#chatBox");
@@ -91,7 +152,7 @@ const ChatBox = () => {
       "type" : "CHAT"
     };
     if(stompClient.current && stompClient.current.connected){
-      stompClient.current.send("/app/chat.sendMessageToRoom", headers , JSON.stringify(messageBody))
+      stompClient.current.send("/app/chat.sendMessageToRoom", headers , JSON.stringify(messageBody));
     }
     text.value = "";
   }

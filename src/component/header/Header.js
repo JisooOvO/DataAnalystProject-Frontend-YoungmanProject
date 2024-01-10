@@ -96,47 +96,24 @@ const Header = () => {
   },[isExpanded]);
 
   useEffect(()=>{
-    const url = new URL(window.location.href);
-    const menuItem = document.querySelectorAll("#menuItem");
-    switch(url.pathname){
-      case menuItems[0]["items"][0]["url"] :
-        menuItem.forEach(item => item.classList.remove("underline"));
-        menuItem[0].classList.add("underline"); 
-        break;
-      case menuItems[0]["items"][1]["url"] : 
-        menuItem.forEach(item => item.classList.remove("underline"));
-        menuItem[1].classList.add("underline"); 
-        break;
-      case ( menuItems[1] ? menuItems[1]["items"][0]["url"] : "/Im_not_url"): 
-        menuItem.forEach(item => item.classList.remove("underline"));
-        menuItem[2].classList.add("underline"); 
-        break;
-      case ( menuItems[1] && menuItems[1]["items"][1] ? menuItems[1]["items"][1]["url"] : "/Im_not_url"): 
-        menuItem.forEach(item => item.classList.remove("underline"));
-        menuItem[3].classList.add("underline"); 
-        break;
-      case ( menuItems[2] ? menuItems[2]["items"][0]["url"] : "/Im_not_url") :
-        menuItem.forEach(item => item.classList.remove("underline"));
-        if(menuItem[4]) menuItem[4].classList.add("underline");
-        else menuItem[3].classList.add("underline"); 
-        break;
-      default :
-        menuItem.forEach(item => item.classList.remove("underline"));
-        break;
+    const menuItem = document.querySelectorAll("[id^=menu]");
+    for ( const node of menuItem) {
+      node.classList.remove("underline");
+      if(window.location.pathname === "/"+node["id"].slice(5))
+        node.classList.add("underline");
     }
-    // eslint-disable-next-line
-  },[navigate])
+  },[isLoggedIn,navigate])
 
   const sidebarClass = isExpanded ? "translate-x-0" : `-translate-x-[18rem]`;
   const arrowIcon = isExpanded ? <ArrowLeftIcon /> : <ArrowRightIcon />
 
   const menuItems = [
       {
-          title: "영수증 관리",
-          items: [
-            { name: "수기 영수증 변환", icon: <ChangeReceiptIcon />, url : "/transform_receipt" },
-            { name: "영수증 관리", icon: <WriteIcon />, url : "/manage_receipt" }
-          ]
+        title: "영수증 관리",
+        items: [
+          { name: "수기 영수증 변환", icon: <ChangeReceiptIcon />, url : "/transform_receipt" },
+          { name: "영수증 관리", icon: <WriteIcon />, url : "/manage_receipt" }
+        ]
       },
       {
         title: "회사 관리",
@@ -152,14 +129,14 @@ const Header = () => {
         ] 
       },
       {
-          title: "내 정보 관리",
-          items: [
-              ...(!isLoggedIn ? 
-              [{ name: "회원가입", icon: <RegisterIcon />, url : "/signup" }] 
-              : 
-              [{ name: "비밀번호 변경", icon: <LockIcon />, url : "/mypage/change_password" }]
-              )
-          ]
+        title: "내 정보 관리",
+        items: [
+            ...(!isLoggedIn ? 
+            [{ name: "회원가입", icon: <RegisterIcon />, url : "/signup" }] 
+            : 
+            [{ name: "비밀번호 변경", icon: <LockIcon />, url : "/mypage/change_password" }]
+            )
+        ]
       }
   ]
 
@@ -221,7 +198,7 @@ const Header = () => {
                         menu.items ?
                         menu.items.map((item, itemIndex) => {
                         return (
-                          <div id="menuItem" className="flex w-full p-2 hover:cursor-pointer hover:opacity-70" key={`key${itemIndex}`} onClick={(e)=>{handleNavigate(e,item.url)}}>
+                          <div id={`menu${item["url"]}`} className="flex w-full p-2 hover:cursor-pointer hover:opacity-70" key={`key${itemIndex}`} onClick={(e)=>{handleNavigate(e,item.url)}}>
                             {item.icon}
                             <span className="px-2 mt-1">{item.name}</span>
                           </div>

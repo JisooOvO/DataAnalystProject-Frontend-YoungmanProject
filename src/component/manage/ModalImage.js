@@ -41,15 +41,18 @@ const ModalImage = () => {
 
   return (
     <div id="modal" onMouseDown={handleMouseDown} style={{ transform: `translateX(${x}px) translateY(${y}px)` }} 
-    className="hidden border w-[80%] max-w-[30rem] h-fit bg-white p-3 rounded-xl shadow-xl absolute top-[50%] left-10 z-[9999]">
-      <div className="w-full h-14 flex items-center rounded-xl border-4 p-2 pl-4 justify-between border-custom-blue shadow-inner drop-shadow-md">
+    className="hidden border bg-gray-200  w-[80%] max-w-[30rem] h-[40rem] p-3 rounded-xl shadow-xl absolute top-[50%] left-10 z-[9999]">
+      <div className="w-full bg-custom-blue text-white h-14 flex items-center rounded-xl p-2 pl-4 justify-between border-custom-blue shadow-inner drop-shadow-md">
         <p>영수증 사진 정보</p>
-        <button onClick={handleExit} className="w-9 h-9"><CustomCircle svg={<CloseIcon/>}/></button>
+        <button onClick={handleExit} className="w-9 h-9 flex items-center justify-center bg-gray-400 hover:opacity-70 rounded-[50%] border">
+          <CloseIcon/>
+        </button>
       </div>
-      <div className="flex items-center justify-center h-[80%] mt-5">
+      <div className="flex h-[85%] justify-center w-full mt-5">
         {
           viewImage ?
-            <img onClick={handleClick} draggable={false} src={viewImage} alt="영수증 사진 정보" className="w-fit h-fit hover:scale-105 hover:cursor-pointer"/>
+            <img onClick={handleClick} draggable={false} src={viewImage} alt="영수증 사진 정보" 
+            className="hover:scale-105 hover:cursor-pointer"/>
           :
             <div className="w-full h-[80%] mt-5 flex flex-col items-center justify-center">
               <p>해당 아이템과 일치하는</p>

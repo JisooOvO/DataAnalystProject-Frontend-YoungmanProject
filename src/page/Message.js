@@ -2,14 +2,12 @@ import { useEffect } from 'react'
 import TitleHeader from '../component/common/TitleHeader'
 import MessengerBox from '../component/messenger/MessengerBox'
 import { useNavigate } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
-import { AtomIsLogin } from '../component/common/Common'
 
 const Message = () => {
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useRecoilState(AtomIsLogin);
+
   useEffect(()=>{
-    if(!isLogin){
+    if(!sessionStorage.getItem("token")){
       alert("로그인이 필요한 서비스입니다.");
       navigate("/");      
     }

@@ -32,8 +32,8 @@ const ManageTable = ({data}) => {
 
   const handleChangePermission = (e) => {
     if(!window.confirm("해당 유저의 권한을 변경하시겠습니까?")) {
-        window.location.reload();
-        return;
+      window.location.reload();
+      return;
     }
 
     const username = e.target.closest("tr").children[0].innerText;
@@ -53,10 +53,10 @@ const ManageTable = ({data}) => {
       body: JSON.stringify(rawBody)
     })
     .then(res => {
-        if(res.status === 200) {
-            alert("변경되었습니다");
-            window.location.reload();
-        }else return res.json()
+      if(res.status === 200) {
+        alert("변경되었습니다");
+        window.location.reload();
+      }else return res.json()
     })
     .then(data => console.log(data))
     .catch(e => console.log(e));
