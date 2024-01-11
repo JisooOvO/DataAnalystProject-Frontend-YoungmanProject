@@ -13,8 +13,10 @@ const ChatBox = () => {
   const navigate = useNavigate();
   const username = sessionStorage.getItem("username");
   const [view , setView] = useState("");
-  const [isLooked, setIsLooked] = useState(false);
-  const lastMsg = useRef();
+  const messages = useRef([]);
+  const unReadMsgs = useRef([]);
+  const isLooked = useRef(false);
+  const lastMsg = useRef("");
   const stompClient = useRef(Stomp.over(()=>{
     return socket;
   }))
@@ -40,9 +42,10 @@ const ChatBox = () => {
     })
     .then(res => res.json())
     .then(data => {
-      data.map((item,idx) =>
-        setView(prevItem => [...prevItem,<MyMessage key={`key${idx}`} chatLog={item}/>])
-      )
+      data.map((item,idx) => {
+        messages.current.push(item);
+        setView(prevItem => [...prevItem,<MyMessage key={`key${idx}`} chatLog={item}/>]);
+      })
     })
     .catch(e => console.log(e));
   }
@@ -53,27 +56,6 @@ const ChatBox = () => {
 
     fetchData();
 
-    let c1 = username + "&" + targetUsername;
-    let c2 = targetUsername + "&" + username;
-    let roomId;
-
-    if(c1 < c2) roomId = c1;
-    else roomId = c2; 
-
-    const fetchBody = {
-      "roomId" : roomId,
-    }
-
-    fetch(BACKENDURL+`/api/private/chat/postGreeting`,{
-      method : "post",
-      headers: {
-        "Authorization" : sessionStorage.getItem("token"),
-        "Content-Type" : "application/json",
-      },
-      body: JSON.stringify(fetchBody)
-    })
-    .catch(e => console.log(e));
-
     stompClient.current.activate();
 
     stompClient.current.onDisconnect = function(){
@@ -82,23 +64,74 @@ const ChatBox = () => {
     
     stompClient.current.onConnect = function(){
       console.log("STOMP CONNECT SUCCESS");
-      stompClient.current.send("/app/join", headers ,JSON.stringify(sessionStorage.getItem("username")));
+
+      stompClient.current.send("/app/chat.setRoomId", headers , JSON.stringify({"sender" : username , "roomId" : roomId}));
 
       stompClient.current.subscribe(`/topic/room/${roomId}`, (message) => {
         const msgBody = JSON.parse(message.body);
+
         lastMsg.current = msgBody;
 
         console.log(msgBody);
 
-        if(msgBody["type"] === null) {
-          console.log("HELLO");
-          setIsLooked(true);
-          setView("");
-          fetchData();
+        // 상대방의 진입 이벤트 발생
+        if(msgBody["type"] === "JOIN") {
+          isLooked.current = true;
+          fetch(BACKENDURL+`/api/private/chat/getChatLogsByRoomId?chatRoomId=${encodeURIComponent(roomId)}`,{
+            headers:{
+              "Authorization" : sessionStorage.getItem("token"),
+            }
+          })
+          .then(res => res.json())
+          .then(data => {
+            for(let i = data.length - 1  ; i >= 0 ; i--){
+              if(messages.current[i]["isLooked"] === "TRUE") break;
+              unReadMsgs.current.push(data[i]);
+            }
+            console.log(unReadMsgs.current);
+            setView(prevItem => {
+              if (unReadMsgs.current.length > 0)
+                return (
+                [
+                  ...prevItem.slice(0,-unReadMsgs.current.length),
+                  ...unReadMsgs.current.reverse().map(item => <MyMessage key={`msgkey${Math.random()}`} chatLog={item}/>)
+                ])
+              else
+                return [...prevItem]
+            })
+          })
+          .catch(e => console.log(e));
         }
 
-        if(msgBody["type"] !== null)
-          setView(prevItem => [...prevItem,<MyMessage key={`key${Math.random()}`} chatLog={msgBody}/>])
+        // 상대방이 나감
+        if(msgBody["type"] === "LEAVE"){
+          isLooked.current = false;
+          unReadMsgs.current = [];
+        }
+
+        if(msgBody["type"] === "CHAT") {
+          setView(prevItem => [...prevItem,<MyMessage key={`msgkey${Math.random()}`} chatLog={msgBody}/>])
+          messages.current.push(msgBody);
+          if(isLooked.current){
+            // 상대방이 접속 중임
+            fetch(BACKENDURL+"/api/private/chat/updateIsLooked",{
+              method : "put",
+              headers : {
+                "Authorization" : sessionStorage.getItem("token"),
+                "Content-Type" : "application/json",
+              },
+              body : JSON.stringify(msgBody)
+            })
+            .then(res => res.json())
+            .then(data => {
+              // 마지막 메시지 재 렌더링
+              setView(prevItem => [...prevItem.slice(0,-1), <MyMessage key={`msgkey${Math.random()}`} chatLog={data}/>])
+              messages.current = [...messages.current.slice(0,-1), data]
+            })
+            .catch(e => console.log(e));
+          }
+        }
+        console.log(messages.current);
       })
     };
     
@@ -107,27 +140,6 @@ const ChatBox = () => {
         stompClient.current.deactivate();
     }
   },[])
-
-  useEffect(()=>{
-    console.log(lastMsg);
-    if(isLooked && lastMsg.current["chatLogId"]){
-      fetch(BACKENDURL+"/api/private/chat/updateIsLooked",{
-        method : "put",
-        headers : {
-          "Authorization" : sessionStorage.getItem("token"),
-          "Content-Type" : "application/json"
-        },
-        body : JSON.stringify(lastMsg.current)
-      })
-      .then(res => {
-        if(res.status === 200) {
-          setView();
-          fetchData();
-        }
-      })
-      .catch(e => console.log(e));
-    }
-  },[lastMsg.current])
 
   useEffect(()=>{
     const chatBox = document.querySelector("#chatBox");
@@ -153,6 +165,7 @@ const ChatBox = () => {
     };
     if(stompClient.current && stompClient.current.connected){
       stompClient.current.send("/app/chat.sendMessageToRoom", headers , JSON.stringify(messageBody));
+
     }
     text.value = "";
   }

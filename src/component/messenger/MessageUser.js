@@ -27,7 +27,6 @@ const MessageUser = ({conData,data,count}) => {
   })
 
   useEffect(()=>{
-    
     conData.map(item => {
       const c1 = sessionStorage.getItem("username");
       const c2 = data["username"];
@@ -44,14 +43,14 @@ const MessageUser = ({conData,data,count}) => {
         })
       }
     })
-  },[navigate])
+  },[conData])
 
   const handleEnterMessage = () => {
     navigate(`/company/message/chat?username=${data["username"]}`)
   }
 
   return (
-    <div onClick={handleEnterMessage} className="border bg-white p-4 w-full hover:bg-gray-300 hover:cursor-pointer text-[80%] sm:text-xl h-40 mb-5 rounded-xl shadow-md">
+    <div onClick={handleEnterMessage} className="border bg-white p-4 w-full hover:bg-gray-300 hover:cursor-pointer text-[80%] sm:text-base h-40 mb-5 rounded-xl shadow-md">
       <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-3">
               <div className="bg-custom-blue w-10 h-10 rounded-xl shadow-md flex items-center justify-center">
@@ -61,13 +60,14 @@ const MessageUser = ({conData,data,count}) => {
           </div>
           <p className="text-custom-blue">{data["association"] ? data["association"]["association"] : ""}</p>
       </div>
-      <div className="mt-2 p-2 text-sm text-gray-500 flex items-center justify-between">
-        <p>{lastMsg}</p>
-        <div className="flex flex-col items-end">
-          <p>{lastTime}</p>
+      <div className="mt-2 p-2 text-sm h-[4rem] text-gray-500 flex items-center justify-between">
+        <p className="h-full my-auto whitespace-nowrap overflow-hidden text-ellipsis break-all w-[55%]">{lastMsg}</p>
+        <div className="flex flex-col items-end text- whitespace-nowrap">
+          <p className="text-[80%]">{lastTime}</p>
           {
             unReadCount ?
-            <p className="w-7 h-7 rounded-[50%] flex items-center justify-center mt-1 shadow-md bg-red-500 text-white">{unReadCount}</p> : ""
+            <p className="w-7 h-7 rounded-[50%] flex items-center justify-center mt-1 shadow-md bg-red-500 text-white">{unReadCount}</p> 
+            : <div className="h-7"></div>
           }
         </div>
       </div>

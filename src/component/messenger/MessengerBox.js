@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AtomIsMobile, BACKENDURL } from "../common/Common";
 import MessageUser from "./MessageUser";
 import CustomInput from "../common/CustomInput";
@@ -6,14 +6,20 @@ import CustomButton from "../common/CustomButton";
 import { useRecoilState } from "recoil";
 import CustomCircle from "../common/CustomCircle";
 import SearchIcon from "../../image/SearchIcon";
+import SockJS from "sockjs-client";
+import { Stomp } from "@stomp/stompjs";
 
 const MessengerBox = () => {
   const [view , setView] = useState("");
   // eslint-disable-next-line
   const [isMobile, _] = useRecoilState(AtomIsMobile);
   const username = sessionStorage.getItem("username");
+  const socket = new SockJS('http://10.125.121.212:8080/chat');
+  const stompClient = useRef(Stomp.over(()=>{
+    return socket;
+  }))
 
-  useEffect(()=>{
+  function fetchData(){
     fetch(BACKENDURL+"/api/private/chat/getCountUnReadMessage",{
       headers : {
         "Authorization" : sessionStorage.getItem("token")
@@ -78,6 +84,18 @@ const MessengerBox = () => {
       .catch(e => console.log(e));
     })
     .catch(e => console.log(e));
+  }
+
+  useEffect(()=>{
+    stompClient.current.activate();
+    stompClient.current.onConnect = function(){
+      stompClient.current.subscribe(`/topic/lobby/${username}`,(message) => {
+        console.log(JSON.parse(message.body));
+        fetchData();
+      })
+    }
+
+    fetchData();
   },[])
 
   const handleClickSearchButton = (e) => {
