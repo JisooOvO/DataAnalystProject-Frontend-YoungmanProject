@@ -11,6 +11,7 @@ import ArrowLeftIcon from "../../image/ArrowLeftIcon"
 import ArrowRightIcon from "../../image/ArrowRightIcon"
 import SupervisorIcon from "../../image/SupervisorIcon"
 import MessageIcon from "../../image/MessageIcon"
+import { AlarmIcon } from "../../image/AlarmIcon"
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(AtomIsLogin);
@@ -121,10 +122,14 @@ const Header = () => {
           ...(isLoggedIn&(sessionStorage.getItem("role") === "[ROLE_ADMIN]") ?
           [
           { name: "소속 회원 관리", icon : <SupervisorIcon/>, url : "/company/manage_member" },
-          { name: "메신저", icon : <MessageIcon/>, url : "/company/message/lobby"}
+          { name: "메신저", icon : <MessageIcon/>, url : "/company/message/lobby"},
+          { name: "알림", icon : <AlarmIcon/>, url : "/company/alarms"}
           ]
           :
-          [{ name: "메신저", icon : <MessageIcon/>, url : "/company/message/lobby"}]
+          [
+          { name: "메신저", icon : <MessageIcon/>, url : "/company/message/lobby"},
+          { name: "알림", icon : <AlarmIcon/>, url : "/company/alarms"}
+          ]
           )
         ] 
       },

@@ -42,3 +42,12 @@ svg {
 ::-webkit-scrollbar-corner {
     background-color: #57677E; 
 }
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+  
+.fade-out {
+    animation: fadeOut 4s ease-in-out forwards ;
+}

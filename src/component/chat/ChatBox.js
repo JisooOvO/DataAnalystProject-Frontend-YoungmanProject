@@ -17,6 +17,7 @@ const ChatBox = () => {
   const unReadMsgs = useRef([]);
   const isLooked = useRef(false);
   const lastMsg = useRef("");
+  const socket = new SockJS(BACKENDURL+'/chat');
   const stompClient = useRef(Stomp.over(()=>{
     return socket;
   }))
@@ -28,7 +29,6 @@ const ChatBox = () => {
   if(c1 < c2) roomId = c1;
   else roomId = c2; 
 
-  const socket = new SockJS('http://10.125.121.212:8080/chat');
   
   const headers = {
     "Authorization" : sessionStorage.getItem("token"),

@@ -3,7 +3,7 @@ import ChangePWBox from "../component/changePW/ChangePWBox"
 
 const ChangePassword = () => {
   return (
-    <div className="w-full max-w-[50rem] h-full mx-auto">
+    <div className="w-full max-w-[40rem] h-full mx-auto">
       <TitleHeader title={"CHANGE PASSWORD"}/>
       <ChangePWBox/>
     </div>

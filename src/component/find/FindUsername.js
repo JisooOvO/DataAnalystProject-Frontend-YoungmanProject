@@ -30,12 +30,13 @@ const FindUsername = () => {
         })
         .then(data => {
             setTxt(
-             <>
-                <p>해당 이메일에 일치하는 아이디는</p>&nbsp;
-                <p className="font-bold text-custom-blue">{data}</p>
-                <p>입니다.</p>
-             </>);
-             setUserEmail("");
+             <div className="h-fit mt-4 mb-8 sm:flex sm:items-center text-xl">
+                <p>해당 이메일과 일치하는 아이디는</p>&nbsp;
+                <p className="font-bold text-custom-blue ml-4 sm:ml-0">{data}</p>
+                <p className="mt-6 sm:mt-0">입니다.</p>
+             </div>
+            );
+            setUserEmail("");
             setIsCodePass(false);
         })
         .catch(e => {
@@ -52,11 +53,9 @@ const FindUsername = () => {
 
   return (
     <div className="border h-fit bg-gray-200 rounded-xl shadow-md p-5 sm:text-base text-sm">
-        <div className="h-12 flex items-center text-xl mb-4">
-            {txt}
-        </div>
-        <button onClick={handleGoLogin} 
-        className="w-full h-16 font-bold text-2xl text-white"><CustomButton title={"로그인 하러가기"}/></button>
+      {txt}
+      <button onClick={handleGoLogin} 
+      className="w-full h-16 font-bold text-2xl text-white"><CustomButton title={"로그인 하러가기"}/></button>
     </div>
   )
 }

@@ -65,8 +65,8 @@ const Receipt = ({data}) => {
   }
 
   return (
-    <div className="w-full h-full flex flex-col mt-20 items-center p-5">
-        <p className="text-2xl tracking-widest mb-10">전자영수증</p>
+    <div className="w-full h-full flex flex-col mt-20 items-center p-5 sm:text-base text-[70%]">
+        <p className="text-xl sm:text-2xl tracking-widest mb-10">전자영수증</p>
         <div className="w-full justify-end flex items-center gap-4 mb-5">
             <p className="w-20">거래처 :</p>
             <input id="comapanyName" type="text" className="border p-4  border-black rounded-xl shadow-inner w-[80%] h-12" 

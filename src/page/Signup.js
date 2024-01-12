@@ -13,6 +13,7 @@ const Signup = () => {
     <div className="w-full max-w-[40rem] h-full mx-auto">
       <TitleHeader title={"REGISTER FORM"}/>
       <SignupForm/>
+      <div className="h-20"></div>
     </div>
   )
 }

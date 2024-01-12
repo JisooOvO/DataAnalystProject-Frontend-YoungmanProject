@@ -98,10 +98,12 @@ const TableRow = ({dId,dCompanyName,dItem,dQuantity,dTradeDate,dUnitPrice,dPrice
       "companyName" : arr[1],
       "item" : arr[2],
       "quantity" : arr[3],
-      "unitPrice" : arr[4],
-      "price" : arr[5],
+      "unitPrice" : arr[4] ? arr[4].replaceAll(",","") : "0",
+      "price" : arr[5] ? arr[5].replaceAll(",","") : "0",
     })
     
+    console.log(body);
+
     fetch(BACKENDURL+"/api/private/receipt/saveReceipt",{
       method:"post",
       headers: {
@@ -114,6 +116,8 @@ const TableRow = ({dId,dCompanyName,dItem,dQuantity,dTradeDate,dUnitPrice,dPrice
       if(res.status === 200) {
         alert("저장되었습니다.");
         return res.text();
+      }else {
+        alert("이미 삭제된 데이터입니다.");
       }
     })
     .then(data => {
@@ -152,8 +156,8 @@ const TableRow = ({dId,dCompanyName,dItem,dQuantity,dTradeDate,dUnitPrice,dPrice
           } 
           const newArr = tbRows.slice().filter((item,idx) => idx !== targetCnt);
           setTbRows(newArr);
-        }else{
-          alert("데이터 전송 중 에러 발생");
+        }else if(res.status === 422) {
+          alert("이미 삭제된 데이터입니다.");
         }
       })
       .catch(e => {

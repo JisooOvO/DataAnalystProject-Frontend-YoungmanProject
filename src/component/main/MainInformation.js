@@ -7,7 +7,8 @@ import MainInforSVGContainer from "./MainInforSVGContainer"
 const MainInformation = () => {
   return (
     <div className="w-full lg:h-[20rem] my-10 flex flex-col justify-center items-center">
-        <p className="mb-10 text-2xl text-custom-blue">Step 4 of Easy Receipt Conversion</p>
+        <p className="text-xl mb-2 text-custom-blue">4단계의 쉬운 절차를 통해</p>
+        <p className="mb-10 text-xl sm:text-2xl text-custom-blue">영수증 관리가 간편해집니다</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 justify-around w-full">
             <MainInforSVGContainer svg={<CameraIcon/>} title={"1. TAKE PHOTO"}/>
             <MainInforSVGContainer svg={<UploadIcon/>} title={"2. UPLOAD RECEIPT"}/>

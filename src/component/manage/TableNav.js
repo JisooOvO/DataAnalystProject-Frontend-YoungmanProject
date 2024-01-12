@@ -83,6 +83,7 @@ const TableNav = () => {
   let totalData = [];
   const handleExportToExcel = () => {
     const rows = document.querySelectorAll("[id^=td]");
+    
     rows.forEach(item => {
       let i = 0;
       let rowData = {};
