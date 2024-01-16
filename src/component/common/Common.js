@@ -87,3 +87,8 @@ export const AtomIsCodePass = atom({
     key : "isCodePass",
     default : false,
 })
+
+export const AtomAlarmCount = atom({
+    key: "alarmCount",
+    default : 0
+})

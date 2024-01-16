@@ -1,5 +1,5 @@
 import SockJS from "sockjs-client";
-import { AtomIsLogin, BACKENDURL } from "./Common";
+import { AtomAlarmCount, AtomIsLogin, BACKENDURL } from "./Common";
 import { Stomp } from "@stomp/stompjs";
 import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
@@ -17,6 +17,7 @@ const ManageSocket = () => {
     "Authorization" : sessionStorage.getItem("token"),
   }
   const [msg, setMsg] = useState("");
+  const [alarmCnt, setAlarmCnt] = useRecoilState(AtomAlarmCount);
 
   useEffect(()=>{
     const alertMsg = document.querySelector("#alertMsg");
@@ -41,6 +42,15 @@ const ManageSocket = () => {
         if(parseMsg["sender"] === username) return;
 
         setMsg(parseMsg["content"]);
+
+        fetch(BACKENDURL+"/api/private/notice/getNoticeLogsCounts",{
+          headers : {
+            "Authorization" : sessionStorage.getItem("token") 
+          }
+        })
+        .then(res => res.json())
+        .then(data => setAlarmCnt(+data["message"]))
+        .catch(e => console.log(e));
       })
     }
 
@@ -66,7 +76,7 @@ const ManageSocket = () => {
       else
         navigate(urlName);
     }} 
-    className="hidden border  hover:cursor-pointer bg-gray-300 text-custom-blue font-bold p-5 rounded-xl shadow-xl fixed left-[50%] bottom-[20%] translate-x-[-50%] z-[9999]">
+    className="hidden border hover:cursor-pointer bg-gray-300 text-custom-blue font-bold p-5 rounded-xl shadow-xl fixed left-[50%] bottom-[20%] translate-x-[-50%] z-[9999]">
       {msg}
     </div>
   )

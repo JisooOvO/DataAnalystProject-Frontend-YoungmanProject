@@ -5,13 +5,17 @@ import PowerIcon from "../../image/PowerIcon"
 import RegisterIcon from "../../image/RegisterIcon"
 import WriteIcon from "../../image/WriteIcon"
 import { useRecoilState } from "recoil"
-import { AtomIsLogin, AtomIsMobile, AtomWidth } from "./../common/Common"
-import { useEffect, useState } from "react"
+import { AtomAlarmCount, AtomIsLogin, AtomIsMobile, AtomWidth, BACKENDURL } from "./../common/Common"
+import { useEffect, useRef, useState } from "react"
 import ArrowLeftIcon from "../../image/ArrowLeftIcon"
 import ArrowRightIcon from "../../image/ArrowRightIcon"
 import SupervisorIcon from "../../image/SupervisorIcon"
 import MessageIcon from "../../image/MessageIcon"
 import { AlarmIcon } from "../../image/AlarmIcon"
+import SockJS from "sockjs-client"
+import { Stomp } from "@stomp/stompjs"
+import UserIcon from "../../image/UserIcon"
+import CustomCircle from "../common/CustomCircle"
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(AtomIsLogin);
@@ -22,6 +26,96 @@ const Header = () => {
   const [isMobile, setIsMobile] = useRecoilState(AtomIsMobile);
   const [headerHeight, setHeaderHeight] = useState(window.screen.availHeight);
   const [headerWidth, setHeaderWidth] = useState(18+'rem');
+  const socket = new SockJS(BACKENDURL+'/chat');
+  const username = sessionStorage.getItem("username");
+  const [isLogin, _] = useRecoilState(AtomIsLogin);
+  const stompClient = useRef(Stomp.over(()=>{
+    return socket;
+  }))
+  const [unReadCnt, setUnReadCnt] = useState(0);
+  const [lastMsg, setLastMsg] = useState("");
+  const [alarmCnt, setAlarmCnt] = useRecoilState(AtomAlarmCount);
+
+
+  useEffect(()=>{
+    stompClient.current.beforeConnect = function(){
+      stompClient.current.connectHeaders = {
+        "Authorization" : sessionStorage.getItem("token")
+      }
+    }
+
+    stompClient.current.onConnect = function(){
+      console.log("MAIN STOMP CONNECTED");
+
+      stompClient.current.subscribe(`/topic/main/${username}`, (message) => {
+        const parseMsg = JSON.parse(message.body);
+        console.log(parseMsg);
+        setUnReadCnt(parseMsg["unReadMessage"]);
+        if(window.location.pathname === "/company/message/chat") return;
+        setLastMsg(
+          <div onClick={()=>{
+            navigate(`/company/message/chat?username=${parseMsg["sender"]}`)
+          }} id="lasMsgContainer" className="hidden fixed rounded-xl shadow-md p-4 w-60 hover:cursor-pointer bg-white bottom-10 right-4 z-[9999]">
+            <div className="flex gap-3 mb-5 items-center">
+              <div className="w-9 h-9">
+                <CustomCircle svg={<UserIcon/>}/>
+              </div>
+              <p>{parseMsg["sender"]}</p>
+            </div>
+            <p>{parseMsg["content"]}</p>
+          </div>
+        );
+      })
+    }
+
+    stompClient.current.onDisconnect = function(){
+      console.log("MAIN STOMP DISCONNECTED");
+    }
+
+    if(isLogin){
+      if(!stompClient.current.connected)
+        stompClient.current.activate();
+
+      fetch(BACKENDURL+"/api/private/notice/getNoticeLogsCounts",{
+        headers : {
+          "Authorization" : sessionStorage.getItem("token") 
+        }
+      })
+      .then(res => res.json())
+      .then(data => setAlarmCnt(+data["message"]))
+      .catch(e => console.log(e));
+
+      fetch(BACKENDURL+"/api/private/chat/getSumUnReadMessage",{
+        headers : {
+          "Authorization" : sessionStorage.getItem("token") 
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        setUnReadCnt(data["message"])
+      })
+      .catch(e => console.log(e));
+    }
+    else{
+      stompClient.current.deactivate();
+    }
+
+  },[isLogin])  
+
+  useEffect(()=>{
+    const lasMsgContainer = document.querySelector("#lasMsgContainer");
+    if(lasMsgContainer) {
+      lasMsgContainer.classList.remove("hidden");
+      lasMsgContainer.classList.add("fade-out");
+      setTimeout(()=>{
+        lasMsgContainer.classList.add("hidden");
+        lasMsgContainer.classList.remove("fade-out");
+        setLastMsg("");
+      },2000)  
+    }
+  },[lastMsg])
+
 
   const navigate = useNavigate();
 
@@ -164,6 +258,7 @@ const Header = () => {
 
   return (
       <>
+        {lastMsg}
         <header style={{ width : headerWidth, height: headerHeight }} id="header" className={`fixed z-[9999]`}>
           <div
           className={`relative w-full h-full bg-custom-blue transition-all duration-500 ease-in-out ${sidebarClass}`}>
@@ -203,9 +298,23 @@ const Header = () => {
                         menu.items ?
                         menu.items.map((item, itemIndex) => {
                         return (
-                          <div id={`menu${item["url"]}`} className="flex w-full p-2 hover:cursor-pointer hover:opacity-70" key={`key${itemIndex}`} onClick={(e)=>{handleNavigate(e,item.url)}}>
+                          <div className="flex  w-full p-2 hover:cursor-pointer hover:opacity-70" key={`key${itemIndex}`} onClick={(e)=>{handleNavigate(e,item.url)}}>
                             {item.icon}
-                            <span className="px-2 mt-1">{item.name}</span>
+                            <span id={`menu${item["url"]}`} className="px-2 mt-1">
+                              {item.name}
+                            </span>
+                            {
+                              item.name === "메신저" && unReadCnt > 0 ? 
+                              <div className="w-6 h-6 no-underline bg-red-500 shadow-md mt-1 rounded-[50%] flex justify-center items-center">
+                                {unReadCnt}
+                              </div> 
+                              :
+                              item.name === "알림" && alarmCnt > 0 ?
+                              <div className="w-6 h-6 no-underline bg-red-500 shadow-md mt-1 rounded-[50%] flex justify-center items-center">
+                                {alarmCnt}
+                              </div> 
+                              : ""
+                            }
                           </div>
                         )})
                         :

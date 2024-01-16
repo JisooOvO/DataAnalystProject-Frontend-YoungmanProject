@@ -1,18 +1,21 @@
 import { useRecoilState } from "recoil"
 import TitleHeader from "../component/common/TitleHeader"
 import TransformBox from "../component/transform/TransformBox"
-import { AtomIsLoading, AtomIsLogin } from "../component/common/Common"
+import { AtomIsLoading } from "../component/common/Common"
 import Loading from "../component/common/Loading"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 const TransformReceipt = () => {
   const [isLoading, setIsLoading] = useRecoilState(AtomIsLoading);
-  const [isLogin, setIsLogin] = useRecoilState(AtomIsLogin);
   const [headerHeight, setHeaderHeight] = useState(Math.max(
     document.body.scrollHeight, document.body.offsetHeight,
     document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight
   ));
+  const [fullWidth , setFullWidth] = useState(Math.max(
+    document.body.scrollWidth, document.body.offsetWidth,
+    document.documentElement.clientWidth, document.documentElement.scrollWidth, document.documentElement.offsetWidth
+  ))
   const navigate = useNavigate();
 
   const handleResize = () => {
@@ -20,12 +23,20 @@ const TransformReceipt = () => {
       document.body.scrollHeight, document.body.offsetHeight,
       document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight
     ));
+    setFullWidth(Math.max(
+      document.body.scrollWidth, document.body.offsetWidth,
+      document.documentElement.clientWidth, document.documentElement.scrollWidth, document.documentElement.offsetWidth
+    ));
   };
 
   const handleScroll = () => {
     setHeaderHeight(Math.max(
       document.body.scrollHeight, document.body.offsetHeight,
       document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight
+    ));
+    setFullWidth(Math.max(
+      document.body.scrollWidth, document.body.offsetWidth,
+      document.documentElement.clientWidth, document.documentElement.scrollWidth, document.documentElement.offsetWidth
     ));
   };
 
@@ -50,7 +61,7 @@ const TransformReceipt = () => {
 
   return (
     <div className="w-full max-w-[80rem] h-full mx-auto">
-      { isLoading ? <div style={{ width : window.innerWidth, height : headerHeight }} className="absolute top-0 left-0 z-[9999] opacity-70 bg-gray-500 "><Loading/></div> : '' }
+      { isLoading ? <div style={{ width : fullWidth, height : headerHeight }} className="fixed top-0 left-0 z-[9999] opacity-70 bg-gray-500 "><Loading/></div> : '' }
       <TitleHeader title={"TRANSFORM RECEIPT"}/>
       <TransformBox/>
     </div>

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { BACKENDURL } from "../common/Common";
+import { AtomAlarmCount, BACKENDURL } from "../common/Common";
+import { useRecoilState } from "recoil";
 
 const AlarmContainer = ({item}) => {
-  console.log(item);
-  
   const alarmTime = new Date(new Date(item["timeStamp"]) + 9*60*60000);
   const username = sessionStorage.getItem("username");
   const [circle, setCircle] = useState(<div id="alarmCircle" className="w-7 h-7 bg-red-500 rounded-[50%] flex items-center justify-center absolute shadow-md -top-2 -left-2">❕</div>)
+  const [alarmCnt, setAlarmCnt] = useRecoilState(AtomAlarmCount);
 
   const handleClick = () => {
     
@@ -24,6 +24,16 @@ const AlarmContainer = ({item}) => {
       if(data["userHistory"].includes(username)){
         setCircle(<div id="alarmCircle" className="w-7 h-7 bg-gray-500 rounded-[50%] flex items-center justify-center text-white absolute shadow-md -top-2 -left-2">✔</div>)
       }
+
+      fetch(BACKENDURL+"/api/private/notice/getNoticeLogsCounts",{
+        headers : {
+          "Authorization" : sessionStorage.getItem("token") 
+        }
+      })
+      .then(res => res.json())
+      .then(data => setAlarmCnt(+data["message"]))
+      .catch(e => console.log(e));
+
     })
     .catch(e => console.log(e));
   }

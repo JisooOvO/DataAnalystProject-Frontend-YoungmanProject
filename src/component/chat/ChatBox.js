@@ -72,7 +72,6 @@ const ChatBox = () => {
 
         lastMsg.current = msgBody;
 
-        console.log(msgBody);
 
         // 상대방의 진입 이벤트 발생
         if(msgBody["type"] === "JOIN") {
@@ -88,7 +87,6 @@ const ChatBox = () => {
               if(messages.current[i]["isLooked"] === "TRUE") break;
               unReadMsgs.current.push(data[i]);
             }
-            console.log(unReadMsgs.current);
             setView(prevItem => {
               if (unReadMsgs.current.length > 0)
                 return (
