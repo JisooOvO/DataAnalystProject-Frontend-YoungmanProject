@@ -49,10 +49,6 @@
 ### 화면 설계서
 ![화면설계서](https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject/assets/138751028/512a84f5-5f33-4f43-bdfd-8143b45e184e)
 
-
-<details>
-<summary>화면 설계서</summary>
-<div>
     
 ![01  메인 페이지](https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject/assets/138751028/0c963d8c-4ff0-4080-8145-744a88233e35)
     
@@ -81,10 +77,6 @@
 ![12  채팅 로비 페이지](https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject/assets/138751028/9bc7cf15-7ac3-4692-b167-c1d86fefd9da)
 
 ![13  채팅 페이지](https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject/assets/138751028/472b2ff0-e640-4065-a20d-e614b2835aab)
-
-</div>
-</details>
-
 
 
 ## 활용 기술
