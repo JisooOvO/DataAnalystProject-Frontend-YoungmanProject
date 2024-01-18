@@ -53,20 +53,35 @@
 <details>
 <summary>화면 설계서</summary>
 <div>
+    
 ![01  메인 페이지](https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject/assets/138751028/0c963d8c-4ff0-4080-8145-744a88233e35)
+    
 ![02  로그인 페이지](https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject/assets/138751028/4f16b3fa-646f-4648-81c3-d5c8989cb4d3)
+
 ![03  회원가입 페이지](https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject/assets/138751028/ae5e217e-074f-4e63-b0ad-e550ce16e58c)
+
 ![04  이메일 인증 페이지](https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject/assets/138751028/9f2fde5e-e4ad-41b9-be83-fbd67789436f)
+
 ![05  아이디 찾기 페이지](https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject/assets/138751028/4a37d6d1-df26-42c4-81b4-02fcf7dd7a5f)
+
 ![06  비밀번호 찾기 페이지](https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject/assets/138751028/9b22cfa3-e9ac-44f8-a6d8-33e5bbb95518)
+
 ![07  비밀번호 변경 페이지](https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject/assets/138751028/3fe038ec-10c8-4d0a-96be-6502eec7c390)
+
 ![08  영수증 변환 페이지](https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject/assets/138751028/cbddf4af-8952-4753-8c27-2786183dea55)
+
 ![09  영수증 관리 페이지](https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject/assets/138751028/617ff6ef-c526-431a-b491-9e58a443b24a)
+
 ![10  영수증 관리 페이지](https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject/assets/138751028/324dfb9a-9cc2-4649-8fb3-12a43a24e43b)
+
 ![11  소속 유저 관리 페이지](https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject/assets/138751028/4d18cc39-7c62-4679-805f-151ce3706db7)
+
 ![11  알림 페이지](https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject/assets/138751028/3c5acea8-601f-4eac-830b-e1b9c1cc3a9d)
+
 ![12  채팅 로비 페이지](https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject/assets/138751028/9bc7cf15-7ac3-4692-b167-c1d86fefd9da)
+
 ![13  채팅 페이지](https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject/assets/138751028/472b2ff0-e640-4065-a20d-e614b2835aab)
+
 </div>
 </details>
 
