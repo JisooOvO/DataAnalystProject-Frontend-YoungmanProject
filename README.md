@@ -36,16 +36,17 @@
 |강희진|Data Analyst|https://github.com/color7921/YoungMan_projectDA|
 
 
+## 프로젝트 미리보기
+
+![image](https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject/assets/138751028/0b8cf83d-8c33-470d-bc21-0b5a20c85b81)
+
+
 ## 구현 기능
 
+![시스템 구성도](https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject/assets/138751028/f683ff67-29ef-4679-885b-13f16b0b01a3)
 
 
-## REST API 목록
-
-
-
-## 데이터베이스 ERD
-
+![화면설계서](https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject/assets/138751028/512a84f5-5f33-4f43-bdfd-8143b45e184e)
 
 
 ## 활용 기술
