@@ -1,70 +1,63 @@
-# Getting Started with Create React App
+# K-Digital Training AI Project YoungMan Project
+>부산대학교 K-Digital AI 활용 빅데이터분석 풀스택웹서비스 SW 개발자 양성과정 
+>트레이닝 과정을 수강하며 진행한 프로젝트 저장소입니다.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**개발 기간** : `2023.12.19 ~ 2024.01.19`
 
-## Available Scripts
+**개발 목적** : 
+```
+영수증은 재무기록, 세금 관리, 지출결의서 등 다양한 분야에 쓰이고 있습니다.
 
-In the project directory, you can run:
+전자 영수증이 상용화되었지만 아직까지 많은 곳에서 실물 영수증을 이용하고 있습니다.
 
-### `npm start`
+이를 디지털 형태로 변환한다면 재고 관리, 구매 동향 파악 등 고객 서비스 개선에 큰 이점을 제공할 수 있습니다.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+따라서 실물 영수증의 정보를 데이터화 하고 관련 기능을 제공하는 웹서비스 제공이 목적입니다.
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 프로젝트 진행과정 바로가기
 
-### `npm test`
+[Notion 바로가기](https://www.notion.so/AI-bb1b347feb924633902d73b60667424b)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 시연 동영상 바로가기
 
-### `npm run build`
+[유튜브 바로가기](https://www.youtube.com/watch?v=aQxviNjqf3I&feature=youtu.be)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 데이터베이스
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+[나인온스](https://9oz.co.kr/shopinfo/company.html)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 팀 소개
 
-### `npm run eject`
+|이름|역할|깃허브 주소|
+|---|---|---|
+|남지수|Frontend|https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject|
+|김윤성|Backend|https://github.com/ORENOL/YoungmanProject_backend|
+|강희진|Data Analyst|https://github.com/color7921/YoungMan_projectDA|
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 구현 기능
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## REST API 목록
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+## 데이터베이스 ERD
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 활용 기술
 
-### Making a Progressive Web App
+- Frontend
+    - React 18.2.0
+    - React-router-dom 6.12.0
+    - Recoil 0.7.7
+    - Tailwindcss 3.3.6
+    - Sockjs-client 1.6.1
+    - Stompjs 2.3.3
+    - Xlsx 0.18.5
+    - Figma
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
