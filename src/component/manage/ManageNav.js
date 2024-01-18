@@ -22,7 +22,7 @@ const ManageNav = () => {
     api = api + `searchCriteria=tradeDate`
     api = api + ( companyName ? `${encodeURIComponent("&")}companyName` : "" )
     api = api + ( itemName ? `${encodeURIComponent("&")}item` : "" )
-    api = api + `&searchWord=${startDate}~${endDate}`
+    api = api + `&searchValue=${startDate}~${endDate}`
     api = api + ( companyName ? `${encodeURIComponent("&"+companyName)}` : "" )
     api = api + ( itemName ? `${encodeURIComponent("&"+itemName)}` : "" )
   
@@ -37,6 +37,7 @@ const ManageNav = () => {
       }
     })
     .then(data => {
+      console.log(data);
       data.content = data.content.reverse();
       if(isTable){
         setTbRows('');

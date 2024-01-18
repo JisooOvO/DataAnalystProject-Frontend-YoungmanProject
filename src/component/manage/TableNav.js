@@ -18,6 +18,20 @@ const TableNav = () => {
   }
 
   useEffect(()=>{
+    const startDate = document.querySelector("#startDate").value;
+    const endDate = document.querySelector("#endDate").value;
+    const companyName = document.querySelector("#companyName").value;
+    const itemName = document.querySelector("#itemName").value;
+    const pageSize = document.querySelector("#pageSize").value;
+
+    let api = `/api/private/receipt/getPageReceipt?orderCriteria=createDate&pageSize=${pageSize}&`;
+    api = api + `searchCriteria=tradeDate`
+    api = api + ( companyName ? `${encodeURIComponent("&")}companyName` : "" )
+    api = api + ( itemName ? `${encodeURIComponent("&")}item` : "" )
+    api = api + `&searchValue=${startDate}~${endDate}`
+    api = api + ( companyName ? `${encodeURIComponent("&"+companyName)}` : "" )
+    api = api + ( itemName ? `${encodeURIComponent("&"+itemName)}` : "" )
+
 
     if(!sessionStorage.getItem("token")){
       alert("로그인이 필요한 페이지입니다.");
@@ -31,7 +45,7 @@ const TableNav = () => {
 
     setTbRows('');
 
-    fetch(BACKENDURL+"/api/private/receipt/getPageReceipt?orderCriteria=createDate",{
+    fetch(BACKENDURL+api,{
       method : "get",
       headers : {
         "Authorization" : sessionStorage.getItem("token"),

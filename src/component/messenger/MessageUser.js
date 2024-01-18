@@ -12,21 +12,24 @@ const MessageUser = ({conData,data,count}) => {
   if(data["role"] === "WAITING") role = "대기회원"
   if(data["role"] === "ADMIN") role = "관리자"
  
-  count.map((item) => {
-    const cId = item["_id"];
-    const indexAt = String(item["_id"]).indexOf("&");
-    const c1 = cId.slice(0,indexAt);
-    const c2 = cId.slice(indexAt+1);
-    let targetName;
-
-    if(c1 !== myName) targetName = c1
-    else targetName = c2
-
-    if(targetName === data["username"])
-      unReadCount = item["unreadMessages"];
-  })
+  if(count !== undefined) {
+    count.map((item) => {
+      const cId = item["_id"];
+      const indexAt = String(item["_id"]).indexOf("&");
+      const c1 = cId.slice(0,indexAt);
+      const c2 = cId.slice(indexAt+1);
+      let targetName;
+  
+      if(c1 !== myName) targetName = c1
+      else targetName = c2
+  
+      if(targetName === data["username"])
+        unReadCount = item["unreadMessages"];
+    })  
+  };
 
   useEffect(()=>{
+    if(conData === undefined) return;
     conData.map(item => {
       const c1 = sessionStorage.getItem("username");
       const c2 = data["username"];

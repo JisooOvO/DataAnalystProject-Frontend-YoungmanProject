@@ -6,6 +6,7 @@ import ManageTable from "./ManageTable";
 
 const ManageCompanyMemberBox = ({data}) => {
   const [view,setView] = useState(<ManageTable data={data}/>)
+
   const handleClickSearchButton = (e) => {
     const username = document.querySelector("#searchUsername").value;
     const searchRole = document.querySelector("#searchRole").value;
@@ -16,8 +17,11 @@ const ManageCompanyMemberBox = ({data}) => {
     if(searchRole === "대기회원") role = "WAITING"
 
     let api = `/api/admin/getOurMembers`
-    api = api + `?searchCriteria=${username ? username + "&" : ""}${role ? `role` : ""}`
-    api = api + `&searchValue=${username ? username + "&" : ""}${role ? role : ""}`
+    api = api + `?searchCriteria=${username ? "username" : ""}${role ? `%26role` : ""}`
+    api = api + `&searchValue=${username ? username  : ""}`;
+    api = api + (role ? "%26" + role : "");
+
+    console.log(BACKENDURL+api);
 
     setView("");
     fetch(BACKENDURL+api,{

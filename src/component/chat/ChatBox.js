@@ -54,6 +54,8 @@ const ChatBox = () => {
     const text = document.querySelector("#text");
     text.focus();
 
+    console.log(stompClient.current);
+
     fetchData();
 
     stompClient.current.activate();
@@ -61,7 +63,7 @@ const ChatBox = () => {
     stompClient.current.onDisconnect = function(){
       console.log("STOMP DISCONNECTED");
     }
-    
+
     stompClient.current.onConnect = function(){
       console.log("STOMP CONNECT SUCCESS");
 

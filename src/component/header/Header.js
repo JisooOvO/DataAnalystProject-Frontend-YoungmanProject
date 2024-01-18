@@ -76,6 +76,7 @@ const Header = () => {
       if(!stompClient.current.connected)
         stompClient.current.activate();
 
+      if(sessionStorage.getItem("role") === "[ROLE_WAITING]") return;
       fetch(BACKENDURL+"/api/private/notice/getNoticeLogsCounts",{
         headers : {
           "Authorization" : sessionStorage.getItem("token") 

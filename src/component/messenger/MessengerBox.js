@@ -101,6 +101,7 @@ const MessengerBox = () => {
   const handleClickSearchButton = (e) => {
     e.preventDefault();
     const username = document.querySelector("#username").value;
+    if(username === "") return;
     fetch(BACKENDURL+`/api/private/member/getOurMembers?searchCriteria=username&searchValue=${username}`,{
       headers:{
         "Authorization": sessionStorage.getItem("token")
@@ -109,6 +110,7 @@ const MessengerBox = () => {
     .then(res => res.json())
     .then(data => {
       setView("");
+      if(data === undefined) return;
       data.map((item,idx) => {
         // eslint-disable-next-line
         if(item["username"] === username) return;
@@ -118,6 +120,75 @@ const MessengerBox = () => {
           setView(prevItem => [...prevItem, <MessageUser key={`key${Math.random()}`} data ={item}/>])
         )
       })
+    })
+    .catch(e => console.log(e));
+
+    fetch(BACKENDURL+`/api/private/chat/getCountUnReadMessage?searchValue=${username}`,{
+      headers : {
+        "Authorization" : sessionStorage.getItem("token")
+      }
+    })
+    .then(res => res.json())
+    .then(dat => {
+      fetch(BACKENDURL+`/api/private/chat/getLastChatLog?searchValue=${username}`,{
+        headers: {
+          "Authorization" : sessionStorage.getItem("token"),
+        }
+      })
+      .then(res => res.json())
+      .then(d => {
+        fetch(BACKENDURL+`/api/private/member/getOurMembers?searchCriteria=username&searchValue=${username}`,{
+          headers: {
+              "Authorization" : sessionStorage.getItem("token"),
+          }
+        })
+        .then(res => res.json())
+        .then(data => {
+          setView("");
+          d = d.sort(function(a,b){
+            return a["timeStamp"].localeCompare(b["timeStamp"]);
+          }).reverse();
+          
+          // d["sender"] 순서대로 넣고 나머지 없는거 data에 넣기
+          const newData = [];
+
+          d.map(item => {
+            const roomId = item["chatRoomId"];
+            const indexAtt = roomId.indexOf("&");
+            const c1 = roomId.slice(0,indexAtt);
+            const c2 = roomId.slice(indexAtt+1);
+            let targetName;
+            if(c1 === username) targetName = c2;
+            else targetName = c1;
+
+            for(let dataIter of data){
+              if(dataIter["username"] === targetName) newData.push(dataIter);
+            }
+
+          });
+
+          data.map(item => {
+            if(!newData.includes(item))
+              newData.push(item);
+          })
+
+          console.log(newData);
+          
+          newData.map((item,idx) => {
+            // eslint-disable-next-line
+            console.log(item["username"]);
+            console.log(username)
+            if(item["username"] === sessionStorage.getItem("username")) return;
+            // eslint-disable-next-line
+            if(item["role"] === "WAITING") return;
+            return (
+              setView(prevItem => [...prevItem, <MessageUser key={`messageUserkey${idx}`} count={dat} conData={d} data ={item}/>])
+            )
+          })
+        })
+        .catch(e => console.log(e));
+      })
+      .catch(e => console.log(e));
     })
     .catch(e => console.log(e));
   }

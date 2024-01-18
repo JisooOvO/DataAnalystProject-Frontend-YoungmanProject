@@ -10,7 +10,21 @@ const ManageFormCard = () => {
   useEffect(()=>{
     setCardView("");
 
-    fetch(BACKENDURL+"/api/private/receipt/getPageReceipt?orderCriteria=createDate",{
+    const startDate = document.querySelector("#startDate").value;
+    const endDate = document.querySelector("#endDate").value;
+    const companyName = document.querySelector("#companyName").value;
+    const itemName = document.querySelector("#itemName").value;
+    const pageSize = document.querySelector("#pageSize").value;
+
+    let api = `/api/private/receipt/getPageReceipt?orderCriteria=createDate&pageSize=${pageSize}&`;
+    api = api + `searchCriteria=tradeDate`
+    api = api + ( companyName ? `${encodeURIComponent("&")}companyName` : "" )
+    api = api + ( itemName ? `${encodeURIComponent("&")}item` : "" )
+    api = api + `&searchValue=${startDate}~${endDate}`
+    api = api + ( companyName ? `${encodeURIComponent("&"+companyName)}` : "" )
+    api = api + ( itemName ? `${encodeURIComponent("&"+itemName)}` : "" )
+
+    fetch(BACKENDURL+api,{
       headers : {
         "Authorization" : sessionStorage.getItem("token"),
         "Content-Type" : "application/json",
