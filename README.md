@@ -43,9 +43,10 @@
 
 ## 구현 기능
 
+### 시스템 구성도
 ![시스템 구성도](https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject/assets/138751028/f683ff67-29ef-4679-885b-13f16b0b01a3)
 
-
+### 화면 설계서
 ![화면설계서](https://github.com/JisooOvO/DataAnalystProject-Frontend-YoungmanProject/assets/138751028/512a84f5-5f33-4f43-bdfd-8143b45e184e)
 
 
